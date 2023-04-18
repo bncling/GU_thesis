@@ -1,0 +1,19 @@
+\begin{thebibliography}{CLO13}
+
+\bibitem[AM69]{atiyah1969introduction}
+M.F. Atiyah and I.G. MacDonald.
+\newblock {\em Introduction to Commutative Algebra}.
+\newblock Addison-Wesley, 1969.
+
+\bibitem[CLO13]{cox2013ideals}
+David Cox, John Little, and Donal OShea.
+\newblock {\em Ideals, varieties, and algorithms: an introduction to
+  computational algebraic geometry and commutative algebra}.
+\newblock Springer Science \& Business Media, 2013.
+
+\bibitem[Rei95]{reid1995undergraduate}
+Miles Reid.
+\newblock {\em Undergraduate commutative algebra}.
+\newblock Number~29. Cambridge University Press, 1995.
+
+\end{thebibliography}

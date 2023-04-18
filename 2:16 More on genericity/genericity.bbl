@@ -1,0 +1,76 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{BDND{\etalchar{+}}21}
+
+\bibitem[BDND{\etalchar{+}}21]{bigdeli2021semi}
+Mina Bigdeli, Emanuela De~Negri, Manuela~Muzika Dizdarevic, Elisa Gorla, Romy
+  Minko, and Sulamithe Tsakou.
+\newblock Semi-regular sequences and other random systems of equations.
+\newblock In {\em Women in Numbers Europe III: Research Directions in Number
+  Theory}, pages 75--114. Springer, 2021.
+
+\bibitem[BFS04]{bardet2004complexity}
+Magali Bardet, Jean-Charles Faugere, and Bruno Salvy.
+\newblock On the complexity of gr{\"o}bner basis computation of semi-regular
+  overdetermined algebraic equations.
+\newblock In {\em Proceedings of the International Conference on Polynomial
+  System Solving}, pages 71--74, 2004.
+
+\bibitem[BS87]{bayer1987criterion}
+David Bayer and Michael Stillman.
+\newblock A criterion for detecting m-regularity.
+\newblock {\em Inventiones mathematicae}, 87(1):1--11, 1987.
+
+\bibitem[CG20]{caminata2020solving}
+Alessio Caminata and Elisa Gorla.
+\newblock Solving multivariate polynomial systems and an invariant from
+  commutative algebra.
+\newblock In {\em International Workshop on the Arithmetic of Finite Fields},
+  pages 3--36. Springer, 2020.
+
+\bibitem[Fau02]{faugere2002new}
+Jean~Charles Faugere.
+\newblock A new efficient algorithm for computing gr{\"o}bner bases without
+  reduction to zero (f 5).
+\newblock In {\em Proceedings of the 2002 international symposium on Symbolic
+  and algebraic computation}, pages 75--83, 2002.
+
+\bibitem[Fr{\"o}85]{froberg1985inequality}
+Ralf Fr{\"o}berg.
+\newblock An inequality for hilbert series of graded algebras.
+\newblock {\em Mathematica Scandinavica}, 56(2):117--144, 1985.
+
+\bibitem[Gal74]{galligo1974propos}
+Andr{\'e} Galligo.
+\newblock {\`A} propos du th{\'e}or{\`e}me de-pr{\'e}paration de weierstrass,
+  fonctions de plusieurs variables complexes (s{\'e}m. fran{\c{c}}ois norguet,
+  octobre 1970--d{\'e}cembre 1973; {\`a} la m{\'e}moire d’andr{\'e}
+  martineau).
+\newblock 1974.
+
+\bibitem[GS]{M2}
+Daniel~R. Grayson and Michael~E. Stillman.
+\newblock Macaulay2, a software system for research in algebraic geometry.
+\newblock Available at \url{http://www.math.uiuc.edu/Macaulay2/}.
+
+\bibitem[MS05]{miller2005combinatorial}
+Ezra Miller and Bernd Sturmfels.
+\newblock {\em Combinatorial commutative algebra}, volume 227.
+\newblock Springer, 2005.
+
+\bibitem[Par10]{pardue2010generic}
+Keith Pardue.
+\newblock Generic sequences of polynomials.
+\newblock {\em Journal of Algebra}, 324(4):579--590, 2010.
+
+\bibitem[S{\etalchar{+}}22]{sage}
+W.\thinspace{}A. Stein et~al.
+\newblock {\em {S}age {M}athematics {S}oftware ({V}ersion 9.6)}.
+\newblock The Sage Development Team, 2022.
+\newblock {\tt http://www.sagemath.org}.
+
+\bibitem[Tru19]{TRUNG201979}
+Van~Duc Trung.
+\newblock The initial ideal of generic sequences and fröberg's conjecture.
+\newblock {\em Journal of Algebra}, 524:79--96, 2019.
+
+\end{thebibliography}

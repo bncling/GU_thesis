@@ -1,0 +1,684 @@
+\documentclass[11pt]{article}
+
+\usepackage{fullpage}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{centernot}
+\usepackage{pifont}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{blkarray}
+\usepackage{tikz-cd}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\hypersetup{
+	colorlinks=true,
+	urlcolor=black,
+	filecolor=black,
+	citecolor=black,
+	linkcolor=black
+}
+
+\usepackage{pgfplots}
+	\usetikzlibrary{
+		calc,
+		patterns,
+		positioning,
+		angles
+	}
+	\pgfplotsset{
+		compat = 1.12,
+		samples = 400,
+		clip = false
+	}
+	\tikzset{>=stealth}
+
+\usepackage{float}
+\usepackage{caption}
+	\captionsetup{
+		format=plain,
+		labelfont=bf,
+		font=small,
+		justification=centering
+	}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Even}{\mathbb{E}}
+\newcommand{\Odd}{\mathbb{O}}
+\newcommand{\st}{\text{ s.t. }}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\Ts}{\mathcal{T}_\text{std}}
+\newcommand{\Rs}{\mathbb{R}_\text{std}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\dg}{^{\circ}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\BLL}{\mathcal{B}_\text{LL}}
+\newcommand{\RLL}{\mathbb{R}_\text{LL}}
+\newcommand{\TLL}{\mathcal{T}_\text{LL}}
+\newcommand{\Rh}{\mathbb{R}_\text{har}}
+\newcommand{\Hbub}{\mathbb{H}_\text{bub}}
+\newcommand{\Zar}{\mathbb{Z}_\text{arith}}
+\newcommand{\lcm}{\text{lcm}}
+\newcommand{\Sub}{\mathscr{S}}
+\newcommand{\Cl}{\text{Cl}}
+\newcommand{\snd}{2\textsuperscript{nd} }
+\newcommand{\fst}{1\textsuperscript{st}}
+\newcommand{\Cov}{\mathscr{C}}
+\newcommand{\first}{\text{first}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\dividor}[1]{\vspace{2em}\hrule \begin{center} \Large{\textbf{#1}} \end{center}\hrule \vspace{2em}}
+\newcommand{\ass}{\text{Ass}}
+\newcommand{\ann}{\text{Ann}}
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+\newcommand{\Proj}{\mathbb{P}}
+\newcommand{\sat}{^{\text{sat}}}
+\newcommand{\dreg}{d_{\text{reg}}}
+
+\DeclareMathOperator{\Poly}{\mathscr{P}}
+\DeclareMathOperator{\Row}{\mathscr{R}}
+\DeclareMathOperator{\init}{in}
+\DeclareMathOperator{\Init}{\mathbf{in}}
+\DeclareMathOperator{\piv}{piv}
+\DeclareMathOperator{\sd}{sd}
+\DeclareMathOperator{\reg}{reg}
+\DeclareMathOperator{\mdeg}{max.GB.deg}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\HF}{HF}
+\DeclareMathOperator{\HP}{HP}
+\DeclareMathOperator{\HS}{HS}
+\DeclareMathOperator{\V}{\mathbf{V}}
+\DeclareMathOperator{\I}{\mathbf{I}}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\gin}{\mathbf{gin}}
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{conjecture}{Conjecture}
+
+\theoremstyle{definition}
+
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{remark}{Remark}
+\newtheorem*{notation}{Notation}
+
+
+\setcounter{MaxMatrixCols}{20}
+
+
+
+\begin{document}
+
+\begin{center}
+	\Huge{\textbf{Cumulative writing so far}}\\
+	\vspace{.5em}
+	\normalsize{Ben Clingenpeel}
+\end{center}
+
+\section{Gröbner bases and solving degree}
+
+\begin{notation}
+	We will use $R$ to mean $k[x_1, \dots, x_n]$ for a field $k$. When discussing initial ideals of ideals $I$ with a specified generating set $\F = \{f_1, \dots, f_s\}$, we will use $\Init(I)$ or $\Init(\F)$ to mean the initial ideal $\{\init(f): f \in I\}$ and $\init(\F)$ (without boldface) to mean the monomial ideal with generators $\{\init(f): f \in \F\} = \{\init(f_1), \dots, \init(f_s)\}$. We recall that a set $\mathcal{G} = \{g_1, \dots, g_t\}$ is a \textbf{Gröbner basis} for $I$ if $(\mathcal{G}) = I$ and $\init(\mathcal{G}) = \Init(\mathcal{G})$.
+\end{notation}
+
+Given a system of of equations $\mathcal{F} = \{f_1, \dots, f_s\}$ in variables $x_1, \dots, x_n$ and the ideal $I = (f_1, \dots, f_s) \subset R$ it defines, we are interested in finding the corresponding solution set, the affine variety $\mathcal{Z}(I)$. A general way to do this is to compute a Gröbner basis with respect to the lexicographic (LEX) order. This yields a system of equations with the same solution set, but crucially, it includes an equation in a single variable, allowing us to solve the system. This approach is outlined in section 2 of \cite{caminata2020solving}. In general, computing a LEX Gröbner basis is more computationally demanding, and so it is often easier to compute a Gröbner basis with respect to the degree reverse lexicographic (DRL) ordering, and then convert the resulting basis to a LEX basis, for example using the \color{red} [algorithm name and reference] \color{black}
+
+The complexity of computing a Gröbner basis is therefore of interest, and there are several algorithms to do this. There is Buchberger's algorithm, which uses Buchberger's criterion to gradually add elements to a basis until it is a Gröbner basis (see \cite{cox2013ideals}), but many faster algorithms take an approach based on Gaussian elimination, converting the problem of finding a Gröbner basis to finding a reduced row-echelon form (RREF) of a matrix. Among these linear algebra based approaches, there are a number that use Macaulay matrices or Macaulay-like matrices. We will analyze two such algorithms, and will use the following definition:
+
+
+\begin{definition}
+	Let $k$ be a field and let $\F = \{f_1, \dots, f_s\} \subset R$ be a system of equations. Fixing a term order $\tau$ on $R$ and using $(\F)$ to denote the ideal $(f_1, \dots, f_s)$ generated by this system, we define for a degree $d \geq 0$ the \textbf{Macaulay matrix of $\F$ in degree $d$}, denoted $M_{\leq d}$, to be the matrix whose columns are indexed by all monomials of degree at most $d$, arranged in decreasing order with respect to $\tau$ and whose rows are indexed by all monomial multiples of elements of $\F$ with degree at most $d$, such that every entry is the coefficient of its column index monomial in the row index polynomial.  
+\end{definition}
+
+
+\begin{example}
+	Let $f_1 = x$ and $f_2 = x^2 - y$. Then the degree $d = 2$ Macaulay matrix of $\F = \{f_1, f_2\}$ with respect to the degree reverse lexicographic (DRL) order is \[ M_{\leq 2} = \begin{blockarray}{ccccccc}
+    & x^2 & xy & y^2 & x & y & 1 \\
+    \begin{block}{c(cccccc)}
+        f_1 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 \\
+        xf_1 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 \\
+        yf_1 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 \\
+        f_2 & \mathbf{1} & 0 & 0 & 0 & \mathbf{-1} & 0 \\
+    \end{block}
+\end{blockarray} \quad . \]
+\end{example}
+
+
+\begin{notation}
+	Given any matrix $A$, we will denote its reduced row-echelon form by $A^r$. Noting that any matrix $A$ whose columns are indexed by monomials has its rows represent polynomials (using each entry as the coefficient of its corresponding column index monomial), we will use $\Poly(A)$ to mean the set of polynomials obtained from the rows of $A$, and $(\Poly(A))$ will denote the ideal they generate. We will use $\Row(A)$ to mean the set of polynomials obtained from all rows in the row space of $A$, that is, $\Row(A)$ is the free $k$-vector space with generating set $\Poly(A)$.  
+\end{notation}
+
+
+\begin{example}
+	Continuing the previous example, using $M_{\leq 2}$ above, we have that \[ M_{\leq 2}^r = \begin{pmatrix}
+		\mathbf{1} & 0 & 0 & 0 & 0 & 0 \\
+		0 & \mathbf{1} & 0 & 0 & 0 & 0 \\
+		0 & 0 & 0 & \mathbf{1} & 0 & 0 \\
+		0 & 0 & 0 & 0 & \mathbf{1} & 0
+	\end{pmatrix}. \] Then $\Poly(M_{\leq 2}^r) = \{x^2, xy, x, y\}$ and so $(\Poly(M_{\leq 2}^r)) = (x,y)$. dd
+\end{example}
+
+
+Since ideals are closed under $k$-linear combinations, we always have the inclusions $\Poly(M_{\leq d}) \subset \Row(M_{\leq d}) \subset (\Poly(M_{\leq d}))$. We also have that $\Row(M_{\leq d}^r) = \Row(M_{\leq d})$, so we see that \[ \Poly(M_{\leq d}) \subset \Row(M_{\leq d}^r) \subset (\Poly(M_{\leq d}^r)) \quad \text{and} \quad \Poly(M_{\leq d}^r) \subset \Row(M_{\leq d}) \subset (\Poly(M_{\leq d})), \] meaning $(\Poly(M_{\leq d}^r)) = (\Poly(M_{\leq d}))$. From this, we also see that taking $D = \max\{\deg(f): f \in \F\}$ gives $(\Poly(M_{\leq D}^r)) = (\F)$. We will soon show that there exists a $d \geq D$ for which $\Poly(M_{\leq d}^r)$ is a Gröbner basis for $(\F)$, and this existence gives us the first algorithm for computing a Gröbner basis by performing Gaussian elimination on Macaulay matrices: for large enough $d$, construct $M_{\leq d}$ and compute $M_{\leq d}^r$ to obtain the Gröbner basis $\Poly(M_{\leq d}^r)$. This algorithm is analyzed in \cite{caminata2020solving}. We will refer to it as \textbf{Algorithm I}. In practice, we do not know a priori what degree $d \geq 0$ we should use to run this algorithm, and so one approach is to simply try all degrees starting from $D = \max\{\deg(f): f \in \F\}$. Many algorithms for computing Gröbner bases work similarly in the sense that, while we know there exists some degree for which the algorithm returns a Gröbner basis, we do not know which. The smallest degree $d$ for which which the algorithm returns a Gröbner basis is called the \textbf{solving degree} of the system, which in the above example is denoted $\sd_{1,DRL}(\F)$ where the $1$ refers to Algorithm 1, and $DRL$ refers to the term order. We have not yet seen enough examples to justify the distinctions, but we will soon, and we will drop the subscripts when the algorithms and term orders are clear from the context. 
+
+Since the complexity of such algorithms can be thought of as a function of the size of the largest matrix involved, which in turn is determined by the solving degree, we would like some methods to estimate it, since it is difficult to compute on its own without simply running the Gröbner basis algorithm. These estimations are done using various different invariants, but before we discuss them, we will first finish showing that Algorithm I does indeed produce a Gröbner basis. We will then introduce a second algorithm whose correctness follows from the correctness of Algorithm I, and we will compare the two to show that the solving degree is algorithm-dependent, something not always made explicit in discussions of the solving degree. In Section 2, we will begin to explore some of the different invariants used to estimate the solving degree. 
+
+
+\begin{notation}
+	Let $\piv(M_{\leq d})$ denote the set of monomials indexing the pivot columns of the matrix $M_{\leq d}$, and define $\init(d) = \init(\Poly(M_{\leq d}^r))$ for ease of notation. Note that because each initial term of a polynomial in $\Poly(M_{\leq d}^r)$ is a monomial that indexes a pivot column of $M_{\leq d}^r$, we see that $\init(d)$ can also be defined to be the ideal $(\piv(M_{\leq d}))$ generated by the monomials indexing the pivot columns of $M_{\leq d}$ (since these are the same as the pivot columns of $M_{\leq d}^r$). 
+\end{notation}
+
+
+\begin{example}
+	Using the DRL ordering, let $\F = \{f_1, f_2\}$ with $f_1 = x^2 - 1$ and $f_2 = xy + x$, as in Example 8 of \cite{caminata2020solving}. Then we have that $\init(\F) = (x^2, xy)$, but because \[ y + 1 = -x^2y + y - x^2 + 1 + x^2y + x^2 = -(y + 1) f_1 + x f_2 \in (\F) \] implies that $y \in \Init(\F) \setminus \init(\F)$, we have that $\init(\F) \neq \Init(\F)$, and therefore $\F$ is not a Gröbner basis for the ideal it generates. Continuing this example, we can compute that \[ M_{\leq 2} = \begin{blockarray}{ccccccc}
+	    & x^2 & xy & y^2 & x & y & 1 \\
+	    \begin{block}{c(cccccc)}
+	        f_1 & \mathbf{1} & 0 & 0 & 0 & 0 & \mathbf{-1} \\
+	        f_2 & 0 & \mathbf{1} & 0 & \mathbf{1} & 0 & 0 \\
+	    \end{block}
+	\end{blockarray} \,\, = M_{\leq 2}^r, \] which is already reduced. Therefore $\piv(M_{\leq 2}) = \{x^2, xy\}$, and so $\init(2) = (x^2, xy)$ which we see does indeed equal the ideal generated by the initial terms of the polynomials in $\Poly(M_{\leq 2}^r) = \{x^2 - 1, xy + x\}$. Hence $\Poly(M_{\leq 2}^r)$ is the same as our starting generating set, and is not a Gröbner basis for $(\F)$ , but if instead we do the same computations with degree $d = 3$, we have the following: \[ M_{\leq 3} = \begin{blockarray}{ccccccccccc}
+	    & x^3 & x^2y & xy^2 & y^3 & x^2 & xy & y^2 & x & y & 1 \\
+	    \begin{block}{c(cccccccccc)}
+	        f_1 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & \mathbf{-1} \\
+	        f_2 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & \mathbf{1} & 0 & 0 \\
+	        xf_1 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{-1} & 0 & 0 \\
+	        yf_1 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{-1} & 0 \\
+	        xf_2 & 0 & \mathbf{1} & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 \\
+	        yf_2 & 0 & 0 & \mathbf{1} & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 \\
+	    \end{block}
+	\end{blockarray} \,\,, \] and bringing this into RREF, we have \[ M_{\leq 3}^r = \begin{pmatrix}
+		\mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{-1} & 0 & 0 \\
+		0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} \\
+		0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & \mathbf{-1} & 0 & 0 \\
+		0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & \mathbf{-1} \\
+		0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & \mathbf{1} & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & \mathbf{1} \\
+	\end{pmatrix}, \] so that $\init(3) = (x^3, x^2y, xy^2, x^2, xy, y) = (x^2, y) = \Init(\F)$. Therefore $\init(\Poly(M_{\leq 3}^r)) = \init(3) = \Init(
+	\F)$, and since the original generating set $
+	\F = \{f_1, f_2\}$ is included in $\Poly(M_{\leq 3})$ and therefore also in $(\Poly(M_{\leq 3}^r)) = (\F)$. Therefore \[ \Poly(M_{\leq 3}^r) = \{x^3 - x, x^2y + 1, xy^2 - x, x^2 - 1, xy + x, y + 1\} \] is a Gröbner basis for $(\F)$. 
+\end{example}
+
+
+\begin{lemma}
+	Given an ideal $(\F)$ and degrees $d_1$ and $d_2$ with $0 \leq d_1 \leq d_2$, we have that $\init(d_1) \subset \init(d_2)$. 
+\end{lemma}
+
+\begin{proof}
+	Since $\init(d_1)$ and $\init(d_2)$ are monomial ideals, it is a Corollary of Lemma 3 of section 2.4 of \cite{cox2013ideals} that $\init(d_1) \subset \init(d_2)$ if and only if all monomials of $\init(d_1)$ lie in $\init(d_2)$. Therefore let $m \in \init(d_1)$ be a monomial. Lemma 2 of the same section in \cite{cox2013ideals} says that $m \in \init(d_1) = (\piv(M_{\leq d_1}))$, means that there is some generating monomial $m^* \in \piv(M_{\leq d_1})$ that divides $m$. Therefore, if we can show that $m^* \in \init(d_2)$, we will have that $m \in \init(d_2)$. To this end, note that $m^* \in \piv(M_{\leq d_1})$ means that the column of $M_{\leq d_1}$ indexed by $m^*$ is a pivot column, so the corresponding column in $M_{\leq d_1}^r$ is all zeros except for a $1$ in a row that corresponds to a polynomial $p$ with $\init(p) = m^*$. This row corresponding to $p$ is in the row space $\Row(M_{\leq d_1}^r) = \Row(M_{\leq d_1})$, and so $p$ can be written as a $k$-linear combination of the polynomials in $\Poly(M_{\leq d_1})$. Note that the polynomials involved in this $k$-linear combination all have degree less than or equal to $d_1$, which is in turn less than or equal to $d_2$. Therefore these polynomials also correspond to rows of $M_{\leq d_2}$, and we have that $p$ is a $k$-linear combination of the elements of $\Poly(M_{\leq d_2})$. 
+
+	That $p$ is a $k$-linear combination of the elements of $\Poly(M_{\leq d_2})$ means that the row vector corresponding to $p$ with the same length as the length of the rows of $M_{\leq d_2}$ (that is, the row vector representation of $p$ whose entries are indexed by monomials of degree less than or equal to $d_2$) is in the row space $\Row(M_{\leq d_2}) = \Row(M_{\leq d_2}^r)$, and so this row is a $k$-linear combination of the nonzero rows of $M_{\leq d_2}^r$. That $m^* = \init(p)$ means that any rows of $M_{\leq d_2}^r$ with pivots further left than the column indexed by $m^*$ are not involved in this $k$-linear combination (if they were, there would need to be cancellation involved, and such cancellation occurring would contradict $M_{\leq d_2}^r)$ being in RREF). Then because the row corresponding to $p$ has $1$ as an entry in the $m^*$ column, this column cannot consist entirely of zeros---there exists at least one row involved in the $k$-linear combination associated to $p$ with a nonzero entry in the $m^*$ column. Because this row is part of this $k$-linear combination, it cannot have a pivot further left than the $m^*$ column, and so we conclude that the $m^*$ entry of this row is a pivot since all nonzero rows of RREF matrices must have a pivot. Therefore $m^* \in \piv(M_{\leq d_2})$ and since $m^*$ divides $m$, we see that $m \in (\piv(M_{\leq d_2})) = \init(d_2)$. Hence $\init(d_1) \subset \init(d_2)$, as claimed. 
+\end{proof}
+
+
+\begin{theorem}
+	For an ideal $(\F)$, there exists a $D \geq 0$ such that $\Poly(M_{\leq D}^r)$ is a Gröbner basis of $(\F)$. 
+\end{theorem}
+
+\begin{proof}
+	By the Lemma, we have that ascending chain of ideals $\init(0) \subset \init(1) \subset \init(2) \subset \dots$ contained in $R = k[x_1, \dots, x_n]$. Because $R$ is Noetherian, there exists a $D' \geq 0$ such that for all $d \geq D'$, $\init(d) = \init(D')$. As in the discussion following Example 2, for any $d \geq \max\{\deg(f): f \in \F\}$, $\Poly(M_{\leq d})$ contains $\F$ and so $(\Poly(M_{\leq d})) = (\Poly(M_{\leq d}^r)) = (\F)$. Therefore we may choose some $D \in \N$ large enough such that $D \geq D'$ and that $(\Poly(M_{\leq D}^r)) = (\F)$. We claim that $\Poly(M_{\leq D}^r)$ is a Gröbner basis for $(\F)$, which means proving that $\init(\Poly(M_{\leq D})) = \Init(\Poly(M_{\leq D}))$, that is, that $\init(D) = \Init(\F)$. Because the ideal $(\Poly(M_{\leq D}^r))$ is the ideal $(\F)$, all initial terms of polynomials in $\Poly(M_{\leq D}^r)$ are initial terms of polynomials in $(\F)$, and so $\init(D) = \init(\Poly(M_{\leq D}^r)) \subset \Init(\F)$. 
+
+	To show the other containment, recall from the proof of the Lemma that $\init(D)$ and $\init(I)$ being monomial ideals means it is sufficient to show that all monomials $m \in \Init(\F)$ are in $\init(D)$ in order to show that $\init(I) \subset \init(D)$. Therefore let $m \in \Init(\F)$ be an arbitrary monomial. Then there exists some $p \in (\F)$ with initial term $\init(p) = m$. Then $p \in (\F) = (\Poly(M_{\leq D}^r)) = (\Poly(M_{\leq D}))$ means $p$ can be written as $p = \sum_{q \in \Poly(M_{\leq D})} h_q q$ where $h_q \in R$. Then because each $h_q$ is a $k$-linear combination of monomials, we have that $h_q = \sum_{\alpha \in N_q} a_\alpha x^\alpha$ for some finite index set $N_q$. Therefore \[ p = \sum_{q \in \Poly(M_{\leq D})} \sum_{\alpha \in N_q} a_\alpha x^\alpha q. \] Since $\Poly(M_{\leq D})$ is finite and each index set $N_q$ is finite, we may set \[ d^* = \max \left\{\deg(x^\alpha q) \, \bigg| \, \alpha \in \bigcup_{q \in \Poly(M_{\leq D})} N_q, \, q \in \Poly(M_{\leq D}) \right\} \geq D. \] Then because each $q$ is a monomial times one of the polynomials $f \in \F$, so is each each $x^\alpha q$, and therefore $p$ as written above is a $k$-linear combination of polynomials corresponding to rows in the Macaulay matrix $M_{\leq d^*}$. Therefore if $r_p$ is the row vector corresponding to $p$ whose entries are indexed by monomials of degree less than or equal to $d^*$, we have that $r_p$ is an element of the row space $\Row(M_{\leq d^*}) = \Row(M_{\leq d^*}^r)$. Therefore we have the same situation as in Lemma 1: we have a polynomial $p$ with leading term $m$ satisfying $\deg(m) \leq d^*$ such that $r_p$ is a $k$-linear combination of the nonzero rows of $M_{\leq d^*}^r$. As in the proof of Lemma 1, then, we have that the column indexed by $m$ is a pivot column of $M_{\leq d^*}$, which means that $m \in \piv(M_{\leq d^*}) \subset (\piv(M_{\leq d^*})) = \init(d^*)$. Because $d^* \geq D$, we also have that $m \in \init(d^*) = \init(D)$ since the ascending chain $\init(0) \subset \init(1) \subset \init(2) \subset \dots$ stabilizes at or before $D$. Therefore $\Init(\F) \subset \init(D)$, and since we have shown both containments, the set $\Poly(M_{\leq D}^r)$ is a Gröbner basis for $I$. 
+\end{proof}
+
+
+Now that we have shown Algorithm I does indeed produce a Gröbner basis, we introduce a variant which we will call \textbf{Algorithm II}. This algorithm is considered in \cite{caminata2023solving} and differs from Algorithm I only in that after row reducing a matrix $M_{\leq d}$, Algorithm II adds new rows for each polynomial $uf$ where $f$ is a polynomial of degree strictly less than $d$ corresponding to a row in $M_{\leq d}$ and $u$ is a monomial such that $\text{deg}(uf) \leq d$ and $uf \notin \Row(M_{\leq d})$. This algorithm then repeats the row reduction of the matrix $M_{\leq d}$ with its new rows until no new rows are added. 
+
+We have shown that Algorithm I does produce a Gröbner basis. If we suppose for a system $\F$ and term order $\tau$ that Algorithm I produces a Gröbner basis in degree $d$ and run Algorithm II also in degree $d$, then the matrix the algorithm starts with already has a Gröbner basis in its row space, meaning now new rows are added, and Algorithm II terminates at least by degree $d$, and so we have that $\sd_{2,\tau}(\F) \leq \sd_{1,\tau}(\F)$. The question that naturally arises is: do these two algorithms yield \emph{the same} solving degree? That is, given a system $\mathcal{F}$, is it true that the largest degree involved in computing a Gröbner basis is the same from algorithm to algorithm? To show the answer is \emph{no}, we give the following example.
+
+
+\begin{example}
+	Let \[ \mathcal{F} = \{f_1,f_2\} \subset k[x,y,z] \quad \text{for} \quad f_1 = y^2, \, f_2 = yz + x, \] and consider the Macaulay matrix $M_{\leq 3}$: \\ \[ \begin{blockarray}{ccccccccccccccccccccc}
+		& x^3 & x^2y & xy^2 & y^3 & x^2z & xyz & y^2z & xz^2 & yz^2 & z^3 & x^2 & xy & y^2 & xz & yz & z^2 & x & y & z & 1 \\
+		\begin{block}{c(cccccccccccccccccccc)}
+			f_1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			f_2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & \mathbf{1} & 0 & 0 & 0 \\
+			xf_1 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			yf_1 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			zf_1 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			xf_2 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			yf_2 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			zf_2 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 \\
+		\end{block}
+	\end{blockarray} \] which in RREF is \[ \begin{blockarray}{cccccccccccccccccccc}
+		x^3 & x^2y & xy^2 & y^3 & x^2z & xyz & y^2z & xz^2 & yz^2 & z^3 & x^2 & xy & y^2 & xz & yz & z^2 & x & y & z & 1\,\, \\
+		\begin{block}{(cccccccccccccccccccc)}
+			0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & \mathbf{1} & 0 & 0 & 0 \\
+		\end{block}
+	\end{blockarray} \] We note now that $x^2 = z^2f_1 + (x - yz)f_2 \in (\F)$ and so $x^2 \in \Init(\F)$ but that the rows of the above matrix correspond to polynomials \[ \{xy^2, y^3, xyz + x^2, y^2z, yz^2 + xz, xy, y^2, yz + x\}, \] whose leading terms generate the ideal $(xy^2, y^3, xyz, y^2z, yz^2, xy, y^2, yz) = (xy, y^2, yz)$. Since $x^2 \notin (xy, y^2, yz)$, we have that $(xy, y^2, yz) \neq \Init(\F)$, meaning the above collection of polynomials we obtained from the RREF form of $M_{\leq 3}$ is not a Gröbner basis. Therefore $\sd_1(\F) > 3$. 
+
+	Now using Algorithm II, the first stage of degree 3 computations involves the same matrices as above, though this time instead of checking whether the collection $\{xy^2, y^3, xyz + x^2, y^2z, yz^2 + xz, xy, y^2, yz + x\}$ obtained from the reduced row-echelon form is a Gröbner basis, we check whether there are any monomial multiples of these polynomials that still have degree less than 3 that correspond to row vectors not originally in the row space of the above matrices. For the polynomial $xy$, we consider the polynomials $x^2y$, $xy^2$, and $xyz$. Since $x^2y$ and $xyz$ are not in the row space of the above matrices, we add new rows for them. For $y^2$, we consider $xy^2$, $y^3$, and $y^2z$, but these are all already in the row space, so we do not add new rows for them. Similarly, we do not add rows for $xyz + x^2$, $y^2z + xy$, or $yz^2 + xz$. After adding these rows and performing Gaussian elimination, we get the resulting RREF matrix: \[ \begin{blockarray}{cccccccccccccccccccc}
+		x^3 & x^2y & xy^2 & y^3 & x^2z & xyz & y^2z & xz^2 & yz^2 & z^3 & x^2 & xy & y^2 & xz & yz & z^2 & x & y & z & 1\,\, \\
+		\begin{block}{(cccccccccccccccccccc)}
+			0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & \mathbf{1} & 0 & 0 & 0 \\
+		\end{block}
+	\end{blockarray} \] whose rows correspond to the set $\{x^2y, xy^2, y^3, xyz, y^2z, yz^2 + xz, x^2, xy, y^2, yz + x\}$. We now do the same procedure, looking at monomial multiples of these polynomials to see if there are any that are not already contained in the row space of the above matrix. Looking to the degree 2 polynomials here for candidates, we check $x^3$, $x^2y$, and $x^2z$, and see that $x^3$ and $x^2z$ are not already in the row space. The remaining candidates $xy^2$, $y^3$, $y^2z$, $xyz + x^2$, $y^2z + xy$, and $yz^2 + xz$ are all already in the row space, so we only add rows corresponding to $x^3$ and $x^2z$. After adding these rows and performing Gaussian elimination again, we see that the new RREF form is \[ \begin{blockarray}{cccccccccccccccccccc}
+		x^3 & x^2y & xy^2 & y^3 & x^2z & xyz & y^2z & xz^2 & yz^2 & z^3 & x^2 & xy & y^2 & xz & yz & z^2 & x & y & z & 1\,\, \\
+		\begin{block}{(cccccccccccccccccccc)}
+			\mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+			0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & \mathbf{1} & 0 & 0 & 0 \\
+		\end{block}
+	\end{blockarray} \] The rows of the above correspond to the polynomials \[ \{x^3, x^2y, xy^2, y^3, x^2z, xyz, y^2z, yz^2 + xz, x^2, xy, y^2, yz + x\}, \] and we note that all monomial multiples of the polynomials in this set with total degree not more than 3 are now contained in the row space of the above matrix. Since this condition is met, we end the calculations for degree 3, and return this set of polynomials. This set is, in fact, a Gröbner basis (in particular, note that it now contains the $x^2$ polynomial that posed a problem for the other algorithm in degree 3), and so we end calculations entirely. Thus $\sd_2(\F) = 3 < \sd_1(\F)$. 
+\end{example}
+
+
+Now that we have two different algorithms for computing Gröbner bases with two different notions of the solving degree, we will now explore some of the invariants used to estimate them in the next section. 
+
+
+
+\section{Estimating the solving degree(s)}
+
+
+Some bounds on the solving degree require certain assumptions about either the system $\F$ or the term order $\tau$. We introduce the following notion of a degree-compatible term order below, which is required for a lower bound on the solving degree:
+
+
+\begin{definition}
+	A term order $\tau$ is called \textbf{degree-compatible} if $\deg(x^\alpha) < \deg(x^\beta)$ implies $x^\alpha <_\tau x^\beta$. Sometimes such term orders are called \textbf{graded} term orders. 
+\end{definition}
+
+
+For example, the $DRL$ term order is degree-compatible. If we restrict our attention to $DRL$ or to any other degree-compatible term order $\tau$, we have the inequality \[\mdeg_\tau(\mathcal{F}) \leq \sd_{2,\tau}(\mathcal{F})\] where $\mdeg_\tau(\F)$ is the largest degree of any polynomial appearing in a \emph{reduced} Gröbner basis for $(\F)$ with respect to $\tau$. This inequality follows because we have a Gröbner basis computed by a Macaulay matrix based algorithm in degree $d$, which means the elements of the output basis have degree at most $d$. In the division required to obtain the reduced Gröbner basis from the output basis, the degree-compatibility of $\tau$ ensures that no remainders have degree greater than their corresponding dividends. Hence all terms of polynomials in the reduced Gröbner basis have degree at most $d = \sd_{2,\tau}(\mathcal{F})$. And since $\sd_{2,\tau}(\F) \leq \sd_{1,\tau}(\F)$, we also have that \[ \mdeg_\tau(\F) \leq \sd_{1,\tau}(\F) \] as well. Going further, it is shown in \cite{caminata2023solving} that \[ \sd_{2,\tau}(\F) = \max\{d_\F, \mdeg_\tau(\F)\} \] where $d_\F$ is the last fall degree of the system. 
+
+Caminata and Gorla show in \cite{caminata2020solving} that certain systems (satisfying a certain genericity requirement) have their solving degrees bounded above by an invariant called the Castelnuovo-Mumford regularity. In what follows, we explain the background necessary for this bound, state the bound, and then give a weaker version that requires no genericity assumption. 
+
+
+\begin{definition}
+	An ideal $(\F) \subset R$ for $\F = \{f_1, \dots, f_s\}$ is said to be \textbf{homogeneous} if all of the $f_i$ are homogeneous polynomials. A nonhomogeneous polynomial $f$ of degree $d$ can be made into a homogeneous polynomial in the ring $S = R[h] = k[x_1, \dots, x_n, h]$ by considering the \textbf{homogenization} of $f$, obtained by writing $f = \sum_{j=0}^d f_j$ as the sum of its homogeneous components and setting $f^h = \sum_{j = 0}^d f_j h^{d - j}$ so that all terms of $f^h$ have degree $d$. 
+\end{definition}
+
+
+\begin{example}
+	The polynomial $f \in k[x, y, z]$ given by $f = xy^3 + y^2 + yz - 1$ is not homogeneous. We can decompose it into homogeneous components as in the above definition by taking $f_0 = -1$, $f_1 = 0$, $f_2 = y^2 + yz$, $f_3 = 0$, and $f_4 = xy^2$. Then $f^h = xy^3 + y^2h^2 + yzh^2 - h^4 \in k[x,y,z,h]$. 
+\end{example}
+
+
+\begin{definition}
+	A map $\varphi: M \to N$ of graded $R$-modules is \textbf{homogeneous of degree 0} if for all homogeneous elements $f \in M$, $\deg(\varphi(f)) = \deg(f)$, that is, $\varphi$ preserves the degrees of homogeneous elements. 
+\end{definition}
+
+
+Given a polynomial ring $R = k[x_1, \dots, x_n]$, many of the maps we will consider will not be homogeneous of degree zero, so we may ``re-grade" elements of $R$ by considering variables to have degrees other than the standard $\deg(x_i) = 1$. We denote the ring $R$ with degrees shifted by $d$ by $R(-d)$ and define the $j$th homogeneous component of $R(-d)$ to be $R(-d)_j = R_{-d + j}$. By degrees ``shifted by $d$'' we mean that the variables have degree $1 + d$, so for example if we would like the variables to have degree $3$, we will consider the ring $R(-2)$, where $R(-2)_3 = R_1$ contains the variables. 
+
+
+\begin{definition}
+	Let $I \subset R$ be a homogeneous ideal. The \textbf{minimal free resolution} of $I$ is the complex  \[ \begin{tikzcd}
+		0 \arrow[r] & F_m \arrow[r, "\varphi_m"] & \cdots \arrow[r, "\varphi_2"] & F_1 \arrow[r, "\varphi_1"] & F_0 \arrow[r, "\varphi_0"] & I \arrow[r] & 0
+	\end{tikzcd} \] of free $R$-modules obtained by choosing a minimal set of generators for $I$, constructing $\varphi_0$ to map a free module $F_0$ onto $I$ sending the generators of $F_0$ to the generators of $I$, constructing $\varphi_1$ to map a free module $F_1$ onto $\ker \varphi_0 \subset F_0$ by sending the generators of $F_1$ to a minimal set of generators for $\ker \varphi_0$, and continuing this procedure until it terminates. Each time we construct a map $\varphi_i$, we take the free modules to be $F_i = \bigoplus_{j \in \Z} R(-j)^{\beta_{i,j}}$ with the degree shifts chosen so that each $\varphi$ is homogeneous of degree 0. The numbers $\beta_{i,j}$ are called the \textbf{graded Betti numbers} of $I$, and the \textbf{Castelnuovo-Mumford regularity} of $I$ is defined to be $\reg I = \max\{j - i : \beta_{i,j} \neq 0\}$. 
+\end{definition}
+
+
+\begin{example}
+	\color{red} Check this! \color{black} Consider the ideal $I = (xy^2, x^2, yz) \subset k[x,y,z]$. A minimal free resolution then is \[ \begin{tikzcd}
+		0 \arrow[r] & R(-5) \arrow[r, "\varphi_2"] & R(-4)^3 \arrow[r, "\varphi_1"] & R(-3) \oplus R(-2)^2 \arrow[r, "\varphi_0"] & I \arrow[r] & 0
+	\end{tikzcd} \] with the maps \[ \varphi_0 = \begin{pmatrix}
+		xy^2 & x^2 & yz
+	\end{pmatrix}, \quad \varphi_1 = \begin{pmatrix}
+		x & z & 0 \\
+		-y^2 & 0 & yz \\
+		0 & -xy & -x^2
+	\end{pmatrix}, \quad \varphi_2 = \begin{pmatrix}
+		z \\
+		-x \\
+		y
+	\end{pmatrix}. \] We know that this resolution is minimal because the matrices above do not contain any invertible elements---everything there is in the irrelevant maximal ideal $\mathfrak{m} = (x,y,z)$. This condition, that for each map $\varphi_i$, the image $\im \varphi_i$ is contained in $\mathfrak{m} F_{i-1}$, is taken as a definition of minimality in \cite{eisenbud2005geometry}. Following that text's conventions, the graded Betti numbers are then shown in the table below: \begin{figure}[H]
+		\centering
+		\begin{tabular}{c|ccc}
+			& 0 & 1 & 2 \\
+			\hline
+			2 & 2 & --- & --- \\
+			3 & 1 & 3 & 1
+		\end{tabular}
+	\end{figure} \noindent where the entry in the $i$th column and $j$th row is the graded Betti number $\beta_{i,i + j}$. Then the regularity, the largest $j - i$ for which $\beta_{i,j} \neq 0$, is simply the index of the last nonzero row, and so we see that in this case $\reg I = 4$. 
+\end{example} 
+
+
+\begin{definition}
+	Given a nonhomogeneous ideal $(\F) \subset R$ with $\F = \{f_1, \dots, f_s\}$, we can obtain a homogeneous ideal in $S$ either by considering the ideal $(\F^h)$, obtained by considering the generating set $\F^h = \{f_1^h, \dots, f_s^h\}$, or by considering the \textbf{homogenization} of $(\F)$, denoted $(\F)^h$, which is the ideal $(\F)^h = (f^h \mid f \in (\F))$ generated by the homogenizations of \emph{all} elements in $(\F)$, not just the elements in $\F$. 
+\end{definition}
+
+
+In \cite{caminata2020solving}, it is shown that the solving degree for a system with respect to the $DRL$ term order can often be bounded above by the regularity of the ideal $(\F^h)$, but this requires the ideal $(\F^h)$ to be in \emph{generic coordinates}, a concept that requires the use of the notions of the \emph{saturation} of an ideal with respect to another and the \emph{dimension} of ideals and varieties. We first define saturations, and the related notion of a quotient ideal: 
+
+
+\begin{definition}
+	Let $\mathcal{R}$ be a ring. Given ideals $I, J \subset \mathcal{R}$, we define the \textbf{quotient} or \textbf{colon ideal} \[ I:J = \{ r \in \mathcal{R} \mid \text{for all } s \in J, rs \in I \} \] and the \textbf{saturation} \[ I:J^\infty = \{r \in \mathcal{R} \mid \text{for all } s \in J, \text{ there exists an } n \geq 0 \text{ such that } rs^n \in I\}. \] When $J = (x)$ for some $x \in \mathcal{R}$, we write $I:x$ instead of $I:(x)$. Then \[ I:x = \{r \in \mathcal{R} \mid \text{for all } x^k \in (x), rx^k \in I\} = \{r \in \mathcal{R} \mid rx \in I\}. \]
+\end{definition}
+
+
+\begin{example}
+	In $\mathcal{R} = \Z$, let $I = (4)$ and $J = (6)$. Then \begin{align*}
+		I:J &= \{m \in \Z \mid \forall a \in (6), ma \in (4)\} \\
+		&= \{m \in \Z \mid \forall k \in \Z, 4 | m \cdot (6k) \} = (2),
+	\end{align*} and \begin{align*}
+		I:J^\infty &= \{m \in \Z \mid \forall a \in (6), \exists n \geq 0 \text{ s.t. } ma^n \in (4)\} \\
+		&= \{m \in \Z \mid \forall k \in \Z, \exists n \geq 0 \text{ s.t. } 4 | m \cdot (6k)^n \} = \Z
+	\end{align*} since choosing $n = 2$ suffices for any $m$. 
+\end{example}
+
+
+For an example with $\mathcal{R} = k[x,y,z]$, we will use the following Proposition, which is Proposition 4.4.13 in \cite{cox2013ideals}.
+
+
+\begin{proposition}
+	Let $I$ and $J_1, \dots, J_n$ be ideals in $R$. Then \[ I : \left(\sum_{i=1}^n J_i\right) = \bigcap_{i=1}^n I:J_i \quad \text{and} \quad I : \left(\sum_{i = 1}^n J_i\right)^\infty = \bigcap_{i = 1}^n I:J_i^\infty. \]
+\end{proposition}
+
+
+\begin{example}
+	In $R = k[x,y,z]$, let $I = (xy^4z, x^2z^3)$ and $J = (xz,y)$. Then \begin{align*}
+		I : J &= (I : xz) \cap (I : y) \\
+		&= (y^4, xz^2) \cap (xy^3z, x^2 z^3) \\
+		&= (xy^4z, x^2y^4z^3, xy^3z^2, x^2z^3) \\
+		&= (xy^4z, xy^3z^2, x^2z^3).
+	\end{align*} Where we have used the above proposition. We compute the saturation similarly: \begin{align*}
+		I : J^\infty &= (I : (xz)^\infty) \cap (I : y^\infty) \\
+		&= k[x,y,z] \cap (xz) = (xz)
+	\end{align*} where $I: (xz)^\infty = k[x,y,z]$ because we can choose $n = 3$ in the defition of a saturation to show that $1 \in I : (xz)^\infty$. 
+\end{example}
+
+
+In discussing ideas of dimension, we will need use Hilbert functions: 
+
+
+\begin{definition}
+	Let $I$ be an ideal in $R$, and consider the sets $R_{\leq s}$ of polynomials in $R$ with degree at most $s$ and $I_{\leq s} = I \cap R_{\leq s}$. Viewing these sets as vector spaces over $k$, we note that $I_{\leq s}$ is a subspace of $R_{\leq s}$ and define the \textbf{affine Hilbert function} of $I$ to be the dimension of their quotient: \[ ^a\HF_{R/I}(s) = \dim R_{\leq s} / I_{\leq s}. \] 
+\end{definition}
+
+In the projective case, we use the vector space $S_s$ of homogeneous polynomials of degree $s$, together with the zero polynomial, and we define $I_s = I \cap S_s$ for a homogeneous ideal $I \subset S$. 
+
+\begin{definition}
+	Let $I$ be a homogeneous ideal in $S$. The \textbf{projective Hilbert function} of $I$ is \[ \HF_{S/I}(s) = \dim S_s/I_s.  \]
+\end{definition}
+
+
+We know state a few propositions from \cite{cox2013ideals} on the behavior of these Hilbert functions. These propositions will allow us to define the dimension of a variety. 
+
+
+\begin{proposition}
+	Let $I \subset R$ be a proper monomial ideal. Then $^a\HF_{R/I}(s)$ is the number of monomials of degree at most $s$ not contained in $I$. If $I \subset S$ is homogeneous, then $\HF_{S/I}(s)$ is the number of monomials of degree exactly $s$ not contained in $I$. 
+\end{proposition}
+
+
+\begin{theorem}
+	For $s$ sufficiently large, the Hilbert functions agree with polynomial functions of $s$. We call these polynomials the Hilbert polynomials, and we denote them $^a\HP(s)$ for the affine case and $\HP(s)$ for the projective case.
+\end{theorem}
+
+
+\begin{remark}
+	The Hilbert polynomial of an ideal can be computed from its Hilbert series, the formal power series \[ ^a\HS_{R/I}(t) := \sum_{s = 0}^\infty {}^a\HF_{R/I} (s) t^s, \] which can in turn be computed via an algorithm involving Gröbner bases given in \cite{kemper2011course}. 
+\end{remark}
+
+
+\begin{proposition}
+	For an ideal $I \subset R$, we have that \[ ^a\HF_{R/I}(s) = \, ^a\HF_{R/\Init(I)}(s) \] where $\Init(I)$ is taken with respect to any degree-compatible term order. Similarly, for a homogeneous $I \subset S$, we have that \[ \HF_{S/I}(s) = \HF_{S/\Init(I)}(s). \] This means that $I$ and $\Init(I)$ also share Hilbert series and Hilbert polynomials. 
+\end{proposition}
+
+
+\begin{definition}
+	Given an affine variety $V$, we define $\dim V$, the \textbf{dimension} of $V$, to be the degree of the affine Hilbert polynomial of $\I(V)$, where $\I(V)$ is the ideal of polynomials that vanish on $V$. If $V$ is a projective variety, we instead use the degree of the projective Hilbert polynomial of $\I(V)$. 
+\end{definition}
+
+
+\begin{example}
+	Consider the affine variety $V$ consisting of the lines $y = x$ and $x = 0$ in $\R^2$. Then $\I(V) = (x(x - y)) \subset R = \R[x,y]$. Using the degree reverse lexicographic (DRL) term order, we see that $\{x^2 - xy\}$ is already a Gröbner basis, and we have that $\Init(\I(V)) = (x^2)$. Then the only monomials not in $\Init(\I(V))$ are those of the form $y^k$ or $xy^k$ for $k = 0, 1, \dots$, meaning there are $2s + 1$ monomials of degree at most $s$ not contained in $\Init(\I(V))$. Therefore \[ ^a\HF_{R/\I(V)}(s) = \,^a\HF_{R/\Init(\I(V))}(s) = 2s + 1, \] and because this is already a polynomial in $s$, we have that this is also the affine Hilbert polynomial. It has degree 1, so $\dim V = 1$ as an affine variety. 
+
+	However, because the lines making up $V$ are lines through the origin, we can also consider $V$ as the projective variety $\{(1:1), (0:1)\} \subset \Proj^1(\R)$ and get the same ideal $\I(V)$ back, but this time we will think of it as being $\I(V) = (x(x - h)) \subset S = \R[x,h]$. As before, we have that $\Init(\I(V)) = (x^2)$ with respect to the DRL order, but now to compute the projective Hilbert function, we are interested in those monomials of degree exactly $s$ not contained in $\Init(\I(V))$. For $s = 0$, there is the monomial $1$, and for $s > 0$, there are the monomials $y^s$ and $xy^{s - 1}$, meaning \[ \HF_{S/\I(V)}(s) = \HF_{S/\Init(\I(V))} = \begin{cases}
+		1 & s = 0 \\
+		2 & s > 0.
+	\end{cases} \] Therefore $\HP_{S/\I(V)}(s) = 2$ is a degree zero polynomial, and so $\dim V = 0$ as a projective variety. In this case, viewing a set as a projective variety rather than an affine variety decreased its dimension by 1, and the following theorem (\cite{cox2013ideals} Theorem 12 of section 9.3) says that this is always the case. 
+\end{example}
+
+
+\begin{theorem}
+	Let $I \subset S$ be homogeneous. Then for $s \geq 1$, we have that \[ \HF_{S/I}(s) = \,^a\HF_{S/I}(s) - \, ^a\HF_{S/I}(s - 1). \] Therefore for a projective variety $V \subset \Proj^n(k)$, the affine variety $C_V \subset k^{n+1}$ (called its affine cone) has $\dim C_V = \dim V + 1$. 
+\end{theorem}
+
+In the second part of Example 9, we had the projective variety $V = \{(1:1), (0:1)\} \subset \Proj^1(\R)$, and saw that the associated ideal was $\I(V) = (x^2 - xh)$, the same ideal we got by considering $V$ as an affine variety (which is denoted $C_V$ in the language of Theorem 1). We said that $^a\HF_{S/\I(V)}(s)$ was $2s + 1$, and indeed, we see that for $s \geq 1$, we have that \[ ^a\HF_{S/\I(V)}(s) - \, ^a\HF_{S/\I(V)}(s - 1) = 2s + 1 - (2(s - 1) + 1) = 2 = \HF_{S/\I(V)}(s). \] We also see in this example that this finite projective variety had dimension 0. Proposition 6 of section 9.4 in \cite{cox2013ideals} asserts that nonempty finite varieties always have dimension 0, but the proof is only given in the affine case. We give details for the projective version below, but first state another proposition from \cite{cox2013ideals}.
+
+
+\begin{proposition}
+	Let $V$ and $W$ be nonempty varieties, either both projective or both affine, then \[ \dim (V \cup W) = \max\{\dim V, \dim W\}, \] where the notion of dimension is affine if $V,W \subset k^n$ or projective if $V,W \subset \Proj^n(k)$. 
+\end{proposition}
+
+
+\begin{proposition}
+	If $V$ is a nonempty projective variety with $|V| < \infty$, then $\dim V = 0$. 
+\end{proposition}
+
+\begin{proof}
+	If $V$ consists of finitely many points, then \[ V = \{p_1, \dots, p_r\} = V_1 \cup \dots \cup V_r \] where $V_j$ is the projective variety $\{p_j\}$. By the above Proposition 3, it suffices to show that $\dim V_j = 0$ for all $1 \leq j \leq r$. Therefore let $W = \{p\}$ be a projective variety consisting of exactly one point, and suppose $p$ has homogeneous coordinates $p = (a_1: \dots: a_n: a_{n+1})$. Then at least one $a_i$ is nonzero, and without loss of generality, we will assume that $a_{n + 1} \neq 0$. (If this is not the case, there is some $1 \leq j \leq n$ for which $a_j$ is nonzero, and we will later consider the DRL term ordering with variables ordered so that $x_j < x_k$ for all $k \neq j$---assuming $a_{n + 1} \neq 0$ allows us to use the normal DRL ordering). Then also \[ p = \left( \frac{a_1}{a_{n+1}} : \dots : \frac{a_n}{a_{n+1}} : 1 \right) \] and we have that $f \in k[x_1, \dots, x_n, h]$ therefore vanishes on all homogeneous coordinates of $p$ if and only if $x_i - (a_i/a_{n+1})h = 0$ for all $1 \leq i \leq n$. Therefore \[ \I(W) = \left( x_1 - \frac{a_1}{a_{n+1}} h , \dots, x_n - \frac{a_n}{a_{n+1}}h \right). \] The polynomials above already form a Gröbner basis for $\I(W)$, and so we have that the initial ideal is $\Init(\I(W)) = (x_1, \dots, x_n)$. To compute the projective Hilbert function of $\I(W)$, we therefore need to determine the number of monomials of degree exactly $s$ not contained in $(x_1, \dots, x_n)$. But the only such monomial is $h^s$, meaning $\HF_{S/\I(W)}(s) = 1$. Since this is already a polynomial, we see that $\I(W)$ has a projective Hilbert polynomial of degree 0, meaning $\dim W = 0$. Therefore any variety that is the union of finitely many points has dimension zero as well. 
+\end{proof}
+
+
+We now consider another way of defining the dimension of a ring, called the Krull dimension:
+
+\begin{definition}
+	Let $\mathcal{R}$ be a ring and let $\Spec \mathcal{R}$ be its collection of prime ideals. We say a \textbf{chain} $P_0 \subsetneq P_1 \subsetneq \dots \subsetneq P_n$ in $\Spec \mathcal{R}$ has \textbf{length} $n$ (the number of strict inclusions), and we define the \textbf{Krull dimension} of $\mathcal{R}$ to be \[ \dim \mathcal{R} = \sup \{\,\text{length}(C) \mid C \text{ is a chain in } \Spec \mathcal{R}\,\}. \]
+\end{definition}
+
+Note that if we have an ideal $I \subset R$, we now have two ways to compute the dimension of the quotient $R/I$. We can look at the degree of the affine Hilbert polynomial, or we can consider the Krull dimension. Recall that a chain of prime ideals in $R/I$ corresponds to a chain of prime ideals in $R$ all containing the ideal $I$. 
+
+
+\begin{example}
+	We continue Example 9, in which $\I(V) = (x^2 - xy)$. This is not prime, so any chain of prime ideals containing $\I(V)$ cannot begin with $\I(V)$ itself. Suppose $P$ is a prime containing $\I(V)$. Then $x^2 - xy \in \I(V) \subset P$, which means either $x \in P$ or $x - y \in P$. Then $P$ must contain either the prime ideal $(x)$ or the prime ideal $(x - y)$, so any chain of primes containing $\I(V)$ and maximal in length must start either with $(x)$ or with $(x - y)$. But the only prime ideal containing either $(x)$ or $(x - y)$ is the maximal ideal $(x,y)$, and so the only possible chains are \[ (x) \subset (x,y) \quad \text{or} \quad (x - y) \subset (x,y), \] meaning the Krull dimension of $R/I$ is 1. This is the same as the degree of the affine Hilbert polynomial of $I$, and this is not a coincidence, as the next Theorem from \cite{kemper2011course} asserts. 
+\end{example}
+
+
+\begin{theorem}
+	Let $I \subset R$ be an ideal. Then the Krull dimension of $R/I$ is the degree of the affine Hilbert polynomial. 
+\end{theorem}
+
+
+With this discussion of dimension out of the way, we can now say what it means for a homogeneous ideal $I$ (in either of the rings $R$ or $S$ over an infinite field $k$) to be in \emph{generic coordinates}. For a homogeneous ideal $I \subset R$ or $I \subset S$, we define $I\sat$ to be the saturation $I:\mathfrak{m}^\infty$ with respect to the irrelevant maximal ideal $\mathfrak{m} = (x_1, \dots, x_n) \subset R$, or $\mathfrak{m} = (x_1, \dots, x_n, h) \subset S$ depending on which ring $I$ is contained in. Although we will be considering homogeneous ideals here, when we refer to the dimension $\dim(R/I)$, we mean the Krull dimension, which agrees with the degree of the \emph{affine} Hilbert polynomial, rather than the projective Hilbert polynomial. We have the following definitions for genericity and generic coordinates from \cite{bayer1987criterion}. 
+
+
+\begin{definition}\label{def:genA}
+	Let $I \subset R$ be a homogeneous ideal. We say that an element $g \in R$ is \textbf{generic} for $I$ if either \begin{enumerate}[noitemsep, label = (\arabic*)]
+		\item $\dim(R/I) = 0$, or
+		\item $g$ is not a zero-divisor on $R/I\sat$. 
+	\end{enumerate} Further, for $j > 0$ we define the set $U_j(I) \subset R_1^j$ by \[ U_j(I) = \{(g_1, \dots, g_j) \in R_1^j \mid g_i \text{ is generic for } I + (g_1, \dots, g_{i - 1}), 1 \leq i \leq j\}, \] and we say that $I$ is in \textbf{generic coordinates} if $(x_n, \dots, x_{n - r + 1}) \in U_r$ for $r = \dim(R/I)$. 
+\end{definition}
+
+
+It is shown in \cite{caminata2020solving} that for the $DRL$ order and a system $\F$ for which the ideal $(\F^h) \subset S$ is in generic coordinates, we have that $\sd_{1,DRL}(\F) \leq \reg(\F^h)$. The proof of this result uses the following definition, which differs slightly from the one given above:
+
+
+\begin{definition}\label{def:genB}
+	Let $I \subset S = k[x_1, \dots, x_n, h]$ be a homogeneous ideal with $|\mathcal{Z}_+(I)| < \infty$. Then $I$ is in \textbf{generic coordinates} if either \begin{enumerate}[noitemsep, label = (\roman*)]
+		\item $|\mathcal{Z}_+(I)| = 0$, or
+		\item $h$ is not a zero-divisor on $S/I\sat$. 
+	\end{enumerate}
+\end{definition}
+
+
+Since the proof of the result that $\sd_{1, DRL}(\F) \leq \reg(\F^h)$ uses the results in \cite{bayer1987criterion}, we will show that the definition in \cite{caminata2020solving} is just a special case of that in \cite{bayer1987criterion}. 
+
+
+\begin{proposition}
+	Let $I \subset S$ be a homogeneous ideal in generic coordinates in the sense of Definition~\ref{def:genB} from \cite{caminata2020solving}. Then $I$ is also in generic coordinates in the sense of Definition~\ref{def:genA} from \cite{bayer1987criterion}. 
+\end{proposition}
+
+\begin{proof}
+	Assume the hypotheses of the claim, and also assume $I$ is a proper ideal (if not, $\dim(S/I) = \dim(S/S) = 0$ and so $I$ is in generic coordinates). There are two cases to consider. In the first, suppose $|\mathcal{Z}_+(I)| = 0$. Because $I$ is a homogeneous ideal, the polynomials in $I$ all vanish at $(0,0, \dots, 0)$, so $(0,0,\dots,0) \in \mathcal{Z}(I)$. If there is any other point in $p \in \mathcal{Z}(I)$, then any function in $I$ vanishes along the line in $k^{n+1}$ through $(0,0,\dots,0)$ and $p$, since each point on the line has the same homogeneous coordinates as $p$. But the point with these homogeneous coordinates is then in $\mathcal{Z}_+(I) = \emptyset$, which cannot be the case. Therefore $\mathcal{Z}(I) = \{(0,0,\dots,0)\}$, and so in particular, $|\mathcal{Z}(I)| < \infty$. Then by the affine version of Proposition 5 (the proof of which is given in \cite{cox2013ideals}), the degree of the affine Hilbert polynomial is 0. By Theorem 4, this means $\dim(S/I) = 0$, and so $I$ is in generic coordinates in the sense of \cite{bayer1987criterion} since it meets (1) of Definition~\ref{def:genA}. 
+
+	Now for the second case, assume that $h$ is not a zero-divisor on $S/I\sat$. Then in the language of Definition~\ref{def:genA}, this means that $h$ is generic for $I$. Since $h \in S_1$, this in turn means that $h \in U_1(I)$. Because $I$ is in generic coordinates in the sense of Definition 6, we have that $|\mathcal{Z}_+(I)| < \infty$. Since this projective variety is finite, Proposition 5 implies that the degree of the projective Hilbert polynomial is 0. By Theorem 2, the degree of the projective Hilbert polynomial is one less than that of the affine Hilbert polynomial, and therefore the Krull dimension $\dim(S/I)$ is equal to 1 by Theorem 3. Then because $h \in U_1(I)$ and $h$ is the smallest variable (with respect to the DRL ordering) in the polynomial ring $S = k[x_1, \dots, x_n, h]$, we have that $I$ is in generic coordinates in the sense of Definition~\ref{def:genA} from \cite{bayer1987criterion}. 
+\end{proof}
+
+
+In addition, the argument used in \cite{caminata2020solving} uses that for an ideal $J$ in generic coordinates and over a field $k$ of characteristic zero, the equalities $\mdeg_{DRL}(J) = \reg(\Init_{DRL}(J)) = \reg(J)$ hold, both of which come from \cite{bayer1987criterion}. Additionally, they note that in characteristic $p$, $\mdeg_{DRL}(J) \leq \reg(\Init_{DRL}(J))$ still holds. We give an argument for this inequality (in arbitrary characteristic) to show a weaker version of the result that $\sd_{1,DRL}(\F) \leq \reg(\F^h)$ without any genericity assumptions. 
+
+
+\begin{proposition}
+	Let $\F = \{f_1, \dots, f_s\} \subset R$. Then $\sd_{1,DRL}(\F) \leq \reg(\Init_{DRL}(\F^h))$. 
+\end{proposition}
+
+\begin{proof}
+	We follow the proof of given for the stronger result in $\cite{caminata2020solving}$, noting that the genericity of $(\F^h)$ is not needed for the result of Theorem 7 that $\sd_{1,DRL}(\F) \leq \mdeg_{DRL}(\F^h)$, so it does indeed suffice to show that $\mdeg(J) \leq \reg(\Init(J))$ for a proper homogeneous ideal $J \subset S$, and this can be shown for a more general degree-compatible term order. Let $\tau$ be such a term order. Let $\mathcal{G} = \{g_1, \dots, g_r\}$ be a reduced Gröbner basis of $J$, with degrees $d_1, \dots, d_r$, so that $\mdeg_\tau(J) = \max\{d_1, \dots, d_r\}$. Since $\mathcal{G}$ is a reduced Gröbner basis, the leading monomials $m_1, \dots, m_r$ of its elements minimally generate $\Init_\tau(J)$, and so we can define the map \[ \varphi_0: \bigoplus_{j = 1}^r S(-d_j) \to J \] by sending the $i$th generator to the monomial $m_i$. Because $J$ is proper, the degrees satisfy $d_j \geq 1$, and so this map shows us that all the Betti numbers $\beta_{0,d_j}$ are nonzero. Therefore the regularity is at least \[ \reg(\Init_\tau(J)) = \max\{j - i : \beta_{i,j} \neq 0\} \geq \max\{d_j - 0 : 1 \leq j \leq r\} = \mdeg_\tau(J). \] Choosing $J = \F^h$ gives us a proper homogeneous ideal and taking $\tau = DRL$ gives us $\sd_{1,DRL}(\F) \leq \mdeg_{DRL}(\F^h) \leq \reg(\Init_{DRL}(F^h))$, as claimed. 
+\end{proof}
+
+
+So summing up, we have that \[ \sd_{2,DRL}(\F) \leq \sd_{1,DRL}(\F) \leq \reg(\Init_{DRL}(\F^h)) \] for any system $\F$, and if $(\F^h)$ is known or assumed to be in generic coordinates, then we have the stronger result that \[ \sd_{2,DRL}(\F) \leq \sd_{1,DRL}(\F) \leq \reg(\Init_{DRL}(\F^h)) = \reg(\F^h) \] since for a homogeneous ideal $J$ in generic coordinates, we have that $\reg(J) = \reg(\Init_{DRL}(J))$, whereas without genericity assumptions we only have that $\reg(J) \leq \reg(\Init_{DRL}(J))$.
+
+
+\begin{example}
+	We continue Example 4, where we showed that it is possible to have the strict inequality $\sd_{2,\tau}(\F) < \sd_{1, \tau}(\F)$ using the system $\F = \{y^2, yz + x\}$ with $\tau = DRL$. We can also use this example to show that the genericity condition is indeed needed to have $\sd_{1, \tau}(\F) \leq \reg(\F^h)$. The ideal $(\F^h)$ has dimension 2, so checking genericity means checking that $h$ is generic for $(\F^h)$ and $z$ is generic for $(\F^h) + (h)$. To check that $h$ is generic for $(\F^h)$, we first compute the saturation $(\F^h): \mathfrak{m}^\infty = (\F^h)$, and then note that neither $h$ nor $xy$ is an element of $\F^h$, but \[ hxy = y^2z + hxy - y^2z = y(yz + xh) - z(y^2) = yf_2^h - zf_1^h \in (\F^h). \] Therefore $h$ is a zero-divisor on $S/(\F^h)$, and so $(\F^h)$ is not in generic coordinates in the sense of either definition. For the regularity, we have that $(\F^h) = (y^2, yz + xh)$ with minimal free resolution \[ \begin{tikzcd}
+		0 \arrow[r] & S(-4) \arrow[r, "\varphi_1"] & S(-2)^2 \arrow[r, "\varphi_0"] & (\F^h) \arrow[r] & 0
+	\end{tikzcd} \] given by the maps \[ \varphi_0 = \begin{pmatrix}
+		y^2 & yz + xh 
+	\end{pmatrix} \quad \text{and} \quad \varphi_1 = \begin{pmatrix}
+		yz + xh \\
+		-y^2
+	\end{pmatrix}. \] The nonzero Betti numbers are $\beta_{0,2} = 2$ and $\beta_{1,4} = 1$, and so $\reg(\F^h) = 3$. We showed earlier that $\sd_{1,DRL}(\F) > 3$, and so we have an example for which $\sd_{1,DRL}(\F) \not \leq \reg(\F^h)$. 
+\end{example}
+
+
+In Example 4, it was shown that $\sd_{2,DRL}(\F) = 3$, which is the regularity of $(\F^h)$. In general, however, the genericity assumption is also needed to show the $\sd_{2,DRL}(\F) \leq \reg(\F^h)$ version of the inequality for Algorithm II. We show this with the following Example, modifying the above slightly.
+
+
+\begin{example}
+	Consider now the system $\F = \{y^2 + 1, yz + xw\} \subset R = k[x,y,z,w]$. The ideal $(\F^h) = (y^2 + h^2, yz + xw)$ now has dimension 3. First we note that $(\F^h):\mathfrak{m}^\infty = (\F^h)$, as previously, but this time $h$ is not a zero-divisor in $S/(\F^h)$ (this can be checked by confirming that $h$ is not in any of the associated primes of $(\F^h)$), so $h$ is generic for $(\F^h)$. However, $w$ is not generic for $(\F^h) + (h)$, since $\left((\F^h) + (h)\right) : \mathfrak{m}^\infty = (\F^h) + (h)$ and \begin{align*}
+		wxy &= y^2z + wxy - y^2z - zh^2 + zh^2 \\
+		&= y(yz + wx) - z(y^2 + h^2) - zh(h) \\
+		&= yf_2^h - zf_1^h - zh(h) \in (\F^h) + (h)
+	\end{align*} with $w, xy \notin (\F^h) + (h)$. Once again, $(\F^h)$ is not in generic coordinates, and we have an almost identical minimal free resolution: \[ \begin{tikzcd}
+		0 \arrow[r] & S(-4) \arrow[r, "\varphi_1"] & S(-2)^2 \arrow[r, "\varphi_0"] & (\F^h) \arrow[r] & 0,
+	\end{tikzcd} \] the difference being in the maps \[ \varphi_0 = \begin{pmatrix}
+		y^2 + h^2 & yz + xh 
+	\end{pmatrix} \quad \text{and} \quad \varphi_1 = \begin{pmatrix}
+		yz + xh \\
+		-y^2 - h^2
+	\end{pmatrix}. \] This means $\reg(\F^h)$ is still 3, but what changes in this example is that we have \[ \sd_{2,DRL}(\F) = \sd_{1,DRL}(\F) = 4 > \reg(\F^h). \] Hence being in generic coordinates is still a requirement for the inequality to hold. 
+\end{example} 
+
+
+We have shown that Algorithms I and II are indeed different, but with the notion of generic coordinates, we can ask whether they are still ``generically" the same. That is, do we have that $\sd_{1,\tau}(\F) = \sd_{2,\tau}(\F)$ for a system $\F$ for which $(\F^h)$ is in generic coordinates? To see that the answer is \emph{no}, we use the following example from \cite{minko2021security}.
+
+
+\begin{example}
+	Take the polynomials in $\mathbb{\F}_7[x,y,z]$ defined by \[ f_1 = x^5 + y^5 + z^5 - 1, \quad f_2 = x^3 + y^3 + z^2 - 1, \quad f_3 = y^6 - 1, \quad f_4 = z^6 - 1, \] and take $\F$ to consist of all possible products of these polynomials with indices in (not strictly) ascending order, together with the \emph{field equations} $f_x = x^7 - x$, $f_y = y^7 - y$, $f_z = z^7 - z$. That is, we are considering the system \begin{align*}
+		\F &= \left\{ \prod_{j = 1}^3 f_{i_j} : 1 \leq i_1 \leq i_2 \leq i_3 \leq 4 \right\} \cup \{f_x, f_y, f_z\} \\
+		&= \{f_1 f_1 f_1, \,\, f_1 f_1 f_2, \,\, f_1 f_1 f_3, \,\, \dots, \,\, f_3 f_4 f_4, \,\, f_4 f_4 f_4, \,\, f_x, \,\, f_y, \,\, f_z\}. 
+	\end{align*} Then one can compute (using e.g. Sage or Macaulay2) that $\sd_{2,DRL}(\F) = 18 < 22 = \sd_{1,DRL}(\F)$.\footnote{In \cite{minko2021security}, $d_{\text{solve}}$, the notion of solving degree considered, is said to be 24, but this is based on the way the computer algebra system Magma computes the \emph{maximum step degree} of a system in its F5 algorithm, which is another Gröbner basis algorithm distinct from the two presented here.} We can also check that the system is indeed in generic coordinates, and that $\reg(\F^h) = 22$ bounds both solving degrees above, as we would expect. So we see that even with a general choice of coordinates, Algorithms I and II may produce different results for the solving degree of the system.  
+\end{example}
+
+
+\section{Further definitions of genericity}
+
+We have already seen two definitions of what it means to be ``generic,'' one from \cite{bayer1987criterion}, and one from \cite{caminata2020solving}. However, more are used in practice. In fact, an earlier version of the \cite{caminata2020solving} paper used a different definition of genericity, which involves the idea of the \emph{generic initial ideal}. Consider a homogeneous ideal $I$ in a polynomial ring of $n$ variables, $S = k[x_1, \dots, x_n]$. Then an element $g \in GL_n(k)$ with entries $g_{ij}$ acts on $I$ by the mapping $x_i \mapsto \sum_{j = 1}^n g_{ij} x_j$. 
+
+\begin{example}
+	Let $I \subset k[x,y]$ be given by $I = (x^2, y^2)$. Then the matrix \[ g = \begin{pmatrix}
+	2 & -1 \\
+	1 & 0
+\end{pmatrix} \] yields the ideal $gI$, generated by \[ gI = \left((2x - y)^2 + (x)^2\right) = (4x^2 - 4xy + y^2, x^2) = (x^2, 4xy - y^2). \] Note that $\Init_{DRL}(I) = (x^2, y^2)$, but $\Init_{DRL}(gI) = (y^3, x^2, xy)$. 
+\end{example}
+
+We can think of $I$ as being the identity of $GL_n(k)$ acting on $I$, and can define an equivalence relation on $GL_n(k)$ by $g_1 \sim g_2$ if and only if $\Init_{DRL}(g_1 I) = \Init_{DRL}(g_2 I)$. A theorem of Galligo \cite{galligo1974propos} shows that the number of equivalence classes is finite, and that one of them is a Zariski open set in $GL_n(k)$ (see also \cite{miller2005combinatorial}). We define the \textbf{generic initial ideal} of $I$, denoted $\gin_{\tau}(I)$ for a term order $\tau$ by $\gin_\tau(I) = \Init_\tau(gI)$ for any $g$ in this Zariski open equivalence class of $GL_n(k)$. 
+
+
+\begin{definition}\label{def:genC}
+	Let $I \subset S = k[x_1, \dots, x_n]$ be a homogeneous ideal. Then $I$ is said to be in \textbf{generic coordinates} if and only if $\Init_{DRL}(I) = \gin_{DRL}(I)$, that is, if the identity matrix is in the Zariski open equivalence class guaranteed to exist by Galligo's Theorem. 
+\end{definition} 
+
+
+In the example above, it turns out that there are exactly two equivalences classes, with the one yielding $(y^3, x^2, xy)$ being the Zariski open one. Therefore $(x^2,y^2)$ is not in generic coordinates. Bayer and Stillman show in \cite{bayer1987criterion} that this Zariski open equivalence class is contained in the open set $V = \{g \in GL_n(k) : (x_n, \dots, x_{n - r + 1}) \in U_r(gI)\}$ using the notation of Definition~\ref{def:genA}. This means that if $I$ is in generic coordinates in the sense of Definition~\ref{def:genC}, then the identity matrix is in this set $V$, meaning $(x_n, \dots, x_{n - r + 1}) \in U_r(I)$ for $r = \dim(S/I)$, and we have that $I$ is in generic coordinates in the sense of Definition~\ref{def:genA}, which in turn implies being in generic coordinates in the sense of Definition~\ref{def:genB}. The implication $(\ref{def:genA}) \implies (\ref{def:genB})$ is strict since Definition~\ref{def:genB} applies only to homogeneous ideals with dimension $1$ or $0$, and Bayer and Stillman give the example $I = (x^3, y^5)$ to show that the implication $(\ref{def:genC}) \implies (\ref{def:genA})$ is strict as well. 
+
+We now introduce a conjecture due to Fröberg concerning what the Hilbert series of an ideal should look like when it is sufficiently generic \cite{froberg1985inequality}. In the original, the conjecture uses a notion of genericity concerning the algebraic independence of the coefficients of the ideal's generators, but we will consider the version of the conjecture studied in \cite{pardue2010generic}, which involves the idea of a ``generic sequence'' of polynomials: 
+
+
+\begin{conjecture}\label{Fr}
+	If $k$ is an infinite field and $I \subset S = k[x_1, \dots, x_n]$ is an ideal generated by a generic sequence of polynomials $f_1, \dots, f_r$ of degrees $d_1, \dots, d_r$, then \[ \HS_{S/I}(t) = \bigg| \frac{\prod_{i=1}^r (1 - t^{d_i})}{(1 - t)^n} \bigg|. \] 
+\end{conjecture}
+
+
+Here, the absolute value bars mean truncating the series to exclude all terms after and including the first one with a negative coefficient, so for example, if we had an ideal $I$ in $k[x,y,z]$ generated by a ``generic sequence'' of degrees $d_1 = 3$, $d_2 = 2$, $d_3 = 2$, and $d_4 = 2$, the conjecture asserts that \begin{align*}
+	\HS_{S/I}(t) &= \bigg| \frac{(1 - t^3)(1 - t^2)^3}{(1 - t)^3} \bigg| = \bigg| \frac{(1 - t^3)(1 - t)^3(1 + t)^3}{(1 - t)^3} \bigg| \\
+	&= |1 + 3t + 3t^2 - 3t^4 - 3t^5 - t^6| = 1 + 3t + 3t^2.
+\end{align*} We now define what is meant by a generic sequence, as it differs from the previous definitions of genericity. 
+
+
+\begin{definition}\label{def:genD}
+	Given a sequence of degrees $d_1, \dots, d_r$, we may identify any given generating set $f_1, \dots, f_r$ of homogeneous polynomials of these degrees with their coefficients. Any $f_i$ of degree $d_i$ (that is, $f_i \in S_{d_i}$) is a tuple of its $\binom{n + d_i - 1}{d_i}$ coefficients, and so any sequence $f_1, \dots, f_r$ is a tuple of all of the $\sum_{i = 1}^r \binom{n + d_i - 1}{d_i}$ coefficients involved. In this way, we may put the Zariski topology on the space $\prod_{i = 1}^r S_{d_i}$, and we will say that some property $P$ is \textbf{generic} if it holds for all sequences $f_1, \dots, f_r$ whose coefficients lie in a Zariski open $U \subset \prod_{i = 1}^r S_{d_i}$. A sequence with coefficients in $U$ is then said to be a \textbf{generic sequence}. See \cite{pardue2010generic}.
+\end{definition}
+
+
+Note that when a generic sequence is mentioned, this kind of genericity is relative to a certain generic property $P$. In the case of the generic sequences involved in Fröberg's conjecture, the conjecture is asserting that the property of having Hilbert series equal to the specified \[ \bigg| \frac{\prod_{i=1}^r (1 - t^{d_i})}{(1 - t)^n} \bigg| \] is a generic property. This conjecture is open, but what is known is the following, from \cite{pardue2010generic}, Section 2:
+
+
+\begin{proposition}\label{prop:V1V2}
+	For a specified sequence of degrees $d_1, \dots, d_r$, there exist nonempty, Zariski open sets $V_1, V_2 \subset \prod_{i = 1}^r S_{d_i}$ such that the Hilbert series is constant on $V_1$ and the initial ideal is constant on $V_2$. 
+\end{proposition}
+
+
+Since the Hilbert series of an ideal is equal to that of its initial ideal, having the same initial ideal means having the same Hilbert series, so in the above, we have that $V_2 \subset V_1$. Suppose $H(t)$ is the Hilbert series of any homogeneous ideal whose generators' coefficients are in $V_1$. Then Definition 4 says that having Hilbert series equal to $H(t)$ is a generic property. If Fröberg's conjecture holds, we would need to have \[ H(t) = \bigg| \frac{\prod_{i=1}^r (1 - t^{d_i})}{(1 - t)^n} \bigg|, \] as we would have two nonempty Zariski open sets, $V_1$ on which the Hilbert series is $H(t)$, and $V_1'$ on which the Hilbert series has the conjectured form. Since $V_1$ and $V_1'$ are nonempty and Zariski open, they must therefore intersect nontrivially, and so there would be some ideal with coefficients in $V_1 \cap V_1'$ having Hilbert series of the conjectured form \emph{and} equal to $H(t)$, meaning the two series must be equal. Hence there is known to be \emph{some} ``generic'' Hilbert series $H(t)$, and Fröberg's conjecture is that it has the form given in Conjecture~\ref{Fr}. 
+
+
+\begin{remark}
+	Unless otherwise specified, when we refer to a generic sequence in the sense of Definition~\ref{def:genD}, we mean a sequence satisfying the known generic property of having Hilbert series equal to $H(t)$, that is, a sequence whose coefficients are in this corresponding Zariski open set $V_1 \subset \prod_{i = 1}^r S_{d_i}$.
+\end{remark}
+
+
+The interest in Fröberg's conjecture in cryptography stems from another conjecture concerning \emph{semi-regular sequences}. These sequences generate ideals that play particularly nicely with the F5 Gröbner basis algorithm \cite{faugere2002new}, and lead to the notion of the \emph{degree of regularity} of a system, denoted $\dreg$. Bardet, Faugère, and Salvy show that for a semi-regular system in $k[x_1, \dots, x_n]$, the F5 algorithm performs at most \[ O\left( \binom{n + \dreg}{n}^\omega \right) \] arithmetic operations, where $2 \leq \omega < 2.39$ is the linear algebra constant \cite{bardet2004complexity}. This estimate is used for analyzing the security of cryptosystems using multivariate polynomials, but rests on the assumptions that 1) the algorithm being used is F5, and 2) that the input is semi-regular. The validity of using the degree of regularity as an upper bound for the solving degree when the algorithm in use is not F5 has been the subject of some recent work, and we will discuss this shortly, along with the relevant definitions. If the algorithm used is F5, then Fröberg's conjecture enters the picture in addressing the second assumption that the input is semi-regular: Pardue shows in \cite{pardue2010generic} that Fröberg's conjecture is equivalent to the following:
+
+
+\begin{conjecture}\label{Fr:equiv}
+	If $k$ is an infinite field and $I \subset S = k[x_1, \dots, x_n]$ is an ideal generated by a generic sequence of polynomials $f_1, \dots, f_r$ of degrees $d_1, \dots, d_r$, then $f_1, \dots, f_r$ is a semi-regular sequence. 
+\end{conjecture}
+
+
+Hence if Fröberg's conjectures holds (and it is known to hold for several classes of ideals \cite{TRUNG201979}), the F5 algorithm performs very efficiently on a \emph{generic sequence} of polynomials, that is, on a sequence of polynomials whose coefficients come from a Zariski open set in $\prod_{i = 1}^r S_{d_i}$. With an infinite field $k$, this means that if the coefficients are ``random,'' we should expect F5 to perform quite well. This is the concept of genericity in Definition~\ref{def:genD}, and (if Fröberg's conjecture is true) it gives us good results about the complexity of at least one Gröbner basis algorithm. For the remainder of this section, we will look at how this definition compares with our other genericity definitions. 
+
+These other definitions are slightly easier to work with, so it would be nice if one of them would imply Definition~\ref{def:genD}. Unfortunately, we can show that none of them imply Definition~\ref{def:genD} with the following example:
+
+
+\begin{example}
+	We consider two different sequences of polynomials of degrees $d_1 = 3$, $d_2 = 2$, $d_3 = 2$, and $d_4 = 2$, both generic in the sense of Definition~\ref{def:genC}. We will show that they have different Hilbert functions, meaning at least one of their Hilbert series is not equal to $H(t)$, the generic Hilbert series of Proposition~\ref{prop:V1V2}. Define the ideals $I$ and $J$ by $I = (y^3, x^2, xy)$ and $J = (xz^2, x^2, xy)$. Recall that $\HF_{S/I}(s)$ and $\HF_{S/J}(s)$ are the number of degree $s$ monomials not contained in $I$ and $J$, respectively. Thus to show they have different Hilbert series, it suffices to show that their Hilbert functions differ at $s = 4$. The ideal $I = (y^3, x^2, xy)$ contains powers of $x$ and $y$ of degrees greater than or equal to 3 and the cross term $xy$, so $I$ contains all degree monomials in $x$ and $y$ of degrees greater than or equal to 3. Hence any monomials not in $I$ involve $z$, and must have a power of $z$ at least 2, as otherwise the monomial would be $z$ times a degree 3 monomial in $x$ and $y$, which would be in $I$. Hence there are 4 monomials of degree 4 not in $I$, namely $y^2 z^2$, $xz^3$, $yz^3$, and $z^4$. For $J = (xz^2, x^2, xy)$, we see that any monomial in $J$ must be divisible by $x$. Since $x^2 \in J$, so is any degree 4 monomial divisible by $x^2$, and if a degree 4 monomial is divisible by at most $x$, then it is $xm$ where $m$ is a monomial of degree 3 in $y$ and $z$. Hence $m$ is divisible by $z^2$ or $y$, so $xm$ is divisible by $xz^2$ or $xy$ and is therefore in $J$. Hence the degree 4 monomials not in $J$ are exactly the degree 4 monomials that do not involve $x$, of which there are 5: $y^4$, $y^3z$, $y^2z^2$, $yz^3$, and $z^4$. Hence we have that \[ \HF_{S/I}(4) = 4 \neq 5 = \HF_{S/J}(4), \] so $I$ and $J$ do not have the same Hilbert series, and therefore at least one of them is not equal to the generic series $H(t)$. Hence $I$ or $J$ does not meet Definition~\ref{def:genD}. However, a Macaulay2 computation shows that \[ \gin I = (y^3, x^2, xy) = I = \Init I \quad \text{and} \quad \gin J = (xz^2, x^2, xy) = J = \Init J, \] meaning $I$ and $J$ are both generic in the sense of Definition~\ref{def:genC}. Hence Definition~\ref{def:genC} does not imply Definition~\ref{def:genD}.
+\end{example}
+
+
+Now because Definition~\ref{def:genC} implies Definitions~\ref{def:genA} and~\ref{def:genB}, we cannot have that either of these imply Definition~\ref{def:genD}. 
+
+
+\nocite{M2}
+\nocite{sage}
+
+\newpage
+\bibliographystyle{alpha}
+\bibliography{references}
+
+
+\end{document}

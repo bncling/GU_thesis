@@ -1,0 +1,236 @@
+\documentclass[11pt]{article}
+
+\usepackage{fullpage}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{centernot}
+\usepackage{pifont}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{blkarray}
+\usepackage{tikz-cd}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\hypersetup{
+	colorlinks=true,
+	urlcolor=black,
+	filecolor=black,
+	citecolor=black,
+	linkcolor=black
+}
+
+\usepackage{pgfplots}
+	\usetikzlibrary{
+		calc,
+		patterns,
+		positioning,
+		angles
+	}
+	\pgfplotsset{
+		compat = 1.12,
+		samples = 400,
+		clip = false
+	}
+	\tikzset{>=stealth}
+
+\usepackage{float}
+\usepackage{caption}
+	\captionsetup{
+		format=plain,
+		labelfont=bf,
+		font=small,
+		justification=centering
+	}
+
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Even}{\mathbb{E}}
+\newcommand{\Odd}{\mathbb{O}}
+\newcommand{\st}{\text{ s.t. }}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\Ts}{\mathcal{T}_\text{std}}
+\newcommand{\Rs}{\mathbb{R}_\text{std}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\dg}{^{\circ}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\BLL}{\mathcal{B}_\text{LL}}
+\newcommand{\RLL}{\mathbb{R}_\text{LL}}
+\newcommand{\TLL}{\mathcal{T}_\text{LL}}
+\newcommand{\Rh}{\mathbb{R}_\text{har}}
+\newcommand{\Hbub}{\mathbb{H}_\text{bub}}
+\newcommand{\Zar}{\mathbb{Z}_\text{arith}}
+\newcommand{\lcm}{\text{lcm}}
+\newcommand{\Sub}{\mathscr{S}}
+\newcommand{\Cl}{\text{Cl}}
+\newcommand{\snd}{2\textsuperscript{nd} }
+\newcommand{\fst}{1\textsuperscript{st}}
+\newcommand{\Cov}{\mathscr{C}}
+\newcommand{\first}{\text{first}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\dividor}[1]{\vspace{2em}\hrule \begin{center} \Large{\textbf{#1}} \end{center}\hrule \vspace{2em}}
+\newcommand{\ass}{\text{Ass}}
+\newcommand{\ann}{\text{Ann}}
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+\newcommand{\Proj}{\mathbb{P}}
+\newcommand{\sat}{^{\text{sat}}}
+\newcommand{\dreg}{d_{\text{reg}}}
+
+\DeclareMathOperator{\Poly}{\mathscr{P}}
+\DeclareMathOperator{\Row}{\mathscr{R}}
+\DeclareMathOperator{\init}{in}
+\DeclareMathOperator{\Init}{\mathbf{in}}
+\DeclareMathOperator{\piv}{piv}
+\DeclareMathOperator{\sd}{sd}
+\DeclareMathOperator{\reg}{reg}
+\DeclareMathOperator{\mdeg}{max.GB.deg}
+\DeclareMathOperator{\Spec}{Spec}
+\DeclareMathOperator{\HF}{HF}
+\DeclareMathOperator{\HP}{HP}
+\DeclareMathOperator{\HS}{HS}
+\DeclareMathOperator{\V}{\mathbf{V}}
+\DeclareMathOperator{\I}{\mathbf{I}}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\gin}{\mathbf{gin}}
+
+
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{lemma}{Lemma}
+\newtheorem{conjecture}{Conjecture}
+
+\theoremstyle{definition}
+
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+\newtheorem{remark}{Remark}
+\newtheorem*{notation}{Notation}
+
+
+\setcounter{MaxMatrixCols}{20}
+
+
+
+\begin{document}
+
+\begin{center}
+	\Huge{\textbf{Genericity Definitions}}\\
+	\vspace{.5em}
+	\normalsize{Ben Clingenpeel}
+\end{center}
+
+For a homogeneous ideal $I \subset R$ or $I \subset S$, we define $I\sat$ to be the saturation $I:\mathfrak{m}^\infty$ with respect to the irrelevant maximal ideal $\mathfrak{m} = (x_1, \dots, x_n) \subset R$, or $\mathfrak{m} = (x_1, \dots, x_n, h) \subset S$ depending on which ring $I$ is contained in. Although we will be considering homogeneous ideals here, when we refer to the dimension $\dim(R/I)$, we mean the Krull dimension, which agrees with the degree of the \emph{affine} Hilbert polynomial, rather than the projective Hilbert polynomial. We have the following definitions for genericity and generic coordinates from \cite{bayer1987criterion}. 
+
+
+\begin{definition}\label{def:genA}
+	Let $I \subset R$ be a homogeneous ideal. We say that an element $g \in R$ is \textbf{generic} for $I$ if either \begin{enumerate}[noitemsep, label = (\arabic*)]
+		\item $\dim(R/I) = 0$, or
+		\item $g$ is not a zero-divisor on $R/I\sat$. 
+	\end{enumerate} Further, for $j > 0$ we define the set $U_j(I) \subset R_1^j$ by \[ U_j(I) = \{(g_1, \dots, g_j) \in R_1^j \mid g_i \text{ is generic for } I + (g_1, \dots, g_{i - 1}), 1 \leq i \leq j\}, \] and we say that $I$ is in \textbf{generic coordinates} if $(x_n, \dots, x_{n - r + 1}) \in U_r$ for $r = \dim(R/I)$. 
+\end{definition}
+
+
+It is shown in \cite{caminata2020solving} that for the $DRL$ order and a system $\F$ for which the ideal $(\F^h) \subset S$ is in generic coordinates, we have that $\sd_{1,DRL}(\F) \leq \reg(\F^h)$. The proof of this result uses the following definition, which differs slightly from the one given above:
+
+
+\begin{definition}\label{def:genB}
+	Let $I \subset S = k[x_1, \dots, x_n, h]$ be a homogeneous ideal with $|\mathcal{Z}_+(I)| < \infty$. Then $I$ is in \textbf{generic coordinates} if either \begin{enumerate}[noitemsep, label = (\roman*)]
+		\item $|\mathcal{Z}_+(I)| = 0$, or
+		\item $h$ is not a zero-divisor on $S/I\sat$. 
+	\end{enumerate}
+\end{definition}
+
+
+However, an earlier version of the \cite{caminata2020solving} paper uses a different definition of genericity, which involves the idea of the \emph{generic initial ideal}. Consider a homogeneous ideal $I$ in a polynomial ring of $n$ variables, $S = k[x_1, \dots, x_n]$. Then an element $g \in GL_n(k)$ with entries $g_{ij}$ acts on $I$ by the mapping $x_i \mapsto \sum_{j = 1}^n g_{ij} x_j$. 
+
+\begin{example}
+	Let $I \subset k[x,y]$ be given by $I = (x^2, y^2)$. Then the matrix \[ g = \begin{pmatrix}
+	2 & -1 \\
+	1 & 0
+\end{pmatrix} \] yields the ideal $gI$, generated by \[ gI = \left((2x - y)^2 + (x)^2\right) = (4x^2 - 4xy + y^2, x^2) = (x^2, 4xy - y^2). \] Note that $\Init_{DRL}(I) = (x^2, y^2)$, but $\Init_{DRL}(gI) = (y^3, x^2, xy)$. 
+\end{example}
+
+We can think of $I$ as being the identity of $GL_n(k)$ acting on $I$, and can define an equivalence relation on $GL_n(k)$ by $g_1 \sim g_2$ if and only if $\Init_{DRL}(g_1 I) = \Init_{DRL}(g_2 I)$. A theorem of Galligo \cite{galligo1974propos} shows that the number of equivalence classes is finite, and that one of them is a Zariski open set in $GL_n(k)$ (see also \cite{miller2005combinatorial}). We define the \textbf{generic initial ideal} of $I$, denoted $\gin_{\tau}(I)$ for a term order $\tau$ by $\gin_\tau(I) = \Init_\tau(gI)$ for any $g$ in this Zariski open equivalence class of $GL_n(k)$. 
+
+
+\begin{definition}\label{def:genC}
+	Let $I \subset S = k[x_1, \dots, x_n]$ be a homogeneous ideal. Then $I$ is said to be in \textbf{generic coordinates} if and only if $\Init_{DRL}(I) = \gin_{DRL}(I)$, that is, if the identity matrix is in the Zariski open equivalence class guaranteed to exist by Galligo's Theorem. 
+\end{definition} 
+
+
+In the example above, it turns out that there are exactly two equivalences classes, with the one yielding $(y^3, x^2, xy)$ being the Zariski open one. Therefore $(x^2,y^2)$ is not in generic coordinates. Bayer and Stillman show in \cite{bayer1987criterion} that this Zariski open equivalence class is contained in the open set $V = \{g \in GL_n(k) : (x_n, \dots, x_{n - r + 1}) \in U_r(gI)\}$ using the notation of Definition~\ref{def:genA}. This means that if $I$ is in generic coordinates in the sense of Definition~\ref{def:genC}, then the identity matrix is in this set $V$, meaning $(x_n, \dots, x_{n - r + 1}) \in U_r(I)$ for $r = \dim(S/I)$, and we have that $I$ is in generic coordinates in the sense of Definition~\ref{def:genA}, which in turn implies being in generic coordinates in the sense of Definition~\ref{def:genB}. The implication $(\ref{def:genA}) \implies (\ref{def:genB})$ is strict since Definition~\ref{def:genB} applies only to homogeneous ideals with dimension $1$ or $0$, and Bayer and Stillman give the example $I = (x^3, y^5)$ to show that the implication $(\ref{def:genC}) \implies (\ref{def:genA})$ is strict as well. 
+
+We now introduce a conjecture due to Fröberg concerning what the Hilbert series of an ideal should look like when it is sufficiently generic \cite{froberg1985inequality}. In the original, the conjecture uses a notion of genericity concerning the algebraic independence of the coefficients of the ideal's generators, but we will consider the version of the conjecture studied in \cite{pardue2010generic}, which involves the idea of a ``generic sequence'' of polynomials: 
+
+
+\begin{conjecture}\label{Fr}
+	If $k$ is an infinite field and $I \subset S = k[x_1, \dots, x_n]$ is an ideal generated by a generic sequence of polynomials $f_1, \dots, f_r$ of degrees $d_1, \dots, d_r$, then \[ H_{S/I}(t) = \bigg| \frac{\prod_{i=1}^r (1 - t^{d_i})}{(1 - t)^n} \bigg|. \] 
+\end{conjecture}
+
+
+Here, the absolute value bars mean truncating the series to exclude all terms after and including the first one with a negative coefficient, so for example, if we had an ideal $I$ in $k[x,y,z]$ generated by a ``generic sequence'' the conjecture asserts that \begin{align*}
+	H_{S/I}(t) &= \bigg| \frac{(1 - t^3)(1 - t^2)^3}{(1 - t)^3} \bigg| = \bigg| \frac{(1 - t^3)(1 - t)^3(1 + t)^3}{(1 - t)^3} \bigg| \\
+	&= |1 + 3t + 3t^2 - 3t^4 - 3t^5 - t^6| = 1 + 3t + 3t^2.
+\end{align*} We now define what is meant by a generic sequence, as it differs from the previous definitions of genericity. 
+
+
+\begin{definition}\label{def:genD}
+	Given a sequence of degrees $d_1, \dots, d_r$, we may identify any given generating set $f_1, \dots, f_r$ of homogeneous polynomials of these degrees with their coefficients. Any $f_i$ of degree $d_i$ (that is, $f_i \in S_{d_i}$) is a tuple of its $\binom{n + d_i - 1}{d_i}$ coefficients, and so any sequence $f_1, \dots, f_r$ is a tuple of all of the $\sum_{i = 1}^r \binom{n + d_i - 1}{d_i}$ coefficients involved. In this way, we may put the Zariski topology on the space $\prod_{i = 1}^r S_{d_i}$, and we will say that some property $P$ is \textbf{generic} if it holds for all sequences $f_1, \dots, f_r$ whose coefficients lie in a Zariski open $U \subset \prod_{i = 1}^r S_{d_i}$. A sequence with coefficients in $U$ is then said to be a \textbf{generic sequence}. See \cite{pardue2010generic}.
+\end{definition}
+
+
+Note that when a generic sequence is mentioned, this kind of genericity is relative to a certain generic property $P$. In the case of the generic sequences involved in Fröberg's conjecture, the conjecture is asserting that the property of having Hilbert series equal to the specified \[ \bigg| \frac{\prod_{i=1}^r (1 - t^{d_i})}{(1 - t)^n} \bigg| \] is a generic property. This conjecture is open, but what is known is the following, from \cite{pardue2010generic}, Section 2:
+
+
+\begin{proposition}\label{prop:V1V2}
+	For a specified sequence of degrees $d_1, \dots, d_r$, there exist nonempty, Zariski open sets $V_1, V_2 \subset \prod_{i = 1}^r S_{d_i}$ such that the Hilbert series is constant on $V_1$ and the initial ideal is constant on $V_2$. 
+\end{proposition}
+
+
+Since the Hilbert series of an ideal is equal to that of its initial ideal, having the same initial ideal means having the same Hilbert series, so in the above, we have that $V_2 \subset V_1$. Suppose $H(t)$ is the Hilbert series of any homogeneous ideal whose generators' coefficients are in $V_1$. Then Definition 4 says that having Hilbert series equal to $H(t)$ is a generic property. If Fröberg's conjecture holds, we would need to have \[ H(t) = \bigg| \frac{\prod_{i=1}^r (1 - t^{d_i})}{(1 - t)^n} \bigg|, \] as we would have two nonempty Zariski open sets, $V_1$ on which the Hilbert series is $H(t)$, and $V_1'$ on which the Hilbert series has the conjectured form. Since $V_1$ and $V_1'$ are nonempty and Zariski opend, they must therefore intersect nontrivially, and so there would be some ideal with coefficients in $V_1 \cap V_1'$ having Hilbert series of the conjectured form \emph{and} equal to $H(t)$, meaning the two series must be equal. Hence there is known to be \emph{some} ``generic'' Hilbert series $H(t)$, and Fröberg's conjecture is that it has the form given in Conjecture~\ref{Fr}.
+
+The interest in Fröberg's conjecture in cryptography stems from another conjecture concerning \emph{semi-regular sequences}. These sequences generate ideals that play particularly nicely with the F5 Gröbner basis algorithm \cite{faugere2002new}, and lead to the notion of the \emph{degree of regularity} of a system, denoted $\dreg$. Bardet, Faugère, and Salvy show that for a semi-regular system in $k[x_1, \dots, x_n]$, the F5 algorithm performs at most \[ O\left( \binom{n + \dreg}{n}^\omega \right) \] arithmetic operations, where $2 \leq \omega < 2.39$ is the linear algebra constant \cite{bardet2004complexity}. This estimate is used for analyzing the security of cryptosystems using multivariate polynomials, but rests on the assumptions that 1) the algorithm being used is F5, and 2) that the input is semi-regular. The validity of using the degree of regularity as an upper bound for the solving degree when the algorithm in use is not F5 has been the subject of some recent work, and we will discuss this shortly, along with the relevant definitions. If the algorithm used is F5, then Fröberg's conjecture enters the picture in addressing the second assumption that the input is semi-regular: Pardue shows in \cite{pardue2010generic} that Fröberg's conjecture is equivalent to the following:
+
+
+\begin{conjecture}\label{Fr:equiv}
+	If $k$ is an infinite field and $I \subset S = k[x_1, \dots, x_n]$ is an ideal generated by a generic sequence of polynomials $f_1, \dots, f_r$ of degrees $d_1, \dots, d_r$, then $f_1, \dots, f_r$ is a semi-regular sequence. 
+\end{conjecture}
+
+
+Hence if Fröberg's conjectures holds (and it is known to hold for several classes of ideals \cite{TRUNG201979}), the F5 algorithm performs very efficiently on a \emph{generic sequence} of polynomials, that is, on a sequence of polynomials whose coefficients come from a Zariski open set in $\prod_{i = 1}^r S_{d_i}$. With an infinite field $k$, this means that if the coefficients are ``random,'' we should expect F5 to perform quite well. This is the concept of genericity in Definition~\ref{def:genD}, and (if Fröberg's conjecture is true) it gives us good results about the complexity of at least one Gröbner basis algorithm. Our other definitions are slightly easier to work with, so it would be nice if one of them would imply Definition~\ref{def:genD}. Unfortunately, we can show that none of them imply Definition~\ref{def:genD} with the following example:
+
+
+\begin{example}
+	We consider two different sequences of polynomials of degrees $d_1 = 3$, $d_2 = 2$, $d_3 = 2$, and $d_4 = 2$, both generic in the sense of Definition~\ref{def:genC}. We will show that they have different Hilbert functions, meaning at least one of their Hilbert series is not equal to $H(t)$, the generic Hilbert series of Proposition~\ref{prop:V1V2}. Define the ideals $I$ and $J$ by $I = (y^3, x^2, xy)$ and $J = (xz^2, x^2, xy)$. Recall that $\HF_{S/I}(s)$ and $\HF_{S/J}(s)$ are the number of degree $s$ monomials not contained in $I$ and $J$, respectively. Thus to show they have different Hilbert series, it suffices to show that their Hilbert functions differ at $s = 4$. The ideal $I = (y^3, x^2, xy)$ contains powers of $x$ and $y$ of degrees greater than or equal to 3 and the cross term $xy$, so $I$ contains all degree monomials in $x$ and $y$ of degrees greater than or equal to 3. Hence any monomials not in $I$ involve $z$, and must have a power of $z$ at least 2, as otherwise the monomial would be $z$ times a degree 3 monomial in $x$ and $y$, which would be in $I$. Hence there are 4 monomials of degree 4 not in $I$, namely $y^2 z^2$, $xz^3$, $yz^3$, and $z^4$. For $J = (xz^2, x^2, xy)$, we see that any monomial in $J$ must be divisible by $x$. Since $x^2 \in J$, so is any degree 4 monomial divisible by $x^2$, and if a degree 4 monomial is divisible by at most $x$, then it is $xm$ where $m$ is a monomial of degree 3 in $y$ and $z$. Hence $m$ is divisible by $z^2$ or $y$, so $xm$ is divisible by $xz^2$ or $xy$ and is therefore in $J$. Hence the degree 4 monomials not in $J$ are exactly the degree 4 monomials that do not involve $x$, of which there are 5: $y^4$, $y^3z$, $y^2z^2$, $yz^3$, and $z^4$. Hence we have that \[ \HF_{S/I}(4) = 4 \neq 5 = \HF_{S/J}(4), \] so $I$ and $J$ do not have the same Hilbert series, and therefore at least one of them is not equal to the generic series $H(t)$. Hence $I$ or $J$ does not meet Definition~\ref{def:genD}. However, a Macaulay2 computation shows that \[ \gin I = (y^3, x^2, xy) = I = \Init I \quad \text{and} \quad \gin J = (xz^2, x^2, xy) = J = \Init J, \] meaning $I$ and $J$ are both generic in the sense of Definition~\ref{def:genC}. Hence Definition~\ref{def:genC} does not imply Definition~\ref{def:genD}.
+\end{example}
+
+
+Now because Definition~\ref{def:genC} implies Definitions~\ref{def:genA} and~\ref{def:genB}, we cannot have that either of these imply Definition~\ref{def:genD}. \\
+
+
+\noindent\Large{\textbf{Questions}}
+
+\normalsize
+
+\begin{itemize}[noitemsep]
+	\item Does Definition~\ref{def:genD} imply any of the others? \cite{bigdeli2021semi} seems to suggest so on page 11.
+	\item The form suggested by Fröberg's conjecture would imply that any ideal defined by an overdermined generic sequence (in the sense of Definition~\ref{def:genD}) is zero-dimensional. We have examples of generic ideals (in the sense of Definition~\ref{def:genC}) that don't satisfy Fröberg's conjecture, but these all have positive dimension---does Fröberg's conjecture hold for a zero-dimensional generic ideal?
+	\item The ideal $I = (x^2, y^2, z^2)$ has Hilbert series of the form in Fröberg's conjecture, which is known to hold in $k[x,y,z]$ for an infinite field $k$. However, $I$ is not generic in the sense of Definition~\ref{def:genC} (it is not Borel-fixed). This could be a counterexample to Definition~\ref{def:genD} implying Definition~\ref{def:genC}, but even though its Hilbert series is generic, we don't know necessarily whether the coefficients of $I$ are in the open set $V_1$ on which the Hilbert series is constant---is there a way to figure this out?
+\end{itemize}
+
+
+\nocite{M2}
+\nocite{sage}
+
+\newpage
+\bibliographystyle{alpha}
+\bibliography{references}
+
+
+\end{document}

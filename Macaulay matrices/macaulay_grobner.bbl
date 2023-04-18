@@ -1,0 +1,16 @@
+\begin{thebibliography}{CLO13}
+
+\bibitem[CG20]{caminata2020solving}
+Alessio Caminata and Elisa Gorla.
+\newblock Solving multivariate polynomial systems and an invariant from
+  commutative algebra.
+\newblock In {\em International Workshop on the Arithmetic of Finite Fields},
+  pages 3--36. Springer, 2020.
+
+\bibitem[CLO13]{cox2013ideals}
+David Cox, John Little, and Donal OShea.
+\newblock {\em Ideals, varieties, and algorithms: an introduction to
+  computational algebraic geometry and commutative algebra}.
+\newblock Springer Science \& Business Media, 2013.
+
+\end{thebibliography}

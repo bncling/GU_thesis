@@ -1,0 +1,177 @@
+\documentclass[12pt]{article}
+
+\usepackage{fullpage}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{centernot}
+\usepackage{pifont}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{blkarray}
+
+\usepackage{pgfplots}
+	\usetikzlibrary{
+		calc,
+		patterns,
+		positioning,
+		angles
+	}
+	\pgfplotsset{
+		compat = 1.12,
+		samples = 400,
+		clip = false
+	}
+	\tikzset{>=stealth}
+
+\usepackage{float}
+\usepackage{caption}
+	\captionsetup{
+		format=plain,
+		labelfont=bf,
+		font=small,
+		justification=centering
+	}
+
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}} 
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}} 
+\newenvironment{example}[2][Example]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}} 
+\newenvironment{definition}[2][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}} 
+\newenvironment{scholium}[2][Scholium]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}} 
+\newenvironment{solution}
+               {\let\oldqedsymbol=\qedsymbol
+                \renewcommand{\qedsymbol}{$\blacktriangleleft$}
+                \begin{proof}[\textit\upshape Solution]}
+               {\end{proof}
+                \renewcommand{\qedsymbol}{\oldqedsymbol}}
+\newenvironment{vproof}
+               {\let\oldqedsymbol=\qedsymbol
+                \renewcommand{\qedsymbol}{\ding{170}}
+                \begin{proof}[\textit\upshape Vague idea]}
+               {\end{proof}
+                \renewcommand{\qedsymbol}{\oldqedsymbol}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Even}{\mathbb{E}}
+\newcommand{\Odd}{\mathbb{O}}
+\newcommand{\st}{\text{ s.t. }}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\Ts}{\mathcal{T}_\text{std}}
+\newcommand{\Rs}{\mathbb{R}_\text{std}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\dg}{^{\circ}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\BLL}{\mathcal{B}_\text{LL}}
+\newcommand{\RLL}{\mathbb{R}_\text{LL}}
+\newcommand{\TLL}{\mathcal{T}_\text{LL}}
+\newcommand{\Rh}{\mathbb{R}_\text{har}}
+\newcommand{\Hbub}{\mathbb{H}_\text{bub}}
+\newcommand{\Zar}{\mathbb{Z}_\text{arith}}
+\newcommand{\lcm}{\text{lcm}}
+\newcommand{\Sub}{\mathscr{S}}
+\newcommand{\Cl}{\text{Cl}}
+\newcommand{\snd}{2\textsuperscript{nd} }
+\newcommand{\fst}{1\textsuperscript{st}}
+\newcommand{\Cov}{\mathscr{C}}
+\newcommand{\im}{\text{im}}
+\newcommand{\init}{\text{in}}
+\newcommand{\Poly}{\mathscr{P}}
+\newcommand{\row}{\text{row}}
+\newcommand{\piv}{\text{pivots}}
+\newcommand{\first}{\text{first}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\ass}{\text{Ass}}
+\newcommand{\ann}{\text{Ann}}
+\newcommand{\spec}{\text{Spec}}
+\newcommand{\sdeg}{\text{solv.deg}}
+\newcommand{\mdeg}{\text{max.GB.deg}}
+
+\setcounter{MaxMatrixCols}{20}
+
+
+\title{Questions on solving degree}
+\date{9/13/22}
+
+\begin{document}
+
+\maketitle
+
+\noindent We copy the relevant definitions from \cite{caminata2020solving} here:
+
+\begin{definition}{6 (page 15)}
+	\emph{Let $\mathcal{F} = \{f_1, \dots, f_r\} \subseteq R$ and let $\tau$ be a term order on $R$. The} solving degree \emph{of $\mathcal{F}$ is the least degree d such that Gaussian elimination on the Macaulay matrix $M_{\leq d}$ produces a Gr\"obner basis of $\mathcal{F}$ with respect to $\tau$. We denote it by} $\sdeg_\tau(\mathcal{F})$. \emph{When the term order is clear from the context, we omit the subscript $\tau$.}
+
+	\emph{If $\mathcal{F}$ is homogeneous, we consider the homogeneous Macaulay matrix $M_d$ and let the solving degree of $\mathcal{F}$ be the least degree d such that Gaussian elimination on $M_0, \dots, M_d$ produces a Gr\"obner basis of $\mathcal{F}$ with respect to $\tau$.}
+\end{definition}
+
+
+\begin{definition}{7 (page 16)}
+	\emph{Let $I \subseteq R$ be an ideal and let $\tau$ be a term order on $R$. We denote by} $\mdeg_\tau{I}$ \emph{the maximum degree of a polynomial appearing in the reduced $\tau$ Gr\"obner basis of $I$. If $I = (\mathcal{F})$, we sometimes write} $\mdeg_\tau(\mathcal{F})$ \emph{in place of} $\mdeg_\tau(I)$.
+\end{definition}
+
+
+\noindent We walk through Example 6 of \cite{caminata2020solving} to see what these Macaulay matrices look like. Here, $\mathcal{F} = \{f_1, f_2, f_3, f_4\} = \{x^2 + x, xy, y^2 + y, x^2y + x^2 + x\} \subseteq \mathbb{F}_2[x,y]$. Following the constructions on page 15 with the term order $\tau = DRL$, we have that \[ M_{\leq 2} = \begin{blockarray}{ccccccc}
+    & x^2 & xy & y^2 & x & y & 1 \\
+    \begin{block}{c(cccccc)}
+        f_1 & \mathbf{1} & 0 & 0 & \mathbf{1} & 0 & 0 \\
+        f_2 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 \\
+        f_3 & 0 & 0 & \mathbf{1} & 0 & \mathbf{1} & 0 \\
+    \end{block}
+\end{blockarray} \] ($f_4$ is not included since it has degree 3). Since this matrix is already row reduced, we get the collection $\{f_1, f_2, f_3\}$, which is a (reduced) Gr\"obner basis for $(\F)$ ($f_4 = f_1 + xf_2$). Since $M_{\leq d}$ is the empty matrix for $d < 2$, $d = 2$ is the first degree for which row reduction on $M_{\leq d}$ produces a Gr\"obner basis with respect to our chosen term order ($DRL$), and so $\sdeg_{DRL}(\F) = 2$.  \\
+
+
+\noindent For a more complicated example, we walk through Example 5 of \cite{caminata2020solving}. This time we use the $LEX$ order, and our system is $\F = \{f_1, f_2\} = \{x_3^2 - x_2, x_2^3 - x_1\} \subset \mathbb{F}_5[x_1, x_2, x_3]$. Then we have that \[ M_{\leq 2} = \begin{blockarray}{ccccccccccc}
+    & x_1^2 & x_1y_1 & x_1x_3 & x_1 & y_2^2 & x_2x_3 & x_2 & x_3^2 & x_3 & 1 \\
+    \begin{block}{c(cccccccccc)}
+        f_1 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{4} & \mathbf{1} & 0 & 0 \\
+    \end{block}
+\end{blockarray}, \] on which row reduction does not produce a Gröbner basis, and also that $M_{\leq 3}$ is \[ \begin{pmatrix}
+	0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{4} & 0 & \mathbf{1} & 0 & 0 \\
+	0 & 0 & 0 & 0 & 0 & 0 & \mathbf{4} & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{4} & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{4} & 0 & \mathbf{1} & 0 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{4} & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 
+\end{pmatrix} \] where the columns are indexed by the monomials \[ x_1^3, \, x_1^2x_2, \, x_1^2x_3, \, x_1^2, \, x_1x_2^2, \, x_1x_2x_3, \, x_1x_2, \, x_1x_3^2, \, x_1x_3, \, x_1, \, x_2^3, \, x_2^2x_3, \, x_2^2, \, x_2x_3^2, \, x_2x_3, \, x_2, \, x_3^3, \, x_3^2, \, x_3, \, 1 \] and the rows by $f_1$, $x_1f_1$, $x_2f_1$, $x_3f_1$, and $f_2$. Row reduction on this matrix doesn't change the set of polynomials we're working with---we still have $\{f_1, x_1f_1, x_2f_1, x_3f_1, f_2\}$---but this set of polynomials is now a Gr\"obner basis for $\F$, so $\sdeg_{LEX}(\F) = 3$, as in \cite{caminata2020solving}. 
+
+Since the \emph{reduced} Gr\"obner basis for $\F$ is $\{x_1 - x_3^6, x_2 - x_3^2\}$ and this reduced basis contains a degree 6 polynomial, we have that $\mdeg_{LEX}(\F) = 6 \not \leq 3 = \sdeg_{LEX}(\F)$. This would appear to contradict the remark after Definition 7, stating that $\mdeg_\tau(\F) \leq \sdeg_\tau(\F)$ for any term order, but we note that the system in Example 5 has infinitely many solutions over $\overline{\mathbb{F}_5}$. On pages 10-11 it is stated that the assumption is always made that there are only finitely many solutions over the algebraic closure (at least for Section 2), and indeed, the inequality appears to hold in this case.
+
+\begin{enumerate}
+	\item Does this finiteness assumption also apply in Section 3?
+	\item If so, does this imply the inequality $\mdeg_\tau(\F) \leq \sdeg_\tau(\F)$?
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+\newpage
+\bibliographystyle{alpha}
+\bibliography{references}
+
+
+
+
+
+\end{document}

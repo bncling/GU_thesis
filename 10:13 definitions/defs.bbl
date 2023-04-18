@@ -1,0 +1,34 @@
+\begin{thebibliography}{BFS04}
+
+\bibitem[Bar04]{bardet2004etude}
+Magali Bardet.
+\newblock {\em {\'E}tude des syst{\`e}mes alg{\'e}briques
+  surd{\'e}termin{\'e}s. Applications aux codes correcteurs et {\`a} la
+  cryptographie}.
+\newblock PhD thesis, Universit{\'e} Pierre et Marie Curie-Paris VI, 2004.
+
+\bibitem[BFS04]{bardet2004complexity}
+Magali Bardet, Jean-Charles Faugere, and Bruno Salvy.
+\newblock On the complexity of gr{\"o}bner basis computation of semi-regular
+  overdetermined algebraic equations.
+\newblock In {\em Proceedings of the International Conference on Polynomial
+  System Solving}, pages 71--74, 2004.
+
+\bibitem[CG20]{caminata2020solving}
+Alessio Caminata and Elisa Gorla.
+\newblock Solving multivariate polynomial systems and an invariant from
+  commutative algebra.
+\newblock In {\em International Workshop on the Arithmetic of Finite Fields},
+  pages 3--36. Springer, 2020.
+
+\bibitem[CG23]{caminata2023solving}
+Alessio Caminata and Elisa Gorla.
+\newblock Solving degree, last fall degree, and related invariants.
+\newblock {\em Journal of Symbolic Computation}, 114:322--335, 2023.
+
+\bibitem[Min21]{minko2021security}
+Romy Minko.
+\newblock {\em Security assumptions in post-quantum cryptography}.
+\newblock PhD thesis, University of Oxford, 2021.
+
+\end{thebibliography}

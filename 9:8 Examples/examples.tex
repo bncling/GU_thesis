@@ -1,0 +1,279 @@
+\documentclass[12pt]{article}
+
+\usepackage{fullpage}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{centernot}
+\usepackage{pifont}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{blkarray}
+
+\usepackage{pgfplots}
+	\usetikzlibrary{
+		calc,
+		patterns,
+		positioning,
+		angles
+	}
+	\pgfplotsset{
+		compat = 1.12,
+		samples = 400,
+		clip = false
+	}
+	\tikzset{>=stealth}
+
+\usepackage{float}
+\usepackage{caption}
+	\captionsetup{
+		format=plain,
+		labelfont=bf,
+		font=small,
+		justification=centering
+	}
+
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}} 
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}} 
+\newenvironment{example}[2][Example]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}} 
+\newenvironment{definition}[2][Definition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}} 
+\newenvironment{scholium}[2][Scholium]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}} 
+\newenvironment{solution}
+               {\let\oldqedsymbol=\qedsymbol
+                \renewcommand{\qedsymbol}{$\blacktriangleleft$}
+                \begin{proof}[\textit\upshape Solution]}
+               {\end{proof}
+                \renewcommand{\qedsymbol}{\oldqedsymbol}}
+\newenvironment{vproof}
+               {\let\oldqedsymbol=\qedsymbol
+                \renewcommand{\qedsymbol}{\ding{170}}
+                \begin{proof}[\textit\upshape Vague idea]}
+               {\end{proof}
+                \renewcommand{\qedsymbol}{\oldqedsymbol}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Even}{\mathbb{E}}
+\newcommand{\Odd}{\mathbb{O}}
+\newcommand{\st}{\text{ s.t. }}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\Ts}{\mathcal{T}_\text{std}}
+\newcommand{\Rs}{\mathbb{R}_\text{std}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\dg}{^{\circ}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\BLL}{\mathcal{B}_\text{LL}}
+\newcommand{\RLL}{\mathbb{R}_\text{LL}}
+\newcommand{\TLL}{\mathcal{T}_\text{LL}}
+\newcommand{\Rh}{\mathbb{R}_\text{har}}
+\newcommand{\Hbub}{\mathbb{H}_\text{bub}}
+\newcommand{\Zar}{\mathbb{Z}_\text{arith}}
+\newcommand{\lcm}{\text{lcm}}
+\newcommand{\Sub}{\mathscr{S}}
+\newcommand{\Cl}{\text{Cl}}
+\newcommand{\snd}{2\textsuperscript{nd} }
+\newcommand{\fst}{1\textsuperscript{st}}
+\newcommand{\Cov}{\mathscr{C}}
+\newcommand{\im}{\text{im}}
+\newcommand{\init}{\text{in}}
+\newcommand{\Poly}{\mathscr{P}}
+\newcommand{\row}{\text{row}}
+\newcommand{\piv}{\text{pivots}}
+\newcommand{\first}{\text{first}}
+\newcommand{\F}{\mathcal{F}}
+\newcommand{\ass}{\text{Ass}}
+\newcommand{\ann}{\text{Ann}}
+\newcommand{\spec}{\text{Spec}}
+
+
+\title{Examples of things}
+\author{Ben Clingenpeel}
+\date{9/8/22}
+
+\begin{document}
+
+\maketitle
+
+
+\section{Ideal quotients and saturations}
+
+\begin{definition}{1}
+	Let $R$ be a ring. Given ideals $I, J \subset R$, we define the \textbf{quotient} or \textbf{colon ideal} \[ I:J = \{ r \in R \mid \text{for all } s \in J, rs \in I \} \] and the \textbf{saturation} \[ I:J^\infty = \{r \in R \mid \text{for all } s \in J, \text{ there exists an } n \geq 0 \text{ such that } rs^n \in I\}. \] When $J = (x)$ for some $x \in R$, we write $I:x$ instead of $I:(x)$. Then \[ I:x = \{r \in R \mid \text{for all } x^k \in (x), rx^k \in I\} = \{r \in R \mid rx \in I\}. \]
+\end{definition}
+
+
+\begin{example}{1}
+	In $R = \Z$, let $I = (4)$ and $J = (6)$. Then \begin{align*}
+		I:J &= \{m \in \Z \mid \forall a \in (6), ma \in (4)\} \\
+		&= \{m \in \Z \mid \forall k \in \Z, 4 | m \cdot (6k) \} = (2),
+	\end{align*} and \begin{align*}
+		I:J^\infty &= \{m \in \Z \mid \forall a \in (6), \exists n \geq 0 \text{ s.t. } ma^n \in (4)\} \\
+		&= \{m \in \Z \mid \forall k \in \Z, \exists n \geq 0 \text{ s.t. } 4 | m \cdot (6k)^n \} = \Z
+	\end{align*} since choosing $n = 2$ suffices for any $m$. 
+\end{example}
+
+
+\begin{proposition}{4.4.13 \cite{cox2013ideals}}
+	Let $I$ and $J_1, \dots, J_n$ be ideals in $R$. Then \[ I : \left(\sum_{i=1}^n J_i\right) = \bigcap_{i=1}^n I:J_i \quad \text{and} I : \left(\sum_{i = 1}^n J_i\right)^\infty = \bigcap_{i = 1}^n I:J_i^\infty. \]
+\end{proposition}
+
+
+\begin{example}{2}
+	In $R = k[x,y,z]$, let $I = (xy^4z, x^2z^3)$ and $J = (xz,y)$. Then \begin{align*}
+		I : J &= (I : xz) \cap (I : y) \\
+		&= (y^4, xz^2) \cap (xy^3z, x^2 z^3) \\
+		&= (xy^4z, x^2y^4z^3, xy^3z^2, x^2z^3) \\
+		&= (xy^4z, xy^3z^2, x^2z^3).
+	\end{align*} Where we have used the above proposition. We compute the saturation similarly: \begin{align*}
+		I : J^\infty &= (I : (xz)^\infty) \cap (I : y^\infty) \\
+		&= k[x,y,z] \cap (xz) = (xz)
+	\end{align*} where $I: (xz)^\infty = k[x,y,z]$ because we can choose $n = 3$ in the defition of a saturation to show that $1 \in I : (xz)^\infty$. 
+\end{example}
+
+
+\begin{proposition}{4.4.9 \cite{cox2013ideals}}
+	There exists an $N \in \N$ such that for all $n \geq N$, the saturation $I:J^\infty$ is $I:J^n$, where $J^n$ is the product of ideals. 
+\end{proposition}
+
+
+\noindent In Example 1, we have that $I: J^\infty = I: J^n$ for all $n \geq 2$, and in Example 2. we have that $I: J^\infty = I: J^n$ for all $N \geq 5$. 
+
+
+\section{Associated primes via annihilators}
+
+\begin{definition}{2}
+	Let $R$ be a ring and $M$ an $R$-module. Then for an $x \in M$ define the \textbf{annihilator of $x$} to be the ideal $\ann(x)$ or $\ann_R(x)$ given by $\ann(x) = \{r \in R \mid rx = 0\}$. We define the \textbf{annihilator of $M$} to be the ideal $\ann(M) = \ann_R(M) = \{r \in R \mid rM = 0\}$, the intersection $\bigcap_{x \in M} \ann(x)$. 
+\end{definition}
+
+
+\begin{example}{3}
+	Let $R = \Z$ and let $M$ be the group $\Z_2 \oplus \Z_4$. Then the annihilator of $(1,2)$ is \[ \ann( (1,2) ) = \{n \in \Z \mid n(1,2) = (0,0) \in \Z_2 \oplus \Z_4\} = (2), \] and the annihilator of the entire module is \[ \ann(\Z_2 \oplus \Z_4) = \{n \in \Z \mid n(a,b) = (0,0) \text{ for all } (a,b) \in \Z_2 \oplus \Z_4\} = (4). \]
+\end{example}
+
+
+\begin{definition}{4}
+	Let $R$ be a ring and $M$ an $R$-module. Then we define the set of \textbf{associated primes of $M$} by $\ass(M) = \{P \in \spec R \mid P = \ann(x) \text{ for some } x \in M\}$.
+\end{definition}
+
+
+\begin{example}{4}
+	Let $R = k[x,y,z]$ and let $M$ be the quotient ring $R/I$ viewed as an $R$-module, where $I$ is the ideal $I = (xy^4z, x^2z^3)$ from Example 2. Then the associated primes are \begin{align*}
+		(z) &= \ann(x^2y^4 + I) \\
+		(x) &= \ann(y^4z^3 + I) \\
+		(y,z) &= \ann(x^2 y^3 z^2 + I) \\
+		(x,y) &= \ann(x y^3 z^3 + I).
+	\end{align*} These are associated primes because they are proper prime ideals and all are the annihilator of an element in $R/I$. To show these are the only associated primes, we would need to show that any other element either has one of the above primes as its annihilator, or has an annihilator which is not prime. \color{red} (Fill in these details.)
+\end{example}
+
+
+\begin{example}{5}
+	Let $R = \Z$ and let $M$ be $\Z / I$ where $I = (2 \cdot 3^5 \cdot 7^2)$. Then $\ass(M) = \{(2), (3), (7)\}$. To show this, we note that $(2) = \ann(3^5 \cdot 7^2 + I)$, $(3) = \ann(2 \cdot 3^4 \cdot 7^2)$, and $(7) = \ann(2 \cdot 3^5 \cdot 7)$. Therefore $\{(2), (3), (7)\} \subset \ass(M)$. Now if $(p) \in \ass(M)$ for some prime $p \in \Z$, then $(p) = \ann(m + I)$ for some $m + I \in \Z/I$ with $m \notin I$. That is, there exists some $m \in \Z$ not divisible by $k := 2 \cdot 3^5 \cdot 7^2$ such that $p^n m$ is divisible by $k$ for all $n \in \N$, in particular, $pm$ is divisible by $k$. Therefore there is an $l \in \Z$ such that $pm = kl$, meaning $m = kl / p \in \Z$. If $p \mid k$, we would have $m = (k/p) \cdot l$ implying $l \mid m$, which we assumed not to be the case, so we must have that $p \mid l$, i.e. that $p = 2$, $p = 3$, or $p = 7$. But these are exactly the possibilities for $p$ we have already given, so $\ass(M) = \{(2), (3), (7)\}$. 
+\end{example}
+
+
+\section{Associated primes via primary decomposition}
+
+
+\begin{definition}{5}
+	Let $R$ be a ring with ideal $Q \subset R$. The ideal $Q$ is \textbf{primary} iff it is a proper ideal satisfying \[ xy \in Q \implies x \in Q \text{ or } y^n \in Q\text{ for some } n > 0. \] If $P$ is the smallest prime ideal containing a primary ideal $Q$, then we call $Q$ a \textbf{$P$-primary ideal}.
+\end{definition}
+
+
+\begin{example}{6}
+	Let $R = k[x]$. Then $I = (x^3)$ is primary. If $fg \in I$, then $fg = hx^3$ for some $h \in k[x]$. If $f \notin I$, then $x^3$ does not divide $f$, so $f = h'x^m$ for some $m = 0$, $1$, or $2$ and some $h' \in k[x]$ that divides $h$. Therefore \[ g = \frac{hx^3}{h'x^m} = x^{3 - m} \cdot \frac{h}{h'} \in k[x]. \] Since $3 - m \geq 1$, we have that \[ g^3 = x^{3(3 - m)} \left(\frac{h}{h'}\right)^3 \] is divisible by $x^3$. Therefore $g^3 \in I$, and so $I$ is primary. 
+\end{example}
+
+
+\noindent \textbf{Proposition.} A primary ideal $Q$ is $P$-primary for $P = \sqrt{Q}$. That is, $\sqrt{Q}$ is the smallest prime containing $Q$. 
+
+\begin{proof}
+	Let $Q$ be a primary ideal. By Corollary 1.12 of \cite{reid1995undergraduate}, \[ \sqrt{Q} = \bigcap_{\stackrel{P \supset Q}{P \text{ prime}}} P, \] meaning $\sqrt{Q} \subset P$ for all primes $P$ containing $Q$. Therefore showing $\sqrt{Q}$ is prime will imply $\sqrt{Q}$ is the smallest prime containing $Q$. To do so, let $xy \in \sqrt{Q}$. Then there exists an $m > 0$ such that $x^m y^m \in Q$, by definition of the radical. Since $Q$ is primary, we have that $x^m \in Q$, or that there exists an $n > 0$ such that $(y^m)^n \in Q$. In the first case, $x^m \in Q$ implies that $x \in \sqrt{Q}$, and in the second case, $y^{mn} \in Q$ implies that $y \in \sqrt{Q}$. Therefore $xy \in \sqrt{Q}$ implies that $x \in \sqrt{Q}$ or $y \in \sqrt{Q}$, and so $\sqrt{Q}$ is prime. Because $\sqrt{Q}$ is contained in all primes containing $Q$, $\sqrt{Q}$ is the smallest prime containing $Q$, and so $Q$ is $P$-primary for $P = \sqrt{Q}$. 
+\end{proof}
+
+
+\begin{definition}{6}
+	Given a proper ideal $I \subset R$, a \textbf{primary decomposition of $I$} is an expression \[ I = Q_1 \cap \dots \cap Q_n \] for primary ideals $Q_1, \dots, Q_n \subset R$. A primary decomposition of $I$ is called \textbf{minimal} if 
+
+	(1) $\sqrt{Q_i} \neq \sqrt{Q_j}$ for all $i \neq j$, and 
+
+	(2) for all $i = 1, \dots n$, we have that $\bigcap_{j \neq i} Q_j \not \subset Q_i$.
+\end{definition}
+
+
+\begin{example}{7}
+	Let $R = \Z$ and let $I = (2 \cdot 3^5 \cdot 7^2)$ as in Example 5. Then a primary decomposition for $I$ is \[ I = (2) \cap (3^2) \cap (2 \cdot 7) \cap (3^5) \cap (7^2). \] Note that this decompoisition is not minimal. 
+\end{example}
+
+
+\noindent \textbf{Theorem.} In a Noetherian ring $R$, every ideal $I \subset R$ has a primary decomposition. 
+
+\begin{proof}
+	This is Theorem 4.8.4 of \cite{cox2013ideals}. We fill in the details of their proof here: first showing that $I$ is the intersection of finitely many irreducible ideals (ideals $I$ for which $I = I_1 \cap I_2$ implies $I = I_1$ or $I = I_2$), and then showing that irreducible ideals are primary. 
+
+	Suppose for contradiction that $I$ cannot be written as the intersection of finitely many irreducible ideals. Then $I$ is not irreducible, so we have that $I = I_1 \cap I_1'$ where $I \subsetneq I_1, I_1'$. If both $I_1$ and $I_1'$ can be written as the intersection of finitely many irreducible ideals, then so can $I$, so $I_1$ or $I_1'$ cannot be written in this way. Assume without loss of generality that this is $I_1$. Then we may write $I_1 = I_2 \cap I_2'$ for $I_1 \subsetneq I_2, I_2'$. By the same argument we may assume that $I_2$ cannot be written as the interesection of finitely many irreducible ideals, and so continuing in this fashion gives an ascending chain \[ I \subsetneq I_1 \subsetneq I_2 \subsetneq \dots. \] However, this contradicts the assumption that $R$ is Noetherian, and so we must have that $I$ can be written as the intersection of finitely many irreducible ideals. 
+
+	Suppose now that $J = (x_1, \dots, x_m)$ is an irreducible ideal (and since $R$ is Noetherian we may safely assume finite generation), and suppose $rs \in J$ for some $r,s \in R$. By Proposition 4.4.9 at the end of Section 1, there exists an $N \in \N$ such that $J: s^\infty = J: s^n$ for all $n \geq N$. Because $J \subset J + (r), J + (s^N)$, we have that $J \subset \left(J + (r)\right) \cap \left(J + (s^N) \right)$. Suppose now that $y \in \left(J + (r)\right) \cap \left(J + (s^N) \right)$. Then we have that \[ a_1 x_1 + \dots a_m x_m + br = y = c_1 x_1 + \dots + c_m x_m + ds^N \] for some $a_1, \dots, a_m, b, c_1, \dots, c_m, d \in R$. But then this implies that \[ ds^N - br = (a_1 - c_1) x_1 + \dots + (a_m - c_m) x_m \in J. \] Since $J$ is an ideal, also $ds^{N+1} - brs \in J$, and since $rs \in J$, this implies that $ds^{N+1} \in J$. Therefore $d \in J:s^{N+1} = J: s^\infty = J: s^N$, meaning also $ds^N \in J$. Hence $y = c_1 x_1 + \dots + c_m x_m + ds^N \in J$, and so $\left(J + (r)\right) \cap \left(J + (s^N) \right) \subset J$. Because $J$ is irreducible and $J = \left(J + (r)\right) \cap \left(J + (s^N) \right)$, we have that either $J = J + (r)$, in which case $r \in J$, or $J = J + (s^N)$, in which case $s^N \in J$. Therefore $J$ is primary. Combining this with the result that any ideal $I$ can be written as an intersection of finitely many irreducible ideals, we see that in fact, $I$ is the intersection of finitely many primary ideals, and so has a primary decomposition. 
+\end{proof}
+
+
+\begin{theorem}{4.8.7 \cite{cox2013ideals}}
+	In a Noetherian ring $R$, every ideal $I \subset R$ has a \emph{minimal} primary decomposition. 
+\end{theorem}
+
+
+\begin{proposition}{7.17 \cite{atiyah1969introduction}}
+	Let $I = Q_1 \cap \dots \cap Q_n$ be a minimal primary decomposition of a proper ideal $I \subset R$, and let $P_i = \sqrt{Q_i}$. Then the $P_i$ are precisely the proper prime ideals in the set $\{I:r \mid r \in R\}$. 
+\end{proposition}
+
+
+\begin{corollary}{1}
+	The set $\ass(R/I)$ of associated primes of the $R$-module $R/I$ is exactly the set of primes $\{P_1, \dots, P_n\}$ where $I = \bigcap_{i = 1}^n Q_i$ is a minimal primary decomposition and $Q_i$ is $P_i$-primary, as in the Proposition above. 
+\end{corollary}
+
+\begin{proof}
+	We first show that $\{P_1, \dots, P_n\} \subset \ass(R/I)$. For each $P_i$, there exists an $r_i \in R$ such that \[ P_i = I: r_i = \{ s \in R \mid sr_i \in I \} = \{s \in R \mid s(r_i + I) = I\} = \ann(r_i + I). \] Since $P_i$ is the annihilator of the element $r_i + I \in R/I$, $P_i \in \ass(R/I)$. Now suppose $P \in \ass(R/I)$. Then there is a coset $x + I \in R/I$ annihilated by $P$, so that \[ P = \ann(x + I) = \{s \in R \mid s(x + I) = I\} = \{s \in R \mid sx \in I\} = I:x. \] Because $P \in \ass(R/I)$ is a proper prime ideal, the above Proposition says that $P = \sqrt{Q_i} = P_i$ for some $Q_i$ in the primary decomposition of $I$.
+\end{proof}
+
+
+\begin{example}{8}
+	From Example 7, we have the primary decomposition \[ I = (2 \cdot 3^5 \cdot 7^2) = (2) \cap (3^2) \cap (2 \cdot 7) \cap (3^5) \cap (7^2). \] Since $(3^5) \subset (3^2)$, we can shorten the decomposition to \[ I = (2 \cdot 3^5 \cdot 7^2) = (2) \cap (2 \cdot 7) \cap (3^5) \cap (7^2). \] Then since $(2) \cap (3^5) \cap (7^2) \subset (2 \cdot 7)$, we may again shorten to \[ I = (2 \cdot 3^5 \cdot 7^2) = (2) \cap (3^5) \cap (7^2) \] to obtain a minimal primary decomposition. We now note two things: 1) the above decomposition of the ideal mirrors the normal prime factorization of the integer generating the ideal exactly, and 2) we can now verify the above Corollary 1 by noting that $\sqrt{(2)} = (2)$, $\sqrt{(3^5)} = (3)$, and $\sqrt{(7^2)} = (7)$, and these are exactly the associated primes of $R/I$ per Example 5.
+\end{example}
+
+
+\begin{example}{9}
+	For the ideal $I = (xy^4z, x^2z^3)$ of $R = k[x,y,z]$ from Examples 2 and 4, Sage gives the following primary decomposition: \[ I = (xy^4z, x^2z^3) = (z) \cap (x) \cap (z^3,y^4) \cap (x^2,y^4). \] The radicals of these ideals are $(z)$, $(x)$, $(z,y)$, and $(y,x)$, respectively, and these are exactly the associated primes calculated in Example 4.
+\end{example}
+
+
+
+
+
+
+
+
+\newpage
+\bibliographystyle{alpha}
+\bibliography{references}
+
+
+
+
+
+\end{document}

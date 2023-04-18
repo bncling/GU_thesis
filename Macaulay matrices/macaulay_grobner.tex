@@ -1,0 +1,219 @@
+\documentclass[12pt]{article}
+
+\usepackage{fullpage}
+\usepackage{hyperref}
+\usepackage[onehalfspacing]{setspace}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{centernot}
+\usepackage{pifont}
+\usepackage{graphicx}
+\usepackage{mathrsfs}
+\usepackage{blkarray}
+
+\usepackage{pgfplots}
+	\usetikzlibrary{
+		calc,
+		patterns,
+		positioning,
+		angles
+	}
+	\pgfplotsset{
+		compat = 1.12,
+		samples = 400,
+		clip = false
+	}
+	\tikzset{>=stealth}
+
+\usepackage{float}
+\usepackage{caption}
+	\captionsetup{
+		format=plain,
+		labelfont=bf,
+		font=small,
+		justification=centering
+	}
+
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}} 
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}} 
+\newenvironment{scholium}[2][Scholium]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}} 
+\newenvironment{solution}
+               {\let\oldqedsymbol=\qedsymbol
+                \renewcommand{\qedsymbol}{$\blacktriangleleft$}
+                \begin{proof}[\textit\upshape Solution]}
+               {\end{proof}
+                \renewcommand{\qedsymbol}{\oldqedsymbol}}
+\newenvironment{vproof}
+               {\let\oldqedsymbol=\qedsymbol
+                \renewcommand{\qedsymbol}{\ding{170}}
+                \begin{proof}[\textit\upshape Vague idea]}
+               {\end{proof}
+                \renewcommand{\qedsymbol}{\oldqedsymbol}}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Even}{\mathbb{E}}
+\newcommand{\Odd}{\mathbb{O}}
+\newcommand{\st}{\text{ s.t. }}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\Ts}{\mathcal{T}_\text{std}}
+\newcommand{\Rs}{\mathbb{R}_\text{std}}
+\newcommand{\inv}{^{-1}}
+\newcommand{\dg}{^{\circ}}
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\BLL}{\mathcal{B}_\text{LL}}
+\newcommand{\RLL}{\mathbb{R}_\text{LL}}
+\newcommand{\TLL}{\mathcal{T}_\text{LL}}
+\newcommand{\Rh}{\mathbb{R}_\text{har}}
+\newcommand{\Hbub}{\mathbb{H}_\text{bub}}
+\newcommand{\Zar}{\mathbb{Z}_\text{arith}}
+\newcommand{\lcm}{\text{lcm}}
+\newcommand{\Sub}{\mathscr{S}}
+\newcommand{\Cl}{\text{Cl}}
+\newcommand{\snd}{2\textsuperscript{nd} }
+\newcommand{\fst}{1\textsuperscript{st}}
+\newcommand{\Cov}{\mathscr{C}}
+\newcommand{\im}{\text{im}}
+\newcommand{\init}{\text{in}}
+\newcommand{\Poly}{\mathscr{P}}
+\newcommand{\row}{\text{row}}
+\newcommand{\piv}{\text{pivots}}
+\newcommand{\first}{\text{first}}
+\newcommand{\F}{\mathcal{F}}
+
+
+\title{Macaulay matrices and Gröbner bases}
+\author{Ben Clingenpeel}
+\date{6/15/22}
+
+\begin{document}
+
+\maketitle
+
+Let $\mathcal{F} = \{f_1, \dots, f_s\}$ be a collection of elements of the polynomial ring $k[x_1, \dots, x_n]$ for a field $k$, and fix a term order $<$. For a given degree $d \geq 0$, we let $M_{\leq d}$ denote the Macaulay matrix of the system $\F$, as defined in \cite{caminata2020solving}. Then if the matrix $A$ is the Macaulay matrix of some collection $\mathcal{B}$ of polynomials, we define $\Poly(A)$ to be the collection of polynomials corresponding to the nonzero rows of $A$. If $\{a_{ij}\}$ is some set of entries of the matrix $A$, we define $\Poly(\{a_{ij}\})$ to be the set of monomials that index the columns $i$. \\
+
+\noindent \textbf{Example 1.} Let $f_1 = x$ and $f_2 = x^2 - y$. Then the degree $d = 2$ Macaulay matrix of $\F = \{f_1, f_2\}$ with respect to the degree reverse lexicographic (DRL) order is \[ M_{\leq 2} = \begin{blockarray}{ccccccc}
+    & x^2 & xy & y^2 & x & y & 1 \\
+    \begin{block}{c(cccccc)}
+        f_1 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 \\
+        xf_1 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 \\
+        yf_1 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 \\
+        f_2 & \mathbf{1} & 0 & 0 & 0 & \mathbf{-1} & 0 \\
+    \end{block}
+\end{blockarray} \quad . \] Then we have that $\Poly(M_{\leq 2}) = \{f_1, xf_1, yf_1, f_2\} = \{x, x^2, xy, x^2 - y\}$, and we have that $\Poly(\{a_{41}, a_{12}, a_{23}, a_{14}\}) = \{x, x^2, xy, x\} = \{x^2, xy, x\}$. \\ 
+
+Throughout, given a matrix $A$, we will denote the Reduced Row Echelon Form (RREF) of $A$ by $A^r$. \\
+
+\noindent \textbf{Example 2.} Using $M_{\leq 2}$ above, we have that \[ M_{\leq 2}^r = \begin{pmatrix}
+	\mathbf{1} & 0 & 0 & 0 & 0 & 0 \\
+	0 & \mathbf{1} & 0 & 0 & 0 & 0 \\
+	0 & 0 & 0 & \mathbf{1} & 0 & 0 \\
+	0 & 0 & 0 & 0 & \mathbf{1} & 0
+\end{pmatrix}. \] Then $\Poly(M_{\leq 2}^r) = \{x^2, xy, x, y\}$. \\
+
+The following Lemma says that the ideal generated by $\Poly(M_{\leq d})$, the set of polynomials in the Macaulay matrix, is the same as the ideal generated by $\Poly(M_{\leq d}^r)$, the set of polynomials from the row reduced Macaulay matrix.
+
+
+\begin{lemma}{1}
+	Let $M$ be a Macaulay matrix of some collection of polynomials $\F$ and denote the ideal it generates by $I$. Then for $d \geq 0$, we have that $(\Poly(M_{\leq d}^r)) = (\Poly(M_{\leq d}))$. 
+\end{lemma}
+
+\begin{proof}
+	Recall that the elementary row operations performed on a matrix during Gaussian elimination do not change its row space. Since $\row(M_{\leq d}^r) = \row(M_{\leq d})$, any polynomial $f \in \Poly(M_{\leq d}^r)$ is a $k$-linear combination of the elements of $\Poly(M_{\leq d})$, where $k$ is the field over which the polynomial ring is defined. Since ideals in $k[x_1, \dots, x_n]$ are closed under linear combinations of elements, we have that $\Poly(M_{\leq d})$ and $\Poly(M_{\leq d}^r)$ generate the same ideal: any $f \in \Poly(M_{\leq d}^r)$ can be written as $a_1 p_1 + \dots + a_m p_m$ for some $a_i \in k$ and $p_i \in \Poly(M_{\leq d})$, meaning $f \in (\Poly(M_{\leq d}))$, the ideal generated by $\Poly(M_{\leq d})$. Since the generators of $(\Poly(M_{\leq d}^r))$ are all contained in $(\Poly(M_{\leq d}))$, we have that $(\Poly(M_{\leq d}^r)) \subset (\Poly(M_{\leq d}))$, and a similar argument gives the other containment. 
+\end{proof}
+
+
+\begin{corollary}{1}
+	For an ideal $I = (\F)$, there exists a $D \geq 0$ such that for all $d \geq D$, $(\Poly(M_{\leq d}^r)) = I$. 
+\end{corollary}
+
+\begin{proof}
+	Let $\F_{\leq d} = \{f \in \F \mid \deg(f) \leq d\}$ be the set of polynomials in $\F$ with degree less than or equal to $d$. Then $\Poly(M_{\leq d})$ is the set of polynomials in the corresponding Macaulay matrix, and so consist of the elements of $\F_{\leq d}$, along with monomial multiples of the elements of $\F_{\leq d}$. Since these multiples are already in the ideal $(\F_{\leq d})$ (because ideals are closed under multiplication by ring elements), we have that $(\Poly(M_{\leq d})) = (\F_{\leq d})$. 
+
+	Now choose the degree $D$ to be $D = \max \{\deg(f) \mid f \in \F\}$ so that $\F_{\leq d} = \F$ for all $d \geq D$. Then we apply Lemma 1 to say that if $d \geq D$, then \[ (\Poly(M_{\leq d}^r)) = (\Poly(M_{\leq d})) = (\F_{\leq d}) = (\F) = I, \] as required.
+\end{proof}
+
+\noindent \textbf{Definition 1.} For an ideal $I = (\F)$, we define the \textbf{initial ideal of $I$} to be the ideal $\init(I) = (\{\init(f) \mid f \in I \setminus \{0\}\})$, and we define $\init(\F) = (\{\init(f_i) \mid f_i \in \F\})$ so that $\init(I)$ is the ideal generated by the initial terms of all elements of $I$ and $\init(\F)$ is the ideal generated by the initial terms of elements of the generating set $\F$. If $\init(I) = \init(\F)$, we say that $\F$ is a \textbf{Gröbner basis for $I$}.  \\
+
+\noindent \textbf{Definition 2.} Let $\piv(A)$ be the set of pivot positions of the matrix $A$. Then define the monomial ideal $\init(d)$ by $\init(d) = (\Poly(\piv(M_{\leq d})))$. That is, $\init(d)$ is the ideal generated by the monomials corresponding to the pivot columns of the Macaulay matrix. \\
+
+\noindent \textbf{Remark 1.} In the definition above, note that the pivot columns of the Macaulay matrix are those columns of $M_{\leq d}^r$ that contain a leading entry 1 of a some row. Since these rows correspond to the polynomials in $\Poly(M_{\leq d}^r)$, the monomials that index these pivot columns therefore correspond exactly to the initial terms of the polynomials in $\Poly(M_{\leq d}^r)$, and so $\init(d) = \init(\Poly(M_{\leq d}^r))$ as in Definition 1, substituting $\Poly(M_{\leq d}^r)$ for $\F$. \\
+
+\noindent \textbf{Example 3.} Using the DRL ordering, let $\F = \{f_1, f_2\}$ with $f_1 = x^2 - 1$ and $f_2 = xy + x$, as in Example 8 of \cite{caminata2020solving}. Then we have that $\init(\F) = (x^2, xy)$, but because \[ y + 1 = -x^2y + y - x^2 + 1 + x^2y + x^2 = -(y + 1) f_1 + x f_2 \in I \] implies that $y \in \init(I) \setminus \init(\F)$, we have that $\init(\F) \neq \init(I)$, and therefore $\F$ is not a Gröbner basis for $I$. 
+
+Continuing this example, we can compute that \[ M_{\leq 2} = \begin{blockarray}{ccccccc}
+    & x^2 & xy & y^2 & x & y & 1 \\
+    \begin{block}{c(cccccc)}
+        f_1 & \mathbf{1} & 0 & 0 & 0 & 0 & \mathbf{-1} \\
+        f_2 & 0 & \mathbf{1} & 0 & \mathbf{1} & 0 & 0 \\
+    \end{block}
+\end{blockarray} \,\, = M_{\leq 2}^r, \] which is already reduced. Therefore $\piv(M_{\leq 2}) = \{a_{11}, a_{22}\}$, and so \[ \init(2) = (\Poly(\piv(M_{\leq 2}))) = (\Poly(\{a_{11}, a_{22}\})) = (x^2, xy), \] which we see does indeed equal the ideal generated by the initial terms of the polynomials in $\Poly(M_{\leq 2}^r) = \{x^2 - 1, xy + x\}$. 
+
+By the above, we know then that $\Poly(M_{\leq 2}^r)$ is not a Gröbner basis for $I$, but if instead we do the same computations with degree $d = 3$, we have the following: \[ M_{\leq 3} = \begin{blockarray}{ccccccccccc}
+    & x^3 & x^2y & xy^2 & y^3 & x^2 & xy & y^2 & x & y & 1 \\
+    \begin{block}{c(cccccccccc)}
+        f_1 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & \mathbf{-1} \\
+        f_2 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & \mathbf{1} & 0 & 0 \\
+        xf_1 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{-1} & 0 & 0 \\
+        yf_1 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{-1} & 0 \\
+        xf_2 & 0 & \mathbf{1} & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 \\
+        yf_2 & 0 & 0 & \mathbf{1} & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 \\
+    \end{block}
+\end{blockarray} \,\,, \] and bringing this into RREF, we have \[ M_{\leq 3}^r = \begin{pmatrix}
+	\mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{-1} & 0 & 0 \\
+	0 & \mathbf{1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} \\
+	0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & \mathbf{-1} & 0 & 0 \\
+	0 & 0 & 0 & 0 & \mathbf{1} & 0 & 0 & 0 & 0 & \mathbf{-1} \\
+	0 & 0 & 0 & 0 & 0 & \mathbf{1} & 0 & \mathbf{1} & 0 & 0 \\
+	0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & \mathbf{1} & \mathbf{1} \\
+\end{pmatrix}, \] so that $\init(3) = (x^3, x^2y, xy^2, x^2, xy, y) = (x^2, y) = \init(I)$. Therefore $\init(\Poly(M_{\leq 3}^r)) = \init(3) = \init(I)$, and since the maximal degree of the original set of polynomials $\F = \{f_1, f_2\}$ is $2$, the proof of Corollary 1 implies that $(\Poly(M_{\leq 3}^r)) = I$. Therefore \[ \Poly(M_{\leq 3}^r) = \{x^3 - x, x^2y + 1, xy^2 - x, x^2 - 1, xy + x, y + 1\} \] is a Gröbner basis for $I$. \\
+
+In the above example, a Gröbner basis was found by computing $\Poly(M_{\leq d}^r)$ up to degree $d = 3$. In general, ideals may require computing $\Poly(M_{\leq d}^r)$ for degrees much larger than $d = 3$, but we claim that for any ideal $I = (\F)$ there is always some choice of degree $d \geq 0$ for which $\Poly(M_{\leq d}^r)$ is a Gröbner basis for $I$. We will prove this Theorem after the following Lemma, generalizing the observation that in Example 3, $\init(2)$ was contained in $\init(3)$. 
+
+\newpage
+
+\begin{lemma}{2}
+	Given an ideal $I = (\F)$ and degrees $d_1$ and $d_2$ with $d_1 \leq d_2$, we have that $\init(d_1) \subset \init(d_2)$. 
+\end{lemma}
+
+\begin{proof}
+	Since $\init(d_1)$ and $\init(d_2)$ are monomial ideals, it is a Corollary of Lemma 3 of section 2.4 of \cite{cox2013ideals}, that $\init(d_1) \subset \init(d_2)$ if and only if all monomials of $\init(d_1)$ lie in $\init(d_2)$. Therefore let $m \in \init(d_1)$ be a monomial. Lemma 2 of the same section in \cite{cox2013ideals} says that $m \in \init(d_1) = (\Poly(\piv(M_{\leq d_1})))$, means that there is some generating monomial $m^* \in \Poly(\piv(M_{\leq d_1}))$ that divides $m$. Therefore, if we can show that $m^* \in \init(d_2)$, we will have that $m \in \init(d_2)$. To this end, note that $m^* \in \Poly(\piv(M_{\leq d_1}))$ means that the column of $M_{\leq d_1}$ indexed by $m^*$ is a pivot column, so the corresponding column in $M_{\leq d_1}^r$ is all zeros except for a $1$ in a row that corresponds to a polynomial $p$ with $\init(p) = m^*$. This row corresponding to $p$ is in the row space $\row(M_{\leq d_1}^r) = \row(M_{\leq d_1})$, and so $p$ can be written as a $k$-linear combination of the polynomials in $\Poly(M_{\leq d_1})$. Note that the polynomials involved in this $k$-linear combination all have degree less than or equal to $d_1$, which is in turn less than or equal to $d_2$. Therefore these polynomials also correspond to rows of $M_{\leq d_2}$, and we have that $p$ is a $k$-linear combination of the elements of $\Poly(M_{\leq d_2})$. 
+
+	That $p$ is a $k$-linear combination of the elements of $\Poly(M_{\leq d_2})$ means that the row vector $r_p$ corresponding to $p$ with the same length as the length of the rows of $M_{\leq d_2}$ (that is, the row vector representation of $p$ whose entries are indexed by monomials of degree less than or equal to $d_2$) is in the row space $\row(M_{\leq d_2}) = \row(M_{\leq d_2}^r)$, and so this row is a $k$-linear combination of the nonzero rows of $M_{\leq d_2}^r$, say $r_p = c_1 r_1 + \dots + c_t r_t$ where $r_1, \dots, r_t$ are the rows of $M_{\leq d_2}^r$. Recall that $m^* = \init(p)$, and so the entry of $r_p$ indexed by $m^*$ is 1. Because polynomials with initial term less than $m^*$ (with respect to the chosen term ordering) cannot form a $k$-linear combination with initial term $m^*$, we see that $p$ must be a $k$-linear combination of polynomials, some of which must have initial terms at least $m^*$. Because $M_{\leq d_2}^r$ is in RREF and each nonzero row contains a pivot position, there exists some $1 \leq j < t$ such that the pivots of $r_i$ for $i = 1, \dots, j$ are all in columns indexed by monomials greater than $m^*$ and the pivots of $r_i$ for $i > j$ are all in columns indexed by monomials no larger than $m^*$. Then the condition that $p$ is a $k$-linear combination of polynomials, some of which must have initial terms at least $m^*$ means that $r_p$ is a $k$-linear combination of the rows $r_i$, some of which must have pivot positions in columns at least as far to the left as the column corresponding to $m^*$. However, if $c_i \neq 0$ for some $1 \leq i \leq j$ in the combination $r_p = c_1 r_1 + \dots + c_t r_t$, then the leading entry of $r_p$ would be the entry $c_i$ in a column corresponding to a monomial greater than $m^*$ since all rows other than $r_i$ contain zeros in this column, and this would mean that the initial term of $p$ would be $c_i m'$ for some $m' > m^*$, a contradiction. Therefore $c_i = 0$ for all $i = 1, \dots, j$. But since $r_p$ must be a $k$-linear combination of rows, some of which must have pivot positions at least as far to the left as the column corresponding to $m^*$, the only option is that the combination involves some row with a pivot position $a \in \piv(M_{\leq d_2})$ in the column corresponding to $m^*$. Therefore this column is a pivot column of $M_{\leq d_2}$, and so $m^* \in \Poly(\{a\}) \subset \Poly(\piv(M_{\leq d_2}))$.
+
+	We have shown that if $m \in \init(d_1)$, then there is a monomial in $m^* \in \Poly(\piv(M_{\leq d_1}))$ that divides $m$, and that $m^* \in \Poly(\piv(M_{\leq d_2}))$ as well, meaning \[ m \in (m^*) \subset (\Poly(\piv(M_{\leq d_2}))) = \init(d_2). \] Therefore $\init(d_1) \subset \init(d_2)$, as claimed. 
+\end{proof}
+
+
+\begin{theorem}{1}
+	For an ideal $I = (\F)$, there exists a $D \geq 0$ such that $\Poly(M_{\leq D}^r)$ is a Gröbner basis of $I$. 
+\end{theorem}
+
+\begin{proof}
+	By Lemma 2, we have that ascending chain of ideals $\init(0) \subset \init(1) \subset \init(2) \subset \dots$ in the Noetherian ring $k[x_1, \dots, x_n]$, and so there exists a $D' \geq 0$ such that for all $d \geq D'$, $\init(d) = \init(D')$. By Corollary 1, there exists some $D^* \geq 0$ such that $(\Poly(M_{\leq d}^r)) = I$ for all $d \geq D^*$. Set $D = \max \{D', D^*\}$. Then for all $d \geq D$, we have that $(\Poly(M_{\leq d}^r)) = I$ and that $\init(d) = \init(D)$. By Remark 1, $\init(D)$ is the set $\init(\Poly(M_{\leq D}^r))$, and so to show that $\Poly(M_{\leq D}^r)$ is a Gröbner basis for $I$, it suffices to show that $\init(D) = \init(I)$. Because the ideal $(\Poly(M_{\leq D}^r))$ is the ideal $I$, all initial terms of polynomials in $\Poly(M_{\leq D}^r)$ are initial terms of polynomials in $I$, and so $\init(D) = \init(\Poly(M_{\leq D}^r)) \subset \init(I)$. 
+
+	To show the other containment, recall from the proof of Lemma 2 that $\init(D)$ and $\init(I)$ being monomial ideals means it is sufficient to show that all monomials $m \in \init(I)$ are in $\init(D)$ in order to show that $\init(I) \subset \init(D)$. Therefore let $m \in \init(I)$ be an arbitrary monomial. Then there exists some $p \in I$ with initial term $\init(p) = m^*$ such that $m^*$ divides $m$. Then using Lemma 1, $p \in I$ means \[ p \in I = (\Poly(M_{\leq D}^r)) = (\Poly(M_{\leq D})), \] so $p$ can be written as $p = \sum_{q \in \Poly(M_{\leq D})} h_q q$ where $h_q \in k[x_1, \dots, x_n]$. Then because each $h_q$ is a $k$-linear combination of monomials, we have that $h_q = \sum_{\alpha \in N_q} a_\alpha x^\alpha$ for some finite index set $N_q$. Therefore \[ p = \sum_{q \in \Poly(M_{\leq D})} \sum_{\alpha \in N_q} a_\alpha x^\alpha q. \] Since $\Poly(M_{\leq D})$ is finite and each index set $N_q$ is finite, we may set \[ d^* = \max \left\{\deg(x^\alpha q) \, \bigg| \, \alpha \in \bigcup_{q \in \Poly(M_{\leq D})} N_q, \, q \in \Poly(M_{\leq D}) \right\} \geq D. \] Then because each $q$ is a monomial times one of the polynomials $f \in \F$, so is each each $x^\alpha q$, and therefore $p$ as written above is a $k$-linear combination of polynomials corresponding to rows in the Macaulay matrix $M_{\leq d^*}$. Therefore if $r_p$ is the row vector corresponding to $p$ whose entries are indexed by monomials of degree less than or equal to $d^*$, we have that $r_p$ is an element of the row space $\row(M_{\leq d^*}) = \row(M_{\leq d^*}^r)$. Therefore we have the same situation as in Lemma 2: we have a polynomial $p$ with leading term $m^*$ satisfying $\deg(m^*) \leq d^*$ such that $r_p$ is a $k$-linear combination of the nonzero rows of $M_{\leq d^*}^r$. As in the proof of Lemma 2, then, we have that the column indexed by $m^*$ is a pivot column of $M_{\leq d^*}$, which means that $m^* \in \Poly(\piv(M_{\leq d^*})) = \init(d^*)$. Because $d^* \geq D$, we also have that $m^* \in \init(d^*) = \init(D)$ since the ascending chain $\init(0) \subset \init(1) \subset \init(2) \subset \dots$ stabilizes at or before $D$. Because $m$ is divisible by $m^* \in \init(D)$, we have that $m \in \init(D)$, and so $\init(I) \subset \init(D)$. Therefore $\init(D) = \init(I)$. Since $I = (\Poly(M_{\leq D}^r))$ and $\init(I) = \init(D) = \init(\Poly(M_{\leq D}^r))$, the set $\Poly(M_{\leq D}^r)$ is a Gröbner basis for $I$. 
+\end{proof}
+
+
+\newpage
+\bibliographystyle{alpha}
+\bibliography{references}
+
+
+\end{document}
