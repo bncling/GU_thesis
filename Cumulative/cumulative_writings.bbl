@@ -49,6 +49,11 @@ Ralf Fr{\"o}berg.
 \newblock An inequality for hilbert series of graded algebras.
 \newblock {\em Mathematica Scandinavica}, 56(2):117--144, 1985.
 
+\bibitem[G{\etalchar{+}}98]{green1998generic}
+Mark~L Green et~al.
+\newblock Generic initial ideals.
+\newblock {\em Six lectures on commutative algebra}, 166:119--185, 1998.
+
 \bibitem[Gal74]{galligo1974propos}
 Andr{\'e} Galligo.
 \newblock {\`A} propos du th{\'e}or{\`e}me de-pr{\'e}paration de weierstrass,
@@ -92,5 +97,12 @@ W.\thinspace{}A. Stein et~al.
 Van~Duc Trung.
 \newblock The initial ideal of generic sequences and fröberg's conjecture.
 \newblock {\em Journal of Algebra}, 524:79--96, 2019.
+
+\bibitem[TW12]{thomae2012solving}
+Enrico Thomae and Christopher Wolf.
+\newblock Solving underdetermined systems of multivariate quadratic equations
+  revisited.
+\newblock In {\em International Workshop on Public Key Cryptography}, pages
+  156--171. Springer, 2012.
 
 \end{thebibliography}
