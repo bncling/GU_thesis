@@ -111,6 +111,7 @@
 \newtheorem{example}{Example}
 \newtheorem{remark}{Remark}
 \newtheorem*{notation}{Notation}
+\newtheorem{question}{Question}
 
 
 \setcounter{MaxMatrixCols}{20}
@@ -131,7 +132,7 @@
 	We will use $R$ to mean $k[x_1, \dots, x_n]$ for a field $k$. When discussing initial ideals of ideals $I$ with a specified generating set $\F = \{f_1, \dots, f_s\}$, we will use $\Init(I)$ or $\Init(\F)$ to mean the initial ideal $(\init(f): f \in I)$ and $\init(\F)$ (without boldface) to mean the monomial ideal with generators $\{\init(f): f \in \F\} = \{\init(f_1), \dots, \init(f_s)\}$. We recall that a set $\mathcal{G} = \{g_1, \dots, g_t\}$ is a \textbf{Gröbner basis} for $I$ if $(\mathcal{G}) = I$ and $\init(\mathcal{G}) = \Init(\mathcal{G})$.
 \end{notation}
 
-Given a system of of equations $\mathcal{F} = \{f_1, \dots, f_s\}$ in variables $x_1, \dots, x_n$ and the ideal $I = (f_1, \dots, f_s) \subset R$ it defines, we are interested in finding the corresponding solution set, the affine variety $\mathcal{Z}(I)$. A general way to do this is to compute a Gröbner basis with respect to the lexicographic (LEX) order. This yields a system of equations with the same solution set, but crucially, it includes an equation in a single variable, allowing us to solve the system. This approach is outlined in section 2 of \cite{caminata2020solving}. In general, computing a LEX Gröbner basis is more computationally demanding, and so it is often easier to compute a Gröbner basis with respect to the degree reverse lexicographic (DRL) ordering, and then convert the resulting basis to a LEX basis, for example using the \color{red} [algorithm name and reference] \color{black}
+Given a system of of equations $\mathcal{F} = \{f_1, \dots, f_s\}$ in variables $x_1, \dots, x_n$ and the ideal $I = (f_1, \dots, f_s) \subset R$ it defines, we are interested in finding the corresponding solution set, the affine variety $\mathcal{Z}(I)$. A general way to do this is to compute a Gröbner basis with respect to the lexicographic (LEX) order. This yields a system of equations with the same solution set, but crucially, it includes an equation in a single variable, allowing us to solve the system. This approach is outlined in section 2 of \cite{caminata2020solving}. In general, computing a LEX Gröbner basis is more computationally demanding, and so it is often easier to compute a Gröbner basis with respect to the degree reverse lexicographic (DRL) ordering, and then convert the resulting basis to a LEX basis, for example using the FGLM algorithm \cite{faugere1993efficient}.
 
 The complexity of computing a Gröbner basis is therefore of interest, and there are several algorithms to do this. There is Buchberger's algorithm, which uses Buchberger's criterion to gradually add elements to a basis until it is a Gröbner basis (see \cite{cox2013ideals}), but many faster algorithms take an approach based on Gaussian elimination, converting the problem of finding a Gröbner basis to finding a reduced row-echelon form (RREF) of a matrix. Among these linear algebra based approaches, there are a number that use Macaulay matrices or Macaulay-like matrices. We will analyze two such algorithms, and will use the following definition:
 
@@ -343,7 +344,7 @@ Given a polynomial ring $R = k[x_1, \dots, x_n]$, many of the maps we will consi
 
 
 \begin{example}
-	\color{red} Check this! \color{black} Consider the ideal $I = (xy^2, x^2, yz) \subset k[x,y,z]$. A minimal free resolution then is \[ \begin{tikzcd}
+	Consider the ideal $I = (xy^2, x^2, yz) \subset k[x,y,z]$. A minimal free resolution then is \[ \begin{tikzcd}
 		0 \arrow[r] & R(-5) \arrow[r, "\varphi_2"] & R(-4)^3 \arrow[r, "\varphi_1"] & R(-3) \oplus R(-2)^2 \arrow[r, "\varphi_0"] & I \arrow[r] & 0
 	\end{tikzcd} \] with the maps \[ \varphi_0 = \begin{pmatrix}
 		xy^2 & x^2 & yz
@@ -355,7 +356,7 @@ Given a polynomial ring $R = k[x_1, \dots, x_n]$, many of the maps we will consi
 		z \\
 		-x \\
 		y
-	\end{pmatrix}. \] We know that this resolution is minimal because the matrices above do not contain any invertible elements---everything there is in the irrelevant maximal ideal $\mathfrak{m} = (x,y,z)$. This condition, that for each map $\varphi_i$, the image $\im \varphi_i$ is contained in $\mathfrak{m} F_{i-1}$, is taken as a definition of minimality in \cite{eisenbud2005geometry}. Following that text's conventions, the graded Betti numbers are then shown in the table below: \begin{figure}[H]
+	\end{pmatrix}. \] We know that this resolution is minimal because the matrices above do not contain any invertible elements---all elements there are in the irrelevant maximal ideal $\mathfrak{m} = (x,y,z)$. This condition, that for each map $\varphi_i$, the image $\im \varphi_i$ is contained in $\mathfrak{m} F_{i-1}$, is taken as a definition of minimality in \cite{eisenbud2005geometry}. Following that text's conventions, the graded Betti numbers are then shown in the table below: \begin{figure}[H]
 		\centering
 		\begin{tabular}{c|ccc}
 			& 0 & 1 & 2 \\
@@ -363,7 +364,7 @@ Given a polynomial ring $R = k[x_1, \dots, x_n]$, many of the maps we will consi
 			2 & 2 & --- & --- \\
 			3 & 1 & 3 & 1
 		\end{tabular}
-	\end{figure} \noindent where the entry in the $i$th column and $j$th row is the graded Betti number $\beta_{i,i + j}$. Then the regularity, the largest $j - i$ for which $\beta_{i,j} \neq 0$, is simply the index of the last nonzero row, and so we see that in this case $\reg I = 4$. 
+	\end{figure} \noindent where the entry in the $i$th column and $j$th row is the graded Betti number $\beta_{i,i + j}$. Then the regularity, the largest $j - i$ for which $\beta_{i,j} \neq 0$, is simply the index of the last nonzero row, and so we see that in this case $\reg I = 3$. 
 \end{example} 
 
 
@@ -589,7 +590,7 @@ In Example 4, it was shown that $\sd_{2,DRL}(\F) = 3$, which is the regularity o
 We have shown that Algorithms I and II are indeed different, but with the notion of generic coordinates, we can ask whether they are still ``generically" the same. That is, do we have that $\sd_{1,\tau}(\F) = \sd_{2,\tau}(\F)$ for a system $\F$ for which $(\F^h)$ is in generic coordinates? To see that the answer is \emph{no}, we use the following example from \cite{minko2021security}.
 
 
-\begin{example}
+\begin{example}\label{minko}
 	Take the polynomials in $\mathbb{\F}_7[x,y,z]$ defined by \[ f_1 = x^5 + y^5 + z^5 - 1, \quad f_2 = x^3 + y^3 + z^2 - 1, \quad f_3 = y^6 - 1, \quad f_4 = z^6 - 1, \] and take $\F$ to consist of all possible products of these polynomials with indices in (not strictly) ascending order, together with the \emph{field equations} $f_x = x^7 - x$, $f_y = y^7 - y$, $f_z = z^7 - z$. That is, we are considering the system \begin{align*}
 		\F &= \left\{ \prod_{j = 1}^3 f_{i_j} : 1 \leq i_1 \leq i_2 \leq i_3 \leq 4 \right\} \cup \{f_x, f_y, f_z\} \\
 		&= \{f_1 f_1 f_1, \,\, f_1 f_1 f_2, \,\, f_1 f_1 f_3, \,\, \dots, \,\, f_3 f_4 f_4, \,\, f_4 f_4 f_4, \,\, f_x, \,\, f_y, \,\, f_z\}. 
@@ -657,7 +658,7 @@ Here, the absolute value bars mean truncating the series to exclude all terms af
 
 
 \begin{definition}\label{def:genD}
-	Given a sequence of degrees $d_1, \dots, d_r$, we may identify any given generating set $f_1, \dots, f_r$ of homogeneous polynomials of these degrees with their coefficients. Any $f_i$ of degree $d_i$ (that is, $f_i \in S_{d_i}$) is a tuple of its $\binom{n + d_i - 1}{d_i}$ coefficients, and so any sequence $f_1, \dots, f_r$ is a tuple of all of the $\sum_{i = 1}^r \binom{n + d_i - 1}{d_i}$ coefficients involved. If $I = (f_1, \dots, f_r)$, then we will denote this tuple of all $\sum_{i = 1}^r \binom{n + d_i - 1}{d_i}$ coefficients by $\coeff(I)$. In this way, we may put the Zariski topology on the space $\prod_{i = 1}^r S_{d_i}$, and we will say that some property $P$ is \textbf{generic} if it holds for all sequences $f_1, \dots, f_r$ whose coefficients lie in a Zariski open $U \subset \prod_{i = 1}^r S_{d_i}$. A sequence with coefficients in $U$ is then said to be a \textbf{generic sequence}. See \cite{pardue2010generic}.
+	Given a sequence of degrees $d_1, \dots, d_r$, we may identify any given generating set $f_1, \dots, f_r$ of homogeneous polynomials of these degrees with their coefficients. Any $f_i$ of degree $d_i$ (that is, $f_i \in S_{d_i}$) is a tuple of its $\binom{n + d_i - 1}{d_i}$ coefficients, and so any sequence $f_1, \dots, f_r$ is a tuple of all of the $\sum_{i = 1}^r \binom{n + d_i - 1}{d_i}$ coefficients involved. If $I = (f_1, \dots, f_r)$, then we will denote this tuple of all $\sum_{i = 1}^r \binom{n + d_i - 1}{d_i}$ coefficients by $\coeff(I)$. In this way, we may put the Zariski topology on the space $\prod_{i = 1}^r S_{d_i}$, and we will say that some property $P$ is \textbf{generic} if it holds for all sequences $f_1, \dots, f_r$ whose coefficients lie in a Zariski open $V \subset \prod_{i = 1}^r S_{d_i}$. A sequence with coefficients in $V$ is then said to be a \textbf{generic sequence}. See \cite{pardue2010generic}.
 \end{definition}
 
 
@@ -677,7 +678,7 @@ Since the Hilbert series of an ideal is equal to that of its initial ideal, havi
 \end{remark}
 
 
-The interest in Fröberg's conjecture in cryptography stems from another conjecture concerning \emph{semi-regular sequences}. These sequences generate ideals that play particularly nicely with the F5 Gröbner basis algorithm \cite{faugere2002new}, and lead to the notion of the \emph{degree of regularity} of a system, denoted $\dreg$. Bardet, Faugère, and Salvy show that for a semi-regular system in $k[x_1, \dots, x_n]$, the F5 algorithm performs at most \[ O\left( \binom{n + \dreg}{n}^\omega \right) \] arithmetic operations, where $2 \leq \omega < 2.39$ is the linear algebra constant \cite{bardet2004complexity}. This estimate is used for analyzing the security of cryptosystems using multivariate polynomials, but rests on the assumptions that 1) the algorithm being used is F5, and 2) that the input is semi-regular. The validity of using the degree of regularity as an upper bound for the solving degree when the algorithm in use is not F5 has been the subject of some recent work, and we will discuss this shortly, along with the relevant definitions. If the algorithm used is F5, then Fröberg's conjecture enters the picture in addressing the second assumption that the input is semi-regular: Pardue shows in \cite{pardue2010generic} that Fröberg's conjecture is equivalent to the following:
+The interest in Fröberg's conjecture in cryptography stems from another conjecture concerning \emph{semi-regular sequences}. These sequences generate ideals that play particularly nicely with the F5 Gröbner basis algorithm \cite{faugere2002new}, and lead to the notion of the \emph{degree of regularity} of a system, denoted $\dreg$. Bardet, Faugère, and Salvy show that for a semi-regular system in $k[x_1, \dots, x_n]$, the F5 algorithm performs at most \[ O\left( \binom{n + \dreg}{n}^\omega \right) \] arithmetic operations, where $2 \leq \omega < 2.39$ is the linear algebra constant \cite{bardet2004complexity}. This estimate is used for analyzing the security of cryptosystems using multivariate polynomials, but rests on the assumptions that 1) the algorithm being used is F5, and 2) that the input is semi-regular. The validity of using the degree of regularity as an upper bound for the solving degree when the algorithm in use is not F5 has been the subject of some recent work (see for example \cite{caminata2023solving} and \cite{minko2021security}), and it is known that the inequality can fail. For instance, in the system $\F$ from Example~\ref{minko}, it was shown that $\sd_1(\F) = 22$ and $\sd_2(\F) = 18$, whereas one can compute that $\dreg(\F) = 15$, failing to bound either notion of solving degree. If the algorithm used is F5, then Fröberg's conjecture enters the picture in addressing the second assumption that the input is semi-regular: Pardue shows in \cite{pardue2010generic} that Fröberg's conjecture is equivalent to the following:
 
 
 \begin{conjecture}\label{Fr:equiv}
@@ -701,11 +702,22 @@ Now because Definition~\ref{def:genC} implies Definitions~\ref{def:genA} and~\re
 	Take $I = (x^2, y^2, z^2) \subset k[x,y,z]$. It is known that Fröberg's conjecture holds in this context (with $S = k[x,y,z]$ a polynomial ring of three variables \cite{TRUNG201979}), so if $\coeff(I) \in V_1$, then we have that \[ HS_{S/I} (t) = \bigg| \frac{(1 - t^2)^3}{(1 - t)^3} \bigg| = |(1 + t)^3| = 1 + 3t + 3t^2 + t^3. \] Indeed, $I$ does have the required Hilbert series, so it is possible that \[ (1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1) = \coeff I \in V_1 \] and $I$ is therefore generic in the sense of Definition~\ref{def:genD}. However, $I$ is certainly not generic in the sense of Definition~\ref{def:genC}, because $\Init(I) = I$ and $I$ cannot be the generic initial ideal because it is not Borel-fixed---for example, $z^2 \in I$ but the elementary move $e_2(z^2) = yz \notin I$. 
 \end{example}
 
+\color{red}
 
-The difficulty with the above example is that it is hard to say whether or not $\coeff(I) \in V_1$ or not. 
+\begin{question}
+	\color{black} The difficulty with the above example is that it is hard to say whether $\coeff(I) \in V_1$ or not. Is there a simpler characterization for when a system has its coefficients in the open set $V_1$ on which Hilbert series are constnt?
+\end{question} 
+
+\begin{question}
+	\color{black} Is it true that Definition~\ref{def:genD} implies the others? The authors of \cite{bigdeli2021semi} seem to suggest that being generated by a ``generic sequence" (Definition~\ref{def:genD}) implies being ``in generic coordinates" (Definition~\ref{def:genC}---they reference an earlier version of \cite{caminata2020solving} for this defintion). 
+\end{question}
+
+\color{black}
 
 
 
+
+\nocite{atiyah1969introduction}
 \nocite{M2}
 \nocite{sage}
 

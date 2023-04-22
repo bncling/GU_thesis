@@ -3,46 +3,52 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: cumulative_writings.aux
 The style file: alpha.bst
 Database file #1: references.bib
+Name 1 in "Atiyah, M.F., and MacDonald, I.G." has a comma at the end for entry atiyah1969introduction
+while executing---line 1185 of file alpha.bst
+Name 1 in "Atiyah, M.F., and MacDonald, I.G." has a comma at the end for entry atiyah1969introduction
+while executing---line 1185 of file alpha.bst
+Name 1 in "Atiyah, M.F., and MacDonald, I.G." has a comma at the end for entry atiyah1969introduction
+while executing---line 1250 of file alpha.bst
 Warning--empty journal in galligo1974propos
-You've used 18 entries,
+You've used 21 entries,
             2543 wiz_defined-function locations,
-            665 strings with 7225 characters,
-and the built_in function-call counts, 6699 in all, are:
-= -- 677
-> -- 266
-< -- 15
-+ -- 88
-- -- 82
-* -- 425
-:= -- 1090
-add.period$ -- 57
-call.type$ -- 18
-change.case$ -- 94
-chr.to.int$ -- 18
-cite$ -- 19
-duplicate$ -- 295
-empty$ -- 521
-format.name$ -- 106
-if$ -- 1391
+            681 strings with 7792 characters,
+and the built_in function-call counts, 8170 in all, are:
+= -- 821
+> -- 356
+< -- 16
++ -- 121
+- -- 115
+* -- 538
+:= -- 1336
+add.period$ -- 67
+call.type$ -- 21
+change.case$ -- 117
+chr.to.int$ -- 21
+cite$ -- 22
+duplicate$ -- 349
+empty$ -- 618
+format.name$ -- 141
+if$ -- 1690
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 19
-newline$ -- 95
-num.names$ -- 54
-pop$ -- 110
+missing$ -- 23
+newline$ -- 110
+num.names$ -- 63
+pop$ -- 136
 preamble$ -- 1
-purify$ -- 118
+purify$ -- 145
 quote$ -- 0
-skip$ -- 246
+skip$ -- 288
 stack$ -- 0
-substring$ -- 362
-swap$ -- 53
-text.length$ -- 15
+substring$ -- 435
+swap$ -- 63
+text.length$ -- 16
 text.prefix$ -- 8
 top$ -- 0
-type$ -- 128
+type$ -- 148
 warning$ -- 1
-while$ -- 69
-width$ -- 22
-write$ -- 235
-(There was 1 warning)
+while$ -- 83
+width$ -- 26
+write$ -- 274
+(There were 3 error messages)

@@ -1,5 +1,17 @@
 \newcommand{\etalchar}[1]{$^{#1}$}
-\begin{thebibliography}{CLO13}
+\begin{thebibliography}{BDND{\etalchar{+}}21}
+
+\bibitem[AM69]{atiyah1969introduction}
+M.F. Atiyah and I.G. MacDonald.
+\newblock {\em Introduction to Commutative Algebra}.
+\newblock Addison-Wesley, 1969.
+
+\bibitem[BDND{\etalchar{+}}21]{bigdeli2021semi}
+Mina Bigdeli, Emanuela De~Negri, Manuela~Muzika Dizdarevic, Elisa Gorla, Romy
+  Minko, and Sulamithe Tsakou.
+\newblock Semi-regular sequences and other random systems of equations.
+\newblock In {\em Women in Numbers Europe III: Research Directions in Number
+  Theory}, pages 75--114. Springer, 2021.
 
 \bibitem[BFS04]{bardet2004complexity}
 Magali Bardet, Jean-Charles Faugere, and Bruno Salvy.
@@ -43,6 +55,12 @@ Jean~Charles Faugere.
   reduction to zero (f 5).
 \newblock In {\em Proceedings of the 2002 international symposium on Symbolic
   and algebraic computation}, pages 75--83, 2002.
+
+\bibitem[FGLM93]{faugere1993efficient}
+Jean-Charles Faugere, Patrizia Gianni, Daniel Lazard, and Teo Mora.
+\newblock Efficient computation of zero-dimensional gr{\"o}bner bases by change
+  of ordering.
+\newblock {\em Journal of Symbolic Computation}, 16(4):329--344, 1993.
 
 \bibitem[Fr{\"o}85]{froberg1985inequality}
 Ralf Fr{\"o}berg.

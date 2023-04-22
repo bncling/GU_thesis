@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex cumulative_writings"] 1682099717 "cumulative_writings.aux" "cumulative_writings.bbl" "cumulative_writings" 1682109898
+["bibtex cumulative_writings"] 1682187295 "cumulative_writings.aux" "cumulative_writings.bbl" "cumulative_writings" 1682187579
   "/usr/local/texlive/2020/texmf-dist/bibtex/bst/base/alpha.bst" 1292289607 23907 a5f93555796fb564b924339521f10a7c ""
-  "cumulative_writings.aux" 1682109898 3670 133959a9d2e2fb732f774d3e20287368 "pdflatex"
-  "references.bib" 1682098136 5071 31729f96c26c061a8f112dfdeaa0052b ""
+  "cumulative_writings.aux" 1682187579 4017 4ec293e65a9722e15a8066f387a8dd75 "pdflatex"
+  "references.bib" 1682187179 5797 313f58044b3eb63f9e2e27afef430398 ""
   (generated)
-  "cumulative_writings.blg"
   "cumulative_writings.bbl"
-["pdflatex"] 1682109897 "cumulative_writings.tex" "cumulative_writings.pdf" "cumulative_writings" 1682109898
+  "cumulative_writings.blg"
+["pdflatex"] 1682187578 "cumulative_writings.tex" "cumulative_writings.pdf" "cumulative_writings" 1682187579
   "/usr/local/texlive/2020/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2020/texmf-dist/fonts/tfm/adobe/symbol/psyr.tfm" 1136768653 1408 5937f58aa508ea2cea4901c07d10f5fe ""
   "/usr/local/texlive/2020/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
@@ -254,12 +254,12 @@
   "/usr/local/texlive/2020/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1586288239 4811913 0be9a7e86c70a26e5e3042966bcd7097 ""
   "/usr/local/texlive/2020/texmf-var/web2c/pdftex/pdflatex.fmt" 1586288259 2432462 fd0fa20e9a3cb5f8169fd0ba1c955158 ""
   "/usr/local/texlive/2020/texmf.cnf" 1586288231 577 d60164b4589a341208aff7a667fbbdcb ""
-  "cumulative_writings.aux" 1682109898 3670 133959a9d2e2fb732f774d3e20287368 "pdflatex"
-  "cumulative_writings.bbl" 1682099717 3965 a89cc8a0c952301bea82b9d419c93e9a "bibtex cumulative_writings"
-  "cumulative_writings.out" 1682109898 207 8c28d8e6dce4fca1d439424159fc457a "pdflatex"
-  "cumulative_writings.tex" 1682109897 76991 ada8eca8256479739b60b18dcf25fdae ""
+  "cumulative_writings.aux" 1682187579 4017 4ec293e65a9722e15a8066f387a8dd75 "pdflatex"
+  "cumulative_writings.bbl" 1682187295 4760 c95aca44ed4166d772323832917ce6eb "bibtex cumulative_writings"
+  "cumulative_writings.out" 1682187579 207 8c28d8e6dce4fca1d439424159fc457a "pdflatex"
+  "cumulative_writings.tex" 1682187578 77877 6da688a0bfc8cf12f707b62efa48ee2f ""
   (generated)
-  "cumulative_writings.log"
-  "cumulative_writings.pdf"
   "cumulative_writings.aux"
   "cumulative_writings.out"
+  "cumulative_writings.log"
+  "cumulative_writings.pdf"
