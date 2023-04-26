@@ -1,0 +1,124 @@
+\begin{thebibliography}{}
+
+\bibitem[Atiyah and MacDonald, 1969]{atiyah1969introduction}
+Atiyah, M. and MacDonald, I. (1969).
+\newblock {\em Introduction to Commutative Algebra}.
+\newblock Addison-Wesley.
+
+\bibitem[Bardet et~al., 2004]{bardet2004complexity}
+Bardet, M., Faugere, J.-C., and Salvy, B. (2004).
+\newblock On the complexity of gr{\"o}bner basis computation of semi-regular
+  overdetermined algebraic equations.
+\newblock In {\em Proceedings of the International Conference on Polynomial
+  System Solving}, pages 71--74.
+
+\bibitem[Bayer and Stillman, 1987]{bayer1987criterion}
+Bayer, D. and Stillman, M. (1987).
+\newblock A criterion for detecting m-regularity.
+\newblock {\em Inventiones mathematicae}, 87(1):1--11.
+
+\bibitem[Bigdeli et~al., 2021]{bigdeli2021semi}
+Bigdeli, M., De~Negri, E., Dizdarevic, M.~M., Gorla, E., Minko, R., and Tsakou,
+  S. (2021).
+\newblock Semi-regular sequences and other random systems of equations.
+\newblock In {\em Women in Numbers Europe III: Research Directions in Number
+  Theory}, pages 75--114. Springer.
+
+\bibitem[Caminata and Gorla, 2020]{caminata2020solving}
+Caminata, A. and Gorla, E. (2020).
+\newblock Solving multivariate polynomial systems and an invariant from
+  commutative algebra.
+\newblock In {\em International Workshop on the Arithmetic of Finite Fields},
+  pages 3--36. Springer.
+
+\bibitem[Caminata and Gorla, 2023]{caminata2023solving}
+Caminata, A. and Gorla, E. (2023).
+\newblock Solving degree, last fall degree, and related invariants.
+\newblock {\em Journal of Symbolic Computation}, 114:322--335.
+
+\bibitem[Cox et~al., 2013]{cox2013ideals}
+Cox, D., Little, J., and OShea, D. (2013).
+\newblock {\em Ideals, varieties, and algorithms: an introduction to
+  computational algebraic geometry and commutative algebra}.
+\newblock Springer Science \& Business Media.
+
+\bibitem[Eisenbud, 2005]{eisenbud2005geometry}
+Eisenbud, D. (2005).
+\newblock {\em The geometry of syzygies: A second course in commutative algebra
+  and algebraic geometry}, volume 229.
+\newblock Springer.
+
+\bibitem[Faugere, 2002]{faugere2002new}
+Faugere, J.~C. (2002).
+\newblock A new efficient algorithm for computing gr{\"o}bner bases without
+  reduction to zero (f 5).
+\newblock In {\em Proceedings of the 2002 international symposium on Symbolic
+  and algebraic computation}, pages 75--83.
+
+\bibitem[Faugere et~al., 1993]{faugere1993efficient}
+Faugere, J.-C., Gianni, P., Lazard, D., and Mora, T. (1993).
+\newblock Efficient computation of zero-dimensional gr{\"o}bner bases by change
+  of ordering.
+\newblock {\em Journal of Symbolic Computation}, 16(4):329--344.
+
+\bibitem[Fr{\"o}berg, 1985]{froberg1985inequality}
+Fr{\"o}berg, R. (1985).
+\newblock An inequality for hilbert series of graded algebras.
+\newblock {\em Mathematica Scandinavica}, 56(2):117--144.
+
+\bibitem[Galligo, 1974]{galligo1974propos}
+Galligo, A. (1974).
+\newblock {\`A} propos du th{\'e}or{\`e}me de-pr{\'e}paration de weierstrass,
+  fonctions de plusieurs variables complexes (s{\'e}m. fran{\c{c}}ois norguet,
+  octobre 1970--d{\'e}cembre 1973; {\`a} la m{\'e}moire d’andr{\'e}
+  martineau).
+
+\bibitem[Grayson and Stillman, ]{M2}
+Grayson, D.~R. and Stillman, M.~E.
+\newblock Macaulay2, a software system for research in algebraic geometry.
+\newblock Available at \url{http://www.math.uiuc.edu/Macaulay2/}.
+
+\bibitem[Green et~al., 1998]{green1998generic}
+Green, M.~L. et~al. (1998).
+\newblock Generic initial ideals.
+\newblock {\em Six lectures on commutative algebra}, 166:119--185.
+
+\bibitem[Kemper, 2011]{kemper2011course}
+Kemper, G. (2011).
+\newblock {\em A course in commutative algebra}, volume~1.
+\newblock Springer.
+
+\bibitem[Miller and Sturmfels, 2005]{miller2005combinatorial}
+Miller, E. and Sturmfels, B. (2005).
+\newblock {\em Combinatorial commutative algebra}, volume 227.
+\newblock Springer.
+
+\bibitem[Minko, 2021]{minko2021security}
+Minko, R. (2021).
+\newblock {\em Security assumptions in post-quantum cryptography}.
+\newblock PhD thesis, University of Oxford.
+
+\bibitem[Pardue, 2010]{pardue2010generic}
+Pardue, K. (2010).
+\newblock Generic sequences of polynomials.
+\newblock {\em Journal of Algebra}, 324(4):579--590.
+
+\bibitem[Stein et~al., 2022]{sage}
+Stein, W. et~al. (2022).
+\newblock {\em {S}age {M}athematics {S}oftware ({V}ersion 9.6)}.
+\newblock The Sage Development Team.
+\newblock {\tt http://www.sagemath.org}.
+
+\bibitem[Thomae and Wolf, 2012]{thomae2012solving}
+Thomae, E. and Wolf, C. (2012).
+\newblock Solving underdetermined systems of multivariate quadratic equations
+  revisited.
+\newblock In {\em International Workshop on Public Key Cryptography}, pages
+  156--171. Springer.
+
+\bibitem[Trung, 2019]{TRUNG201979}
+Trung, V.~D. (2019).
+\newblock The initial ideal of generic sequences and fröberg's conjecture.
+\newblock {\em Journal of Algebra}, 524:79--96.
+
+\end{thebibliography}

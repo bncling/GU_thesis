@@ -119,14 +119,21 @@
 \setcounter{MaxMatrixCols}{20}
 
 
+\title{\Huge \textbf{These things \emph{might} be different!} \\ \Large A disoriented amateur's guide to the algorithms and assumptions of multivariate polynomial based cryptography}
+\author{Ben Clingenpeel}
+\date{\vspace{-.8em} 4/26/23}
+
 
 \begin{document}
 
-\begin{center}
-	\Huge{\textbf{Cumulative writing so far}}\\
-	\vspace{.5em}
-	\normalsize{Ben Clingenpeel}
-\end{center}
+\maketitle
+
+
+
+\begin{abstract}
+	\vspace{-1em}
+	\noindent In this thesis we walk through some of the notions at play in solving systems of polynomial equations. The motivation for this comes from cryptosystems based on the difficulty of solving such systems. In the first section, we explore a main tool used to solve systems of polynomials: Gröbner bases. We will look at two algorithms used to compute Gröbner bases, prove that they work, and show that they lead to distinct notions of the solving degree of a system. In the second section, we explain some ideas from commutative algebra used to obtain bounds on the solving degree, and the genericity assumptions needed to guarantee these bounds. Here we give two versions of what it means for a system to be in generic coordinates and show that one is strictly stronger than the other. In the final section, we give two more definitions of genericity, with connections to Fröberg's Conjecture and the notion of the generic initial ideal of a system. We show that none of these definitions are exactly the same, and end with questions about the relationships between them. 
+\end{abstract}
 
 \section{Gröbner bases and solving degree}
 
@@ -724,7 +731,7 @@ Now because Definition~\ref{def:genC} implies Definitions~\ref{def:genA} and~\re
 \nocite{sage}
 
 \newpage
-\bibliographystyle{plain}
+\bibliographystyle{apalike}
 \bibliography{references}
 
 
