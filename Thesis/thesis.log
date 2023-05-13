@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  26 APR 2023 12:17
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  13 MAY 2023 17:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -963,13 +963,13 @@ Package rerunfilecheck Info: File `thesis.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 738.
  ) 
 Here is how much of TeX's memory you used:
- 30251 strings out of 480608
- 729666 string characters out of 5903631
+ 30255 strings out of 480608
+ 729737 string characters out of 5903631
  1112920 words of memory out of 5000000
- 45463 multiletter control sequences out of 15000+600000
+ 45466 multiletter control sequences out of 15000+600000
  549208 words of font info for 88 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 67i,15n,98p,2316b,1081s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 67i,15n,98p,2320b,1081s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></
@@ -993,10 +993,10 @@ mf-dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2020/texmf
 dist/fonts/type1/public/amsfonts/euler/eufm10.pfb></usr/local/texlive/2020/texm
 f-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2020/
 texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb>
-Output written on thesis.pdf (28 pages, 366758 bytes).
+Output written on thesis.pdf (28 pages, 367592 bytes).
 PDF statistics:
- 439 PDF objects out of 1000 (max. 8388607)
- 382 compressed objects within 4 object streams
- 113 named destinations out of 1000 (max. 500000)
+ 445 PDF objects out of 1000 (max. 8388607)
+ 388 compressed objects within 4 object streams
+ 114 named destinations out of 1000 (max. 500000)
  37 words of extra memory for PDF output out of 10000 (max. 10000000)
 

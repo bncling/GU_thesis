@@ -11,45 +11,45 @@ Name 1 in "Atiyah, M.F., and MacDonald, I.G." has a comma at the end for entry a
 while executing---line 1098 of file apalike.bst
 Warning--empty journal in galligo1974propos
 Warning--empty year in M2
-You've used 21 entries,
+You've used 22 entries,
             1935 wiz_defined-function locations,
-            594 strings with 6999 characters,
-and the built_in function-call counts, 7979 in all, are:
-= -- 801
-> -- 265
-< -- 25
-+ -- 96
-- -- 84
-* -- 608
-:= -- 1361
-add.period$ -- 66
-call.type$ -- 21
-change.case$ -- 138
-chr.to.int$ -- 21
-cite$ -- 23
-duplicate$ -- 341
-empty$ -- 589
-format.name$ -- 121
-if$ -- 1601
+            599 strings with 7102 characters,
+and the built_in function-call counts, 8265 in all, are:
+= -- 827
+> -- 272
+< -- 27
++ -- 98
+- -- 86
+* -- 628
+:= -- 1413
+add.period$ -- 69
+call.type$ -- 22
+change.case$ -- 143
+chr.to.int$ -- 22
+cite$ -- 24
+duplicate$ -- 355
+empty$ -- 612
+format.name$ -- 124
+if$ -- 1657
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 23
-newline$ -- 108
-num.names$ -- 63
-pop$ -- 144
+missing$ -- 25
+newline$ -- 113
+num.names$ -- 66
+pop$ -- 151
 preamble$ -- 1
-purify$ -- 145
+purify$ -- 151
 quote$ -- 0
-skip$ -- 261
+skip$ -- 272
 stack$ -- 0
-substring$ -- 546
-swap$ -- 58
-text.length$ -- 8
+substring$ -- 558
+swap$ -- 60
+text.length$ -- 9
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 116
+type$ -- 120
 warning$ -- 2
-while$ -- 70
+while$ -- 72
 width$ -- 0
-write$ -- 272
+write$ -- 285
 (There were 3 error messages)

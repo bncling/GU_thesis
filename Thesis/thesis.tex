@@ -175,7 +175,7 @@ The complexity of computing a Gröbner basis is therefore of interest, and there
 		0 & \mathbf{1} & 0 & 0 & 0 & 0 \\
 		0 & 0 & 0 & \mathbf{1} & 0 & 0 \\
 		0 & 0 & 0 & 0 & \mathbf{1} & 0
-	\end{pmatrix}. \] Then $\Poly(M_{\leq 2}^r) = \{x^2, xy, x, y\}$ and so $(\Poly(M_{\leq 2}^r)) = (x,y)$. dd
+	\end{pmatrix}. \] Then $\Poly(M_{\leq 2}^r) = \{x^2, xy, x, y\}$ and so $(\Poly(M_{\leq 2}^r)) = (x,y)$.
 \end{example}
 
 
@@ -190,7 +190,7 @@ Since the complexity of such algorithms can be thought of as a function of the s
 
 
 \begin{example}
-	Using the DRL ordering, let $\F = \{f_1, f_2\}$ with $f_1 = x^2 - 1$ and $f_2 = xy + x$, as in Example 8 of \cite{caminata2020solving}. Then we have that $\init(\F) = (x^2, xy)$, but because \[ y + 1 = -x^2y + y - x^2 + 1 + x^2y + x^2 = -(y + 1) f_1 + x f_2 \in (\F) \] implies that $y \in \Init(\F) \setminus \init(\F)$, we have that $\init(\F) \neq \Init(\F)$, and therefore $\F$ is not a Gröbner basis for the ideal it generates. Continuing this example, we can compute that \[ M_{\leq 2} = \begin{blockarray}{ccccccc}
+	Using the DRL ordering, let $\F = \{f_1, f_2\}$ with $f_1 = x^2 - 1$ and $f_2 = xy + x$, as in Example 8 of \cite{caminata2020solving}. Then we have that $\init(\F) = (x^2, xy)$, but \[ y + 1 = -x^2y + y - x^2 + 1 + x^2y + x^2 = -(y + 1) f_1 + x f_2 \in (\F) \] implies that $y \in \Init(\F) \setminus \init(\F)$, so we have that $\init(\F) \neq \Init(\F)$, and therefore $\F$ is not a Gröbner basis for the ideal it generates. Continuing this example, we can compute that \[ M_{\leq 2} = \begin{blockarray}{ccccccc}
 	    & x^2 & xy & y^2 & x & y & 1 \\
 	    \begin{block}{c(cccccc)}
 	        f_1 & \mathbf{1} & 0 & 0 & 0 & 0 & \mathbf{-1} \\
@@ -346,9 +346,9 @@ Given a polynomial ring $R = k[x_1, \dots, x_n]$, many of the maps we will consi
 
 
 \begin{definition}
-	Let $I \subset R$ be a homogeneous ideal. The \textbf{minimal free resolution} of $I$ is the complex  \[ \begin{tikzcd}
+	Let $I \subset R$ be a homogeneous ideal. The \textbf{minimal free resolution} of $I$ is the exact sequence  \[ \begin{tikzcd}
 		0 \arrow[r] & F_m \arrow[r, "\varphi_m"] & \cdots \arrow[r, "\varphi_2"] & F_1 \arrow[r, "\varphi_1"] & F_0 \arrow[r, "\varphi_0"] & I \arrow[r] & 0
-	\end{tikzcd} \] of free $R$-modules obtained by choosing a minimal set of generators for $I$, constructing $\varphi_0$ to map a free module $F_0$ onto $I$ sending the generators of $F_0$ to the generators of $I$, constructing $\varphi_1$ to map a free module $F_1$ onto $\ker \varphi_0 \subset F_0$ by sending the generators of $F_1$ to a minimal set of generators for $\ker \varphi_0$, and continuing this procedure until it terminates. Each time we construct a map $\varphi_i$, we take the free modules to be $F_i = \bigoplus_{j \in \Z} R(-j)^{\beta_{i,j}}$ with the degree shifts chosen so that each $\varphi$ is homogeneous of degree 0. The numbers $\beta_{i,j}$ are called the \textbf{graded Betti numbers} of $I$, and the \textbf{Castelnuovo-Mumford regularity} of $I$ is defined to be $\reg I = \max\{j - i : \beta_{i,j} \neq 0\}$. 
+	\end{tikzcd} \] of free $R$-modules obtained by choosing a minimal set of generators for $I$, constructing $\varphi_0$ to map a free module $F_0$ onto $I$ sending the generators of $F_0$ to the generators of $I$, constructing $\varphi_1$ to map a free module $F_1$ onto $\ker \varphi_0 \subset F_0$ by sending the generators of $F_1$ to a minimal set of generators for $\ker \varphi_0$, and continuing this procedure until it terminates. Termination is guaranteed by the Hilbert Syzygy Theorem---a proof using Gröbner bases can be found in section 15.5 of \cite{eisenbud1995commutative} Each time we construct a map $\varphi_i$, we take the free modules to be $F_i = \bigoplus_{j \in \Z} R(-j)^{\beta_{i,j}}$ with the degree shifts chosen so that each $\varphi$ is homogeneous of degree 0. The numbers $\beta_{i,j}$ are called the \textbf{graded Betti numbers} of $I$, and the \textbf{Castelnuovo-Mumford regularity} of $I$ is defined to be $\reg I = \max\{j - i : \beta_{i,j} \neq 0\}$. 
 \end{definition}
 
 
@@ -386,7 +386,7 @@ In \cite{caminata2020solving}, it is shown that the solving degree for a system 
 
 
 \begin{definition}
-	Let $\mathcal{R}$ be a ring. Given ideals $I, J \subset \mathcal{R}$, we define the \textbf{quotient} or \textbf{colon ideal} \[ I:J = \{ r \in \mathcal{R} \mid \text{for all } s \in J, rs \in I \} \] and the \textbf{saturation} \[ I:J^\infty = \{r \in \mathcal{R} \mid \text{for all } s \in J, \text{ there exists an } n \geq 0 \text{ such that } rs^n \in I\}. \] When $J = (x)$ for some $x \in \mathcal{R}$, we write $I:x$ instead of $I:(x)$. Then \[ I:x = \{r \in \mathcal{R} \mid \text{for all } x^k \in (x), rx^k \in I\} = \{r \in \mathcal{R} \mid rx \in I\}. \]
+	Let $\mathcal{R}$ be a ring. Given ideals $I, J \subset \mathcal{R}$, we define the \textbf{quotient} or \textbf{colon ideal} \[ I:J = \{ r \in \mathcal{R} \mid \text{for all } s \in J, rs \in I \} \] and the \textbf{saturation} \[ I:J^\infty = \{r \in \mathcal{R} \mid \text{for all } s \in J, \text{ there exists an } n \geq 0 \text{ such that } rs^n \in I\}. \] When $J = (x)$ for some $x \in \mathcal{R}$, we write $I:x$ instead of $I:(x)$. Then \[ I:x = \{r \in \mathcal{R} \mid \text{for all } s \in (x), rs \in I\} = \{r \in \mathcal{R} \mid rx \in I\}. \]
 \end{definition}
 
 
@@ -445,12 +445,12 @@ We know state a few propositions from \cite{cox2013ideals} on the behavior of th
 
 
 \begin{theorem}
-	For $s$ sufficiently large, the Hilbert functions agree with polynomial functions of $s$. We call these polynomials the Hilbert polynomials, and we denote them $^a\HP(s)$ for the affine case and $\HP(s)$ for the projective case.
+	For $s$ sufficiently large, the Hilbert functions agree with polynomial functions of $s$ in that there is some polynomial $f(s)$ such that the Hilbert function of $I$ evaluated at $s$ is equal to $f(s)$. We call these polynomials the Hilbert polynomials, and we denote them $^a\HP(s)$ for the affine case and $\HP(s)$ for the projective case.
 \end{theorem}
 
 
 \begin{remark}
-	The Hilbert polynomial of an ideal can be computed from its Hilbert series, the formal power series \[ ^a\HS_{R/I}(t) := \sum_{s = 0}^\infty {}^a\HF_{R/I} (s) t^s, \] which can in turn be computed via an algorithm involving Gröbner bases given in \cite{kemper2011course}. 
+	The Hilbert polynomial of an ideal can be computed from its Hilbert series, the formal power series \[ ^a\HS_{R/I}(t) := \sum_{s = 0}^\infty {}^a\HF_{R/I} (s) t^s. \] This is a corollary of the Hilbert-Serre Theorem, giving a representation of the series as a rational function (Corollary 11.10 in \cite{kemper2011course}.) The series can be computed via an algorithm involving Gröbner bases (Algorithm 11.8 in \cite{kemper2011course}). 
 \end{remark}
 
 
@@ -474,14 +474,14 @@ We know state a few propositions from \cite{cox2013ideals} on the behavior of th
 \end{example}
 
 
-\begin{theorem}
-	Let $I \subset S$ be homogeneous. Then for $s \geq 1$, we have that \[ \HF_{S/I}(s) = \,^a\HF_{S/I}(s) - \, ^a\HF_{S/I}(s - 1). \] Therefore for a projective variety $V \subset \Proj^n(k)$, the affine variety $C_V \subset k^{n+1}$ (called its affine cone) has $\dim C_V = \dim V + 1$. 
+\begin{theorem}\label{thm:cone}
+	Let $I \subset S$ be homogeneous. Then for $s \geq 1$, we have that \[ \HF_{S/I}(s) = \,^a\HF_{S/I}(s) - \, ^a\HF_{S/I}(s - 1). \] Therefore for a projective variety $V \subset \Proj^n(k)$, the affine variety $C_V \subset k^{n+1}$ (called its affine cone) with the same associated ideal $I$ has $\dim C_V = \dim V + 1$. 
 \end{theorem}
 
-In the second part of Example 9, we had the projective variety $V = \{(1:1), (0:1)\} \subset \Proj^1(\R)$, and saw that the associated ideal was $\I(V) = (x^2 - xh)$, the same ideal we got by considering $V$ as an affine variety (which is denoted $C_V$ in the language of Theorem 1). We said that $^a\HF_{S/\I(V)}(s)$ was $2s + 1$, and indeed, we see that for $s \geq 1$, we have that \[ ^a\HF_{S/\I(V)}(s) - \, ^a\HF_{S/\I(V)}(s - 1) = 2s + 1 - (2(s - 1) + 1) = 2 = \HF_{S/\I(V)}(s). \] We also see in this example that this finite projective variety had dimension 0. Proposition 6 of section 9.4 in \cite{cox2013ideals} asserts that nonempty finite varieties always have dimension 0, but the proof is only given in the affine case. We give details for the projective version below, but first state another proposition from \cite{cox2013ideals}.
+In the second part of Example 9, we had the projective variety $V = \{(1:1), (0:1)\} \subset \Proj^1(\R)$, and saw that the associated ideal was $\I(V) = (x^2 - xh)$, the same ideal we got by considering $V$ as an affine variety (which is denoted $C_V$ in the language of Theorem~\ref{thm:cone}). We said that $^a\HF_{S/\I(V)}(s)$ was $2s + 1$, and indeed, we see that for $s \geq 1$, we have that \[ ^a\HF_{S/\I(V)}(s) - \, ^a\HF_{S/\I(V)}(s - 1) = 2s + 1 - (2(s - 1) + 1) = 2 = \HF_{S/\I(V)}(s). \] We also see in this example that this finite projective variety had dimension 0. Proposition 6 of section 9.4 in \cite{cox2013ideals} asserts that nonempty finite varieties always have dimension 0, but the proof is only given in the affine case. We give details for the projective version below, but first state another proposition from \cite{cox2013ideals}.
 
 
-\begin{proposition}
+\begin{proposition}\label{dimmax}
 	Let $V$ and $W$ be nonempty varieties, either both projective or both affine, then \[ \dim (V \cup W) = \max\{\dim V, \dim W\}, \] where the notion of dimension is affine if $V,W \subset k^n$ or projective if $V,W \subset \Proj^n(k)$. 
 \end{proposition}
 
@@ -491,7 +491,7 @@ In the second part of Example 9, we had the projective variety $V = \{(1:1), (0:
 \end{proposition}
 
 \begin{proof}
-	If $V$ consists of finitely many points, then \[ V = \{p_1, \dots, p_r\} = V_1 \cup \dots \cup V_r \] where $V_j$ is the projective variety $\{p_j\}$. By the above Proposition 3, it suffices to show that $\dim V_j = 0$ for all $1 \leq j \leq r$. Therefore let $W = \{p\}$ be a projective variety consisting of exactly one point, and suppose $p$ has homogeneous coordinates $p = (a_1: \dots: a_n: a_{n+1})$. Then at least one $a_i$ is nonzero, and without loss of generality, we will assume that $a_{n + 1} \neq 0$. (If this is not the case, there is some $1 \leq j \leq n$ for which $a_j$ is nonzero, and we will later consider the DRL term ordering with variables ordered so that $x_j < x_k$ for all $k \neq j$---assuming $a_{n + 1} \neq 0$ allows us to use the normal DRL ordering). Then also \[ p = \left( \frac{a_1}{a_{n+1}} : \dots : \frac{a_n}{a_{n+1}} : 1 \right) \] and we have that $f \in k[x_1, \dots, x_n, h]$ therefore vanishes on all homogeneous coordinates of $p$ if and only if $x_i - (a_i/a_{n+1})h = 0$ for all $1 \leq i \leq n$. Therefore \[ \I(W) = \left( x_1 - \frac{a_1}{a_{n+1}} h , \dots, x_n - \frac{a_n}{a_{n+1}}h \right). \] The polynomials above already form a Gröbner basis for $\I(W)$, and so we have that the initial ideal is $\Init(\I(W)) = (x_1, \dots, x_n)$. To compute the projective Hilbert function of $\I(W)$, we therefore need to determine the number of monomials of degree exactly $s$ not contained in $(x_1, \dots, x_n)$. But the only such monomial is $h^s$, meaning $\HF_{S/\I(W)}(s) = 1$. Since this is already a polynomial, we see that $\I(W)$ has a projective Hilbert polynomial of degree 0, meaning $\dim W = 0$. Therefore any variety that is the union of finitely many points has dimension zero as well. 
+	If $V$ consists of finitely many points, then \[ V = \{p_1, \dots, p_r\} = V_1 \cup \dots \cup V_r \] where $V_j$ is the projective variety $\{p_j\}$. By the above Proposition~\ref{dimmax}, it suffices to show that $\dim V_j = 0$ for all $1 \leq j \leq r$. Therefore let $W = \{p\}$ be a projective variety consisting of exactly one point, and suppose $p$ has homogeneous coordinates $p = (a_1: \dots: a_n: a_{n+1})$. Then at least one $a_i$ is nonzero, and without loss of generality, we will assume that $a_{n + 1} \neq 0$. (If this is not the case, there is some $1 \leq j \leq n$ for which $a_j$ is nonzero, and we will later consider the DRL term ordering with variables ordered so that $x_j < x_k$ for all $k \neq j$---assuming $a_{n + 1} \neq 0$ allows us to use the normal DRL ordering). Then also \[ p = \left( \frac{a_1}{a_{n+1}} : \dots : \frac{a_n}{a_{n+1}} : 1 \right) \] and we have that $f \in k[x_1, \dots, x_n, h]$ therefore vanishes on all homogeneous coordinates of $p$ if and only if $x_i - (a_i/a_{n+1})h = 0$ for all $1 \leq i \leq n$. Therefore \[ \I(W) = \left( x_1 - \frac{a_1}{a_{n+1}} h , \dots, x_n - \frac{a_n}{a_{n+1}}h \right). \] The polynomials above already form a Gröbner basis for $\I(W)$, and so we have that the initial ideal is $\Init(\I(W)) = (x_1, \dots, x_n)$. To compute the projective Hilbert function of $\I(W)$, we therefore need to determine the number of monomials of degree exactly $s$ not contained in $(x_1, \dots, x_n)$. But the only such monomial is $h^s$, meaning $\HF_{S/\I(W)}(s) = 1$. Since this is already a polynomial, we see that $\I(W)$ has a projective Hilbert polynomial of degree 0, meaning $\dim W = 0$. Therefore any variety that is the union of finitely many points has dimension zero as well. 
 \end{proof}
 
 
@@ -501,11 +501,11 @@ We now consider another way of defining the dimension of a ring, called the Krul
 	Let $\mathcal{R}$ be a ring and let $\Spec \mathcal{R}$ be its collection of prime ideals. We say a \textbf{chain} $P_0 \subsetneq P_1 \subsetneq \dots \subsetneq P_n$ in $\Spec \mathcal{R}$ has \textbf{length} $n$ (the number of strict inclusions), and we define the \textbf{Krull dimension} of $\mathcal{R}$ to be \[ \dim \mathcal{R} = \sup \{\,\text{length}(C) \mid C \text{ is a chain in } \Spec \mathcal{R}\,\}. \]
 \end{definition}
 
-Note that if we have an ideal $I \subset R$, we now have two ways to compute the dimension of the quotient $R/I$. We can look at the degree of the affine Hilbert polynomial, or we can consider the Krull dimension. Recall that a chain of prime ideals in $R/I$ corresponds to a chain of prime ideals in $R$ all containing the ideal $I$. 
+Note that if we have an ideal $I \subset R$, we now have two notions of the dimension of a quotient $R/I$. We can look at the degree of the affine Hilbert polynomial, or we can consider the Krull dimension. For the next example, recall that a chain of prime ideals in $R/I$ corresponds to a chain of prime ideals in $R$ all containing the ideal $I$. 
 
 
 \begin{example}
-	We continue Example 9, in which $\I(V) = (x^2 - xy)$. This is not prime, so any chain of prime ideals containing $\I(V)$ cannot begin with $\I(V)$ itself. Suppose $P$ is a prime containing $\I(V)$. Then $x^2 - xy \in \I(V) \subset P$, which means either $x \in P$ or $x - y \in P$. Then $P$ must contain either the prime ideal $(x)$ or the prime ideal $(x - y)$, so any chain of primes containing $\I(V)$ and maximal in length must start either with $(x)$ or with $(x - y)$. But the only prime ideal containing either $(x)$ or $(x - y)$ is the maximal ideal $(x,y)$, and so the only possible chains are \[ (x) \subset (x,y) \quad \text{or} \quad (x - y) \subset (x,y), \] meaning the Krull dimension of $R/I$ is 1. This is the same as the degree of the affine Hilbert polynomial of $I$, and this is not a coincidence, as the next Theorem from \cite{kemper2011course} asserts. 
+	We continue Example 9, in which $\I(V) = (x^2 - xy)$. This ideal is not prime, so any chain of prime ideals containing $\I(V)$ cannot begin with the ideal $\I(V)$ itself. Suppose $P$ is a prime ideal containing $\I(V)$. Then $x^2 - xy \in \I(V) \subset P$, which means either $x \in P$ or $x - y \in P$. Then $P$ must contain either the prime ideal $(x)$ or the prime ideal $(x - y)$, so any chain of primes containing $\I(V)$ and maximal in length must start either with $(x)$ or with $(x - y)$. But the only prime ideal containing either $(x)$ or $(x - y)$ is the maximal ideal $(x,y)$, and so the only possible chains are \[ (x) \subset (x,y) \quad \text{or} \quad (x - y) \subset (x,y), \] meaning the Krull dimension of $R/I$ is 1. This is the same as the degree of the affine Hilbert polynomial of $I$, and this is not a coincidence, as the next Theorem from \cite{kemper2011course} asserts. 
 \end{example}
 
 
@@ -521,7 +521,7 @@ With this discussion of dimension out of the way, we can now say what it means f
 	Let $I \subset R$ be a homogeneous ideal. We say that an element $g \in R$ is \textbf{generic} for $I$ if either \begin{enumerate}[noitemsep, label = (\arabic*)]
 		\item $\dim(R/I) = 0$, or
 		\item $g$ is not a zero-divisor on $R/I\sat$. 
-	\end{enumerate} Further, for $j > 0$ we define the set $U_j(I) \subset R_1^j$ by \[ U_j(I) = \{(g_1, \dots, g_j) \in R_1^j \mid g_i \text{ is generic for } I + (g_1, \dots, g_{i - 1}), 1 \leq i \leq j\}, \] and we say that $I$ is in \textbf{generic coordinates} if $(x_n, \dots, x_{n - r + 1}) \in U_r$ for $r = \dim(R/I)$. 
+	\end{enumerate} Further, recall that by $R_d$ we mean the set of degree $d$ elements in $R$, and for $j > 0$ define the set $U_j(I) \subset R_1^j$ by \[ U_j(I) = \{(g_1, \dots, g_j) \in R_1^j \mid g_i \text{ is generic for } I + (g_1, \dots, g_{i - 1}), 1 \leq i \leq j\}, \] and we say that $I$ is in \textbf{generic coordinates} if $(x_n, \dots, x_{n - r + 1}) \in U_r$ for $r = \dim(R/I)$. 
 \end{definition}
 
 
@@ -529,7 +529,7 @@ It is shown in \cite{caminata2020solving} that for the $DRL$ order and a system 
 
 
 \begin{definition}\label{def:genB}
-	Let $I \subset S = k[x_1, \dots, x_n, h]$ be a homogeneous ideal with $|\mathcal{Z}_+(I)| < \infty$. Then $I$ is in \textbf{generic coordinates} if either \begin{enumerate}[noitemsep, label = (\roman*)]
+	Let $I \subset S = k[x_1, \dots, x_n, h]$ be a homogeneous ideal with finite projective zero locus $|\mathcal{Z}_+(I)| < \infty$. Then $I$ is in \textbf{generic coordinates} if either \begin{enumerate}[noitemsep, label = (\roman*)]
 		\item $|\mathcal{Z}_+(I)| = 0$, or
 		\item $h$ is not a zero-divisor on $S/I\sat$. 
 	\end{enumerate}
@@ -546,7 +546,7 @@ Since the proof of the result that $\sd_{1, DRL}(\F) \leq \reg(\F^h)$ uses the r
 \begin{proof}
 	Assume the hypotheses of the claim, and also assume $I$ is a proper ideal (if not, $\dim(S/I) = \dim(S/S) = 0$ and so $I$ is in generic coordinates). There are two cases to consider. In the first, suppose $|\mathcal{Z}_+(I)| = 0$. Because $I$ is a homogeneous ideal, the polynomials in $I$ all vanish at $(0,0, \dots, 0)$, so $(0,0,\dots,0) \in \mathcal{Z}(I)$. If there is any other point in $p \in \mathcal{Z}(I)$, then any function in $I$ vanishes along the line in $k^{n+1}$ through $(0,0,\dots,0)$ and $p$, since each point on the line has the same homogeneous coordinates as $p$. But the point with these homogeneous coordinates is then in $\mathcal{Z}_+(I) = \emptyset$, which cannot be the case. Therefore $\mathcal{Z}(I) = \{(0,0,\dots,0)\}$, and so in particular, $|\mathcal{Z}(I)| < \infty$. Then by the affine version of Proposition 5 (the proof of which is given in \cite{cox2013ideals}), the degree of the affine Hilbert polynomial is 0. By Theorem 4, this means $\dim(S/I) = 0$, and so $I$ is in generic coordinates in the sense of \cite{bayer1987criterion} since it meets (1) of Definition~\ref{def:genA}. 
 
-	Now for the second case, assume that $h$ is not a zero-divisor on $S/I\sat$. Then in the language of Definition~\ref{def:genA}, this means that $h$ is generic for $I$. Since $h \in S_1$, this in turn means that $h \in U_1(I)$. Because $I$ is in generic coordinates in the sense of Definition 6, we have that $|\mathcal{Z}_+(I)| < \infty$. Since this projective variety is finite, Proposition 5 implies that the degree of the projective Hilbert polynomial is 0. By Theorem 2, the degree of the projective Hilbert polynomial is one less than that of the affine Hilbert polynomial, and therefore the Krull dimension $\dim(S/I)$ is equal to 1 by Theorem 3. Then because $h \in U_1(I)$ and $h$ is the smallest variable (with respect to the DRL ordering) in the polynomial ring $S = k[x_1, \dots, x_n, h]$, we have that $I$ is in generic coordinates in the sense of Definition~\ref{def:genA} from \cite{bayer1987criterion}. 
+	Now for the second case, assume that $h$ is not a zero-divisor on $S/I\sat$. Then in the language of Definition~\ref{def:genA}, this means that $h$ is generic for $I$. Since $h \in S_1$, this in turn means that $h \in U_1(I)$. Because $I$ is in generic coordinates in the sense of Definition~\ref{def:genB}, we have that $|\mathcal{Z}_+(I)| < \infty$. Since this projective variety is finite, Proposition 5 implies that the degree of the projective Hilbert polynomial is 0. By Theorem 2, the degree of the projective Hilbert polynomial is one less than that of the affine Hilbert polynomial, and therefore the Krull dimension $\dim(S/I)$ is equal to 1 by Theorem 3. Then because $h \in U_1(I)$ and $h$ is the smallest variable (with respect to the DRL ordering) in the polynomial ring $S = k[x_1, \dots, x_n, h]$, we have that $I$ is in generic coordinates in the sense of Definition~\ref{def:genA} from \cite{bayer1987criterion}. 
 \end{proof}
 
 
