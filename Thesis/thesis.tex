@@ -119,7 +119,7 @@
 \setcounter{MaxMatrixCols}{20}
 
 
-\title{\Huge \textbf{These things \emph{might} be different!} \\ \Large A disoriented amateur's guide to the algorithms and assumptions of multivariate polynomial based cryptography}
+\title{\Huge \textbf{Notions of Solving Degree and Genericity} \\ \Large A look at some of the algorithms and assumptions of multivariate polynomial based cryptography}
 \author{Ben Clingenpeel}
 \date{\vspace{-.8em} 4/26/23}
 
@@ -544,7 +544,7 @@ Since the proof of the result that $\sd_{1, DRL}(\F) \leq \reg(\F^h)$ uses the r
 \end{proposition}
 
 \begin{proof}
-	Assume the hypotheses of the claim, and also assume $I$ is a proper ideal (if not, $\dim(S/I) = \dim(S/S) = 0$ and so $I$ is in generic coordinates). There are two cases to consider. In the first, suppose $|\mathcal{Z}_+(I)| = 0$. Because $I$ is a homogeneous ideal, the polynomials in $I$ all vanish at $(0,0, \dots, 0)$, so $(0,0,\dots,0) \in \mathcal{Z}(I)$. If there is any other point in $p \in \mathcal{Z}(I)$, then any function in $I$ vanishes along the line in $k^{n+1}$ through $(0,0,\dots,0)$ and $p$, since each point on the line has the same homogeneous coordinates as $p$. But the point with these homogeneous coordinates is then in $\mathcal{Z}_+(I) = \emptyset$, which cannot be the case. Therefore $\mathcal{Z}(I) = \{(0,0,\dots,0)\}$, and so in particular, $|\mathcal{Z}(I)| < \infty$. Then by the affine version of Proposition 5 (the proof of which is given in \cite{cox2013ideals}), the degree of the affine Hilbert polynomial is 0. By Theorem 4, this means $\dim(S/I) = 0$, and so $I$ is in generic coordinates in the sense of \cite{bayer1987criterion} since it meets (1) of Definition~\ref{def:genA}. 
+	Assume the hypotheses of the claim, and also assume $I$ is a proper ideal (if not, $\dim(S/I) = \dim(S/S) = 0$ and so $I$ is in generic coordinates). There are two cases to consider. In the first, suppose $|\mathcal{Z}_+(I)| = 0$. Because $I$ is a homogeneous ideal, the polynomials in $I$ all vanish at $(0,0, \dots, 0)$, so $(0,0,\dots,0) \in \mathcal{Z}(I)$. If there is any other point in $p \in \mathcal{Z}(I)$, then any function in $I$ vanishes along the line in $k^{n+1}$ through $(0,0,\dots,0)$ and $p$, since each point on the line has the same homogeneous coordinates as $p$. But the point with these homogeneous coordinates is then in $\mathcal{Z}_+(I) = \emptyset$, which cannot be the case. Therefore $\mathcal{Z}(I) = \{(0,0,\dots,0)\}$, where $\mathcal{Z}$ is the affine zero locus (the affine cone of $\mathcal{Z}_+(I)$). In particular then we have that $|\mathcal{Z}(I)| < \infty$. Now by the affine version of Proposition 5 (the proof of which is given in \cite{cox2013ideals}), the degree of the affine Hilbert polynomial is 0. By Theorem 4, this means $\dim(S/I) = 0$, and so $I$ is in generic coordinates in the sense of \cite{bayer1987criterion} since it meets (1) of Definition~\ref{def:genA}. 
 
 	Now for the second case, assume that $h$ is not a zero-divisor on $S/I\sat$. Then in the language of Definition~\ref{def:genA}, this means that $h$ is generic for $I$. Since $h \in S_1$, this in turn means that $h \in U_1(I)$. Because $I$ is in generic coordinates in the sense of Definition~\ref{def:genB}, we have that $|\mathcal{Z}_+(I)| < \infty$. Since this projective variety is finite, Proposition 5 implies that the degree of the projective Hilbert polynomial is 0. By Theorem 2, the degree of the projective Hilbert polynomial is one less than that of the affine Hilbert polynomial, and therefore the Krull dimension $\dim(S/I)$ is equal to 1 by Theorem 3. Then because $h \in U_1(I)$ and $h$ is the smallest variable (with respect to the DRL ordering) in the polynomial ring $S = k[x_1, \dots, x_n, h]$, we have that $I$ is in generic coordinates in the sense of Definition~\ref{def:genA} from \cite{bayer1987criterion}. 
 \end{proof}
@@ -711,17 +711,18 @@ Now because Definition~\ref{def:genC} implies Definitions~\ref{def:genA} and~\re
 	Take $I = (x^2, y^2, z^2) \subset k[x,y,z]$. It is known that Fröberg's conjecture holds in this context (with $S = k[x,y,z]$ a polynomial ring of three variables \cite{TRUNG201979}), so if $\coeff(I) \in V_1$, then we have that \[ HS_{S/I} (t) = \bigg| \frac{(1 - t^2)^3}{(1 - t)^3} \bigg| = |(1 + t)^3| = 1 + 3t + 3t^2 + t^3. \] Indeed, $I$ does have the required Hilbert series, so it is possible that \[ (1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1) = \coeff I \in V_1 \] and $I$ is therefore generic in the sense of Definition~\ref{def:genD}. However, $I$ is certainly not generic in the sense of Definition~\ref{def:genC}, because $\Init(I) = I$ and $I$ cannot be the generic initial ideal because it is not Borel-fixed---for example, $z^2 \in I$ but the elementary move $e_2(z^2) = yz \notin I$. 
 \end{example}
 
-\color{red}
+
+We end with two questions this raises:
+
 
 \begin{question}
-	\color{black} The difficulty with the above example is that it is hard to say whether $\coeff(I) \in V_1$ or not. Is there a simpler characterization for when a system has its coefficients in the open set $V_1$ on which Hilbert series are constnt?
+	The difficulty with the above example is that it is hard to say whether $\coeff(I) \in V_1$ or not. Is there a simpler characterization for when a system has its coefficients in the open set $V_1$ on which Hilbert series are constnt?
 \end{question} 
 
 \begin{question}
-	\color{black} Is it true that Definition~\ref{def:genD} implies the others? The authors of \cite{bigdeli2021semi} seem to suggest that being generated by a ``generic sequence" (Definition~\ref{def:genD}) implies being ``in generic coordinates" (Definition~\ref{def:genC}---they reference an earlier version of \cite{caminata2020solving} for this defintion). 
+	Is it true that Definition~\ref{def:genD} implies the others? The authors of \cite{bigdeli2021semi} seem to suggest that being generated by a ``generic sequence" (Definition~\ref{def:genD}) implies being ``in generic coordinates" (Definition~\ref{def:genC}---they reference an earlier version of \cite{caminata2020solving} for this defintion). 
 \end{question}
 
-\color{black}
 
 
 
